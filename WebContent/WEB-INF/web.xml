@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
+	<display-name>大学生美妆交流平台</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+
+	<!-- Filters -->
+	<filter>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<filter-class>com.xuyihao.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+
+	<!-- Session -->
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+
+	<!-- Servlets -->
+	<servlet>
+		<description>Accounts</description>
+		<display-name>AccountsServlet</display-name>
+		<servlet-name>AccountsServlet</servlet-name>
+		<servlet-class>com.xuyihao.service.impl.AccountsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AccountsServlet</servlet-name>
+		<url-pattern>/accounts</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description>Courses</description>
+		<display-name>CoursesServlet</display-name>
+		<servlet-name>CoursesServlet</servlet-name>
+		<servlet-class>com.xuyihao.service.impl.CoursesServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CoursesServlet</servlet-name>
+		<url-pattern>/courses</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description>Posts</description>
+		<display-name>PostsServlet</display-name>
+		<servlet-name>PostsServlet</servlet-name>
+		<servlet-class>com.xuyihao.service.impl.PostsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PostsServlet</servlet-name>
+		<url-pattern>/posts</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description>Shops</description>
+		<display-name>ShopsServlet</display-name>
+		<servlet-name>ShopsServlet</servlet-name>
+		<servlet-class>com.xuyihao.service.impl.ShopsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ShopsServlet</servlet-name>
+		<url-pattern>/shops</url-pattern>
+	</servlet-mapping>
+
+	<!-- Configure Spring -->
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/config/app-context-beans.xml</param-value>
+	</context-param>
+
+</web-app>
