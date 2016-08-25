@@ -302,11 +302,13 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		String Acc_ID = this.accountsLogic.saveAccounts(account);
 		if (Acc_ID.equals("")) {
 			json.put("result", false);
+			json.put("Acc_ID", "");
 		} else {
 			// XXX 将登录结果存入session中
 			this.session.setAttribute("Acc_name", account.getAcc_name());
 			this.session.setAttribute("Acc_ID", Acc_ID);
 			json.put("result", true);
+			json.put("Acc_ID", Acc_ID);
 		}
 		return json.toString();
 	}
@@ -333,11 +335,13 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		String Acc_ID = this.accountsLogic.login(name, password);
 		if (Acc_ID.equals("")) {
 			json.put("result", false);
+			json.put("Acc_ID", "");
 		} else {
 			// XXX 将登录结果存入session中
 			this.session.setAttribute("Acc_name", name);
 			this.session.setAttribute("Acc_ID", Acc_ID);
 			json.put("result", true);
+			json.put("Acc_ID", Acc_ID);
 		}
 		return json.toString();
 	}
