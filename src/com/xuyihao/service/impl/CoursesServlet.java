@@ -82,7 +82,7 @@ public class CoursesServlet extends HttpServlet implements CoursesService {
 			CommentCrs commentCrs = new CommentCrs();
 			commentCrs.setComm_desc(request.getParameter("Crs_desc"));
 			commentCrs.setAcc_ID(session.getAttribute("Acc_ID").toString());
-			commentCrs.setRep_ID(request.getParameter("Rep_Id"));
+			commentCrs.setRep_ID(request.getParameter("Rep_ID"));
 			commentCrs.setCrs_ID(request.getParameter("Crs_ID"));
 			String message = this.addCommentCourse(commentCrs);
 			response.getWriter().println(message);
@@ -100,7 +100,13 @@ public class CoursesServlet extends HttpServlet implements CoursesService {
 			likeCrs.setAcc_ID(session.getAttribute("Acc_ID").toString());
 			likeCrs.setCrs_ID(request.getParameter("Crs_ID"));
 			likeCrs.setRep_ID(request.getParameter("Rep_ID"));
-			likeCrs.setLike_ryb(Integer.parseInt(request.getParameter("Like_ryb")));
+			int ryb = 0;
+			try {
+				ryb = Integer.parseInt(request.getParameter("Like_ryb"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			likeCrs.setLike_ryb(ryb);
 			String message = this.addLikeCourse(likeCrs);
 			response.getWriter().println(message);
 		} else if (action.equals("getLikeCrsInfo")) {

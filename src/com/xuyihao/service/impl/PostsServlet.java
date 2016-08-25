@@ -100,7 +100,13 @@ public class PostsServlet extends HttpServlet implements PostsService {
 			likePost.setAcc_ID(session.getAttribute("Acc_ID").toString());
 			likePost.setPost_ID(request.getParameter("Post_ID"));
 			likePost.setRep_ID(request.getParameter("Rep_ID"));
-			likePost.setLike_ryb(Integer.valueOf(request.getParameter("Like_ryb")));
+			int ryb = 0;
+			try {
+				ryb = Integer.parseInt(request.getParameter("Like_ryb"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			likePost.setLike_ryb(ryb);
 			String message = this.addLikePost(likePost);
 			response.getWriter().println(message);
 		} else if (action.equals("getLikePostInfo")) {
@@ -156,7 +162,8 @@ public class PostsServlet extends HttpServlet implements PostsService {
 	public String changePostInformation(Posts post) {
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
-		if (Acc_ID.equals(post.getAcc_ID())) {
+		Posts queryPost = this.postsLogic.getPostInfo(post.getPost_ID());
+		if (Acc_ID.equals(queryPost.getAcc_ID())) {
 			boolean flag = this.postsLogic.changePostInfo(post);
 			if (flag) {
 				json.put("result", true);
@@ -179,7 +186,7 @@ public class PostsServlet extends HttpServlet implements PostsService {
 	@Override
 	public String sharePost(String accountId, String PostId) {
 		JSONObject json = new JSONObject();
-		String Post_ID = this.sharePost(accountId, PostId);
+		String Post_ID = this.postsLogic.sharePost(accountId, PostId);
 		if (Post_ID == null || Post_ID.equals("")) {
 			json.put("result", false);
 			json.put("Post_ID", "");
@@ -209,7 +216,7 @@ public class PostsServlet extends HttpServlet implements PostsService {
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		CommentPost commentPost = this.commentPostLogic.getCommentInfo(commentId);
-		if (Acc_ID.equals(commentPost.getAcc_ID())) {// 是本人的视频
+		if (Acc_ID.equals(commentPost.getAcc_ID())) {// 是本人的
 			boolean flag = this.commentPostLogic.deleteCommentPost(commentId);
 			if (flag) {
 				json.put("result", true);

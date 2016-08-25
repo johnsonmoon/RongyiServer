@@ -59,7 +59,7 @@ public class ShopsServlet extends HttpServlet implements com.xuyihao.service.Sho
 			String shopName = request.getParameter("Shop_name");
 			String message = this.isShopNameExists(shopName);
 			response.getWriter().println(message);
-		} else if (action.equals("getShopIdByname")) {
+		} else if (action.equals("getShopIdByName")) {
 			String shopName = request.getParameter("Shop_name");
 			String message = this.getShopIdByName(shopName);
 			response.getWriter().println(message);
@@ -71,20 +71,19 @@ public class ShopsServlet extends HttpServlet implements com.xuyihao.service.Sho
 			Shops shop = new Shops();
 			// XXX Shop_ID 为必需项
 			shop.setShop_ID(request.getParameter("Shop_ID"));
-			shop.setShop_name(request.getParameter("Shop_name"));
 			shop.setShop_info(request.getParameter("Shop_info"));
 			// TODO 需要进一步设计，店铺运营执照信息是存图片还是文字，后期需要修正
 			shop.setShop_licen(request.getParameter("Shop_licen"));
 			String message = this.changeShopInformation(shop);
 			response.getWriter().println(message);
 		} else if (action.equals("deleteShop")) {
-			String shopId = request.getParameter("Shop_Id");
+			String shopId = request.getParameter("Shop_ID");
 			String message = this.deleteShop(shopId);
 			response.getWriter().println(message);
 		} else if (action.equals("addCat")) {
 			// TODO category 在设计上需要完善
 			Category category = new Category();
-			category.setCat_name(request.getParameter("Cat_ID"));
+			category.setCat_name(request.getParameter("Cat_name"));
 			category.setCat_desc(request.getParameter("Cat_desc"));
 			String message = this.addCategory(category);
 			response.getWriter().println(message);
@@ -100,8 +99,16 @@ public class ShopsServlet extends HttpServlet implements com.xuyihao.service.Sho
 			product.setProd_desc(request.getParameter("Prod_desc"));
 			// TODO 产品详情需要进一步详细设计
 			product.setProd_info(request.getParameter("Prod_info"));
-			product.setProd_price(Float.parseFloat(request.getParameter("Prod_price")));
-			product.setProd_num(Integer.parseInt(request.getParameter("Prod_num")));
+			float price = 0f;
+			int num = 0;
+			try {
+				price = Float.parseFloat(request.getParameter("Prod_price"));
+				num = Integer.parseInt(request.getParameter("Prod_num"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			product.setProd_price(price);
+			product.setProd_num(num);
 			String message = this.addProduct(product);
 			response.getWriter().println(message);
 		} else if (action.equals("getProdInfo")) {
@@ -161,11 +168,11 @@ public class ShopsServlet extends HttpServlet implements com.xuyihao.service.Sho
 		JSONObject json = new JSONObject();
 		String id = this.shopsLogic.getShopID(shopName);
 		if (id == null || id.equals("")) {
-			json.put("result", true);
-			json.put("Shop_ID", id);
-		} else {
 			json.put("result", false);
 			json.put("Shop_ID", "");
+		} else {
+			json.put("result", true);
+			json.put("Shop_ID", id);
 		}
 		return json.toString();
 	}
@@ -180,7 +187,8 @@ public class ShopsServlet extends HttpServlet implements com.xuyihao.service.Sho
 	public String changeShopInformation(Shops shop) {
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
-		if (Acc_ID.equals(shop.getAcc_ID())) {
+		Shops queryShop = this.shopsLogic.getShopInfo(shop.getShop_ID());
+		if (Acc_ID.equals(queryShop.getAcc_ID())) {
 			boolean flag = this.shopsLogic.changeShopInfo(shop);
 			if (flag) {
 				json.put("result", true);

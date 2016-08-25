@@ -91,7 +91,13 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 			account.setAcc_pwd(request.getParameter("Acc_pwd"));
 			account.setAcc_sex(request.getParameter("Acc_sex"));
 			account.setAcc_loc(request.getParameter("Acc_loc"));
-			account.setAcc_shop(Boolean.parseBoolean(request.getParameter("Acc_shop")));
+			boolean ownShop = false;
+			try {
+				ownShop = Boolean.parseBoolean(request.getParameter("Acc_shop"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			account.setAcc_shop(ownShop);
 			account.setAcc_no(request.getParameter("Acc_no"));
 			account.setAcc_name2(request.getParameter("Acc_name2"));
 			account.setAcc_tel(request.getParameter("Acc_tel"));
@@ -165,8 +171,16 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 			Cart cart = new Cart();
 			cart.setAcc_ID(session.getAttribute("Acc_ID").toString());
 			cart.setProd_ID(request.getParameter("Prod_ID"));
-			cart.setPro_num(Integer.parseInt(request.getParameter("Pro_num")));
-			cart.setProd_price(Float.parseFloat(request.getParameter("Prod_price")));
+			float price = 0f;
+			int num = 0;
+			try {
+				price = Float.parseFloat(request.getParameter("Prod_price"));
+				num = Integer.parseInt(request.getParameter("Pro_num"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			cart.setPro_num(num);
+			cart.setProd_price(price);
 			String message = this.addCart(cart);
 			response.getWriter().println(message);
 		} else if (action.equals("getCartInfo")) {
@@ -175,8 +189,13 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 			response.getWriter().println(message);
 		} else if (action.equals("changeProdCount")) {
 			String cartId = request.getParameter("Cart_ID");
-			int cartCount = Integer.parseInt(request.getParameter("Pro_num"));
-			String message = this.changeProductCount(cartId, cartCount);
+			int num = 0;
+			try {
+				num = Integer.parseInt(request.getParameter("Pro_num"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			String message = this.changeProductCount(cartId, num);
 			response.getWriter().println(message);
 		} else if (action.equals("deleteCart")) {
 			String cartId = request.getParameter("Cart_ID");
@@ -186,8 +205,16 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 			Orders order = new Orders();
 			order.setAcc_ID(session.getAttribute("Acc_ID").toString());
 			order.setProd_ID(request.getParameter("Prod_ID"));
-			order.setProd_price(Float.parseFloat(request.getParameter("Prod_price")));
-			order.setPro_num(Integer.parseInt(request.getParameter("Pro_num")));
+			float price = 0f;
+			int num = 0;
+			try {
+				price = Float.parseFloat(request.getParameter("Prod_price"));
+				num = Integer.parseInt(request.getParameter("Pro_num"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			order.setProd_price(price);
+			order.setPro_num(num);
 			order.setAdd_ID(request.getParameter("Add_ID"));
 			String message = this.addOrder(order);
 			response.getWriter().println(message);
@@ -204,8 +231,16 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 			// XXX Ord_ID 为必须量
 			order.setOrd_ID(request.getParameter("Ord_ID"));
 			order.setProd_ID(request.getParameter("Prod_ID"));
-			order.setProd_price(Float.parseFloat(request.getParameter("Prod_price")));
-			order.setPro_num(Integer.parseInt(request.getParameter("Pro_num")));
+			float price = 0f;
+			int num = 0;
+			try {
+				price = Float.parseFloat(request.getParameter("Prod_price"));
+				num = Integer.parseInt(request.getParameter("Pro_num"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			order.setProd_price(price);
+			order.setPro_num(num);
 			order.setAdd_ID(request.getParameter("Add_ID"));
 			String message = this.changeOrderInformation(order);
 			response.getWriter().println(message);
