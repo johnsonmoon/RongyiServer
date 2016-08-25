@@ -5,16 +5,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.xuyihao.common.ConnDB;
 import com.xuyihao.dao.CartDao;
 import com.xuyihao.entity.Cart;
-import com.xuyihao.tools.ConnDB;
 
 /*
  * created by xuyihao on 2016/4/30
  * @description 购物车数据库操作工具类
  * */
 public class CartDaoImpl implements CartDao {
-	private ConnDB conn;
+	private ConnDB conn = new ConnDB();
 
 	public CartDaoImpl() {
 	}

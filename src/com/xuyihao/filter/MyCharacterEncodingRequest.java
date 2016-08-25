@@ -1,9 +1,10 @@
 package com.xuyihao.filter;
 
-import com.xuyihao.tools.AppPropertiesLoader;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+
+import com.xuyihao.common.AppPropertiesLoader;
+
 import java.util.Properties;
 
 /*

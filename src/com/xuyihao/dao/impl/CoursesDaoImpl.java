@@ -5,9 +5,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.xuyihao.common.ConnDB;
 import com.xuyihao.dao.CoursesDao;
 import com.xuyihao.entity.Courses;
-import com.xuyihao.tools.ConnDB;
 
 /*
  * created by xuyihao on 2016/4/25

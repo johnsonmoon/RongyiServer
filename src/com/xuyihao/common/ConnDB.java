@@ -1,4 +1,4 @@
-package com.xuyihao.tools;
+package com.xuyihao.common;
 
 import java.sql.*;
 import java.util.Properties;

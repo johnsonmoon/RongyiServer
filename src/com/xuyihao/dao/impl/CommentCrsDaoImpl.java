@@ -5,9 +5,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.xuyihao.common.ConnDB;
 import com.xuyihao.dao.CommentCrsDao;
 import com.xuyihao.entity.CommentCrs;
-import com.xuyihao.tools.ConnDB;
 
 /*
  * created by xuyihao on 2016/4/26

@@ -3,9 +3,9 @@ package com.xuyihao.dao.impl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.xuyihao.common.ConnDB;
 import com.xuyihao.dao.ShopsDao;
 import com.xuyihao.entity.Shops;
-import com.xuyihao.tools.ConnDB;
 
 import java.util.*;
 

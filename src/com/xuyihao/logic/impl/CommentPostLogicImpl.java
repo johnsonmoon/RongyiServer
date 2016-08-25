@@ -2,6 +2,7 @@ package com.xuyihao.logic.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.xuyihao.common.ThreadLocalContext;
 import com.xuyihao.dao.CommentPostDao;
 import com.xuyihao.dao.PostsDao;
 import com.xuyihao.entity.CommentPost;
@@ -20,6 +21,16 @@ public class CommentPostLogicImpl implements CommentPostLogic {
 	@Autowired
 	private PostsDao postsDao;
 
+	// XXX 无法通过Autowired注解从Spring容器中获取DAO
+	public void initBeans() {
+		if (commentPostDao == null) {
+			commentPostDao = (CommentPostDao) ThreadLocalContext.getBean("CommentPostDao");
+		}
+		if (postsDao == null) {
+			postsDao = (PostsDao) ThreadLocalContext.getBean("PostsDao");
+		}
+	}
+
 	public void setCommentPostDao(CommentPostDao commentPostDao) {
 		this.commentPostDao = commentPostDao;
 	}
@@ -30,6 +41,7 @@ public class CommentPostLogicImpl implements CommentPostLogic {
 
 	@Override
 	public String saveCommentPost(CommentPost commentPost) {
+		this.initBeans();
 		boolean flag = true;
 		String Comm_ID = RandomUtils.getRandomString(15) + "Comm";
 		String Add_time = DateUtils.currentDateTime();
@@ -51,6 +63,7 @@ public class CommentPostLogicImpl implements CommentPostLogic {
 
 	@Override
 	public boolean deleteCommentPost(String Comm_ID) {
+		this.initBeans();
 		boolean flag = true;
 		Posts post = this.postsDao.queryById(this.commentPostDao.queryById(Comm_ID).getPost_ID());
 		if ((post.getPost_ID() == null) || (post.getPost_ID().equals(""))) {
@@ -65,6 +78,7 @@ public class CommentPostLogicImpl implements CommentPostLogic {
 
 	@Override
 	public CommentPost getCommentInfo(String Comm_ID) {
+		this.initBeans();
 		CommentPost commentPost = this.commentPostDao.queryById(Comm_ID);
 		if (commentPost == null) {
 			return null;

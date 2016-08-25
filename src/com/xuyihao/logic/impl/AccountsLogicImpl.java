@@ -1,6 +1,8 @@
 package com.xuyihao.logic.impl;
 
+import com.xuyihao.common.ThreadLocalContext;
 import com.xuyihao.dao.AccountsDao;
+import com.xuyihao.dao.AttentionDao;
 import com.xuyihao.dao.FavouriteDao;
 import com.xuyihao.dao.ShopsDao;
 import com.xuyihao.dao.WantDao;
@@ -9,6 +11,8 @@ import com.xuyihao.entity.Accounts;
 import com.xuyihao.entity.Shops;
 import com.xuyihao.tools.utils.DateUtils;
 import com.xuyihao.tools.utils.RandomUtils;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,6 +25,9 @@ public class AccountsLogicImpl implements AccountsLogic {
 	private AccountsDao accountsDao;
 
 	@Autowired
+	private AttentionDao attentionDao;
+
+	@Autowired
 	private FavouriteDao favouriteDao;
 
 	@Autowired
@@ -28,6 +35,30 @@ public class AccountsLogicImpl implements AccountsLogic {
 
 	@Autowired
 	private WantDao wantDao;
+
+	// XXX 无法通过Autowired注解从Spring容器中获取DAO
+	public void initBeans() {
+		if (accountsDao == null) {
+			accountsDao = (AccountsDao) ThreadLocalContext.getBean("AccountsDao");
+		}
+		if (attentionDao == null) {
+			attentionDao = (AttentionDao) ThreadLocalContext.getBean("AttentionDao");
+
+		}
+		if (favouriteDao == null) {
+			favouriteDao = (FavouriteDao) ThreadLocalContext.getBean("FavouriteDao");
+		}
+		if (shopsDao == null) {
+			shopsDao = (ShopsDao) ThreadLocalContext.getBean("ShopsDao");
+		}
+		if (wantDao == null) {
+			wantDao = (WantDao) ThreadLocalContext.getBean("WantDao");
+		}
+	}
+
+	public void setAttentionDao(AttentionDao attentionDao) {
+		this.attentionDao = attentionDao;
+	}
 
 	public void setWantDao(WantDao wantDao) {
 		this.wantDao = wantDao;
@@ -47,6 +78,7 @@ public class AccountsLogicImpl implements AccountsLogic {
 
 	@Override
 	public boolean accountNameExist(String Acc_name) {
+		this.initBeans();
 		boolean result = false;
 		Accounts accounts = accountsDao.queryByName(Acc_name);
 		if ((accounts.getAcc_ID() == null) || (accounts.getAcc_ID().equals(""))) {
@@ -59,6 +91,7 @@ public class AccountsLogicImpl implements AccountsLogic {
 
 	@Override
 	public String saveAccounts(Accounts accounts) {
+		this.initBeans();
 		String Acc_ID = "";
 		if (accountNameExist(accounts.getAcc_name())) {
 			Acc_ID = "";
@@ -75,6 +108,7 @@ public class AccountsLogicImpl implements AccountsLogic {
 
 	@Override
 	public String login(String Acc_name, String Acc_pwd) {
+		this.initBeans();
 		String result = "";
 		Accounts DBaccount = accountsDao.queryByName(Acc_name);
 		if (DBaccount == null) {
@@ -89,6 +123,7 @@ public class AccountsLogicImpl implements AccountsLogic {
 
 	@Override
 	public boolean changeAccountInfo(Accounts accounts) {
+		this.initBeans();
 		if ((accounts.getAcc_ID() == null) || (accounts.getAcc_ID().equals(""))) {
 			return false;
 		}
@@ -143,16 +178,19 @@ public class AccountsLogicImpl implements AccountsLogic {
 
 	@Override
 	public Accounts getAccountsInformationByName(String Acc_name) {
+		this.initBeans();
 		return accountsDao.queryByName(Acc_name);
 	}
 
 	@Override
 	public Accounts getAccountsInformationById(String Acc_ID) {
+		this.initBeans();
 		return accountsDao.queryById(Acc_ID);
 	}
 
 	@Override
 	public boolean attention(String atn_Id, String atned_Id) {
+		this.initBeans();
 		boolean result = false;
 		Accounts accountAtn = accountsDao.queryById(atn_Id);
 		Accounts accountAtnd = accountsDao.queryById(atned_Id);
@@ -160,7 +198,8 @@ public class AccountsLogicImpl implements AccountsLogic {
 		accountAtnd.setAcc_atnd(accountAtnd.getAcc_atnd() + 1);
 		boolean flag1 = accountsDao.updateAccounts(accountAtn);
 		boolean flag2 = accountsDao.updateAccounts(accountAtnd);
-		if (flag1 && flag2) {
+		boolean flag3 = this.attentionDao.saveAttention(atn_Id, atned_Id, DateUtils.currentDateTime());
+		if (flag1 && flag2 && flag3) {
 			result = true;
 		}
 		return result;
@@ -168,6 +207,7 @@ public class AccountsLogicImpl implements AccountsLogic {
 
 	@Override
 	public boolean cancelAtention(String atn_Id, String atned_Id) {
+		this.initBeans();
 		boolean result = false;
 		Accounts accountAtn = accountsDao.queryById(atn_Id);
 		Accounts accountAtnd = accountsDao.queryById(atned_Id);
@@ -175,7 +215,8 @@ public class AccountsLogicImpl implements AccountsLogic {
 		accountAtnd.setAcc_atnd(accountAtnd.getAcc_atnd() - 1);
 		boolean flag1 = accountsDao.updateAccounts(accountAtn);
 		boolean flag2 = accountsDao.updateAccounts(accountAtnd);
-		if (flag1 && flag2) {
+		boolean flag3 = this.attentionDao.deleteAttention(atn_Id, atned_Id);
+		if (flag1 && flag2 && flag3) {
 			result = true;
 		}
 		return result;
@@ -183,6 +224,13 @@ public class AccountsLogicImpl implements AccountsLogic {
 
 	@Override
 	public boolean favourite(String Acc_Id, String Shop_ID) {
+		this.initBeans();
+		List<String> shopIdList = this.favouriteDao.queryByAccountId(Acc_Id);
+		for (String shopId : shopIdList) {
+			if (Shop_ID.equals(shopId)) {
+				return false;
+			}
+		}
 		boolean flag1 = this.favouriteDao.saveFavourite(Acc_Id, Shop_ID, DateUtils.currentDateTime());
 		Shops shopUpdate = this.shopsDao.queryById(Shop_ID);
 		shopUpdate.setShop_favo(shopUpdate.getShop_favo() + 1);
@@ -192,6 +240,7 @@ public class AccountsLogicImpl implements AccountsLogic {
 
 	@Override
 	public boolean cancelFavourite(String Acc_Id, String Shop_ID) {
+		this.initBeans();
 		boolean flag1 = this.favouriteDao.deleteFavourite(Acc_Id, Shop_ID);
 		Shops shopUpdate = this.shopsDao.queryById(Shop_ID);
 		shopUpdate.setShop_favo(shopUpdate.getShop_favo() - 1);
@@ -201,11 +250,19 @@ public class AccountsLogicImpl implements AccountsLogic {
 
 	@Override
 	public boolean want(String Acc_ID, String Prod_ID) {
+		this.initBeans();
+		List<String> productIdList = this.wantDao.queryByAccountId(Acc_ID);
+		for (String prodId : productIdList) {
+			if (Prod_ID.equals(prodId)) {
+				return false;
+			}
+		}
 		return this.wantDao.saveWant(Acc_ID, Prod_ID, DateUtils.currentDateTime());
 	}
 
 	@Override
 	public boolean cancelWant(String Acc_ID, String Prod_ID) {
+		this.initBeans();
 		return this.wantDao.deleteWant(Acc_ID, Prod_ID);
 	}
 }

@@ -40,9 +40,4 @@
 	<bean id="ProductsLogic" class="com.xuyihao.logic.impl.ProductsLogicImpl"></bean>
 	<bean id="ShopsLogic" class="com.xuyihao.logic.impl.ShopsLogicImpl"></bean>
 
-	<!-- servlet beans -->
-	<bean class="com.xuyihao.service.impl.AccountsServlet"></bean>
-	<bean class="com.xuyihao.service.impl.CoursesServlet"></bean>
-	<bean class="com.xuyihao.service.impl.PostsServlet"></bean>
-	<bean class="com.xuyihao.service.impl.ShopsServlet"></bean>
 </beans>

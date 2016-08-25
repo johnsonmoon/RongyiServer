@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.WebApplicationContext;
 
+import com.xuyihao.common.ThreadLocalContext;
 import com.xuyihao.entity.CommentPost;
 import com.xuyihao.entity.LikePost;
 import com.xuyihao.entity.Posts;
@@ -112,6 +114,10 @@ public class PostsServlet extends HttpServlet implements PostsService {
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
+		WebApplicationContext context = ThreadLocalContext.setContextAndRet(this.getServletContext());
+		this.postsLogic = (PostsLogic) context.getBean("PostsLogic");
+		this.commentPostLogic = (CommentPostLogic) context.getBean("CommentPostLogic");
+		this.likePostLogic = (LikePostLogic) context.getBean("LikePostLogic");
 	}
 
 	@Override

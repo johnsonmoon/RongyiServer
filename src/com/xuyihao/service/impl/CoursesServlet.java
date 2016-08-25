@@ -2,6 +2,7 @@ package com.xuyihao.service.impl;
 
 import java.io.IOException;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.WebApplicationContext;
 
+import com.xuyihao.common.ThreadLocalContext;
 import com.xuyihao.entity.CommentCrs;
 import com.xuyihao.entity.Courses;
 import com.xuyihao.entity.LikeCrs;
@@ -109,8 +112,12 @@ public class CoursesServlet extends HttpServlet implements CoursesService {
 	}
 
 	@Override
-	public void init() throws ServletException {
-		super.init();
+	public void init(ServletConfig config) throws ServletException {
+		super.init(config);
+		WebApplicationContext context = ThreadLocalContext.setContextAndRet(this.getServletContext());
+		this.commentCrsLogic = (CommentCrsLogic) context.getBean("CommentCrsLogic");
+		this.coursesLogic = (CoursesLogic) context.getBean("CoursesLogic");
+		this.likeCrsLogic = (LikeCrsLogic) context.getBean("LikeCrsLogic");
 	}
 
 	@Override

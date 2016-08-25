@@ -5,9 +5,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.xuyihao.common.ConnDB;
 import com.xuyihao.dao.LikePostDao;
 import com.xuyihao.entity.LikePost;
-import com.xuyihao.tools.ConnDB;
 
 /*
  * create by xuyihao on 2016/4/28

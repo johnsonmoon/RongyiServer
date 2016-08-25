@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.WebApplicationContext;
 
+import com.xuyihao.common.ThreadLocalContext;
 import com.xuyihao.entity.Category;
 import com.xuyihao.entity.Products;
 import com.xuyihao.entity.Shops;
@@ -116,6 +118,10 @@ public class ShopsServlet extends HttpServlet implements com.xuyihao.service.Sho
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
+		WebApplicationContext context = ThreadLocalContext.setContextAndRet(this.getServletContext());
+		this.shopsLogic = (ShopsLogic) context.getBean("ShopsLogic");
+		this.categoryLogic = (CategoryLogic) context.getBean("CategoryLogic");
+		this.productsLogic = (ProductsLogic) context.getBean("ProductsLogic");
 	}
 
 	@Override

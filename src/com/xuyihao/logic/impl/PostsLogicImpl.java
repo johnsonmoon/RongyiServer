@@ -2,8 +2,11 @@ package com.xuyihao.logic.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.xuyihao.common.ThreadLocalContext;
+import com.xuyihao.dao.AccountsDao;
 import com.xuyihao.dao.PostsDao;
 import com.xuyihao.dao.RepostPostDao;
+import com.xuyihao.entity.Accounts;
 import com.xuyihao.entity.Posts;
 import com.xuyihao.logic.PostsLogic;
 import com.xuyihao.tools.utils.DateUtils;
@@ -19,6 +22,26 @@ public class PostsLogicImpl implements PostsLogic {
 	@Autowired
 	private RepostPostDao repostPostDao;
 
+	@Autowired
+	private AccountsDao accountsDao;
+
+	// XXX 无法通过Autowired注解从Spring容器中获取DAO
+	public void initBeans() {
+		if (postDao == null) {
+			postDao = (PostsDao) ThreadLocalContext.getBean("PostsDao");
+		}
+		if (repostPostDao == null) {
+			repostPostDao = (RepostPostDao) ThreadLocalContext.getBean("RepostPostDao");
+		}
+		if (accountsDao == null) {
+			accountsDao = (AccountsDao) ThreadLocalContext.getBean("AccountsDao");
+		}
+	}
+
+	public void setAccountsDao(AccountsDao accountsDao) {
+		this.accountsDao = accountsDao;
+	}
+
 	public void setPostDao(PostsDao postDao) {
 		this.postDao = postDao;
 	}
@@ -29,12 +52,17 @@ public class PostsLogicImpl implements PostsLogic {
 
 	@Override
 	public String savePost(Posts posts) {
+		this.initBeans();
 		boolean flag = true;
 		String Post_ID = RandomUtils.getRandomString(15) + "Post";
 		String Add_time = DateUtils.currentDateTime();
 		posts.setPost_ID(Post_ID);
 		posts.setPost_addTime(Add_time);
 		flag = flag && this.postDao.savePosts(posts);
+		// 账户发表加一(删除不减)
+		Accounts accounts = this.accountsDao.queryById(posts.getAcc_ID());
+		accounts.setAcc_pub(accounts.getAcc_pub() + 1);
+		flag = flag && this.accountsDao.updateAccounts(accounts);
 		if (flag) {
 			return Post_ID;
 		} else {
@@ -44,12 +72,14 @@ public class PostsLogicImpl implements PostsLogic {
 
 	@Override
 	public boolean deletePost(String Post_ID) {
+		this.initBeans();
 		boolean flag = this.postDao.deletePosts(Post_ID);
 		return flag;
 	}
 
 	@Override
 	public boolean changePostInfo(Posts post) {
+		this.initBeans();
 		Posts DBpost = this.postDao.queryById(post.getPost_ID());
 		if ((DBpost.getPost_ID() == null) || (DBpost.getPost_ID().equals(""))) {
 			return false;
@@ -72,12 +102,14 @@ public class PostsLogicImpl implements PostsLogic {
 
 	@Override
 	public Posts getPostInfo(String Post_ID) {
+		this.initBeans();
 		Posts post = this.postDao.queryById(Post_ID);
 		return post;
 	}
 
 	@Override
 	public String sharePost(String Acc_ID, String Post_ID) {
+		this.initBeans();
 		boolean flag = true;
 		Posts postOld = this.postDao.queryById(Post_ID);
 		postOld.setPost_rep(postOld.getPost_rep() + 1);
@@ -90,6 +122,10 @@ public class PostsLogicImpl implements PostsLogic {
 		postNew.setAcc_ID(Acc_ID);
 		flag = flag && this.postDao.savePosts(postNew);
 		flag = flag && this.repostPostDao.saveRepostPost(Acc_ID, postOld.getAuthor_ID(), Post_IDNew, Add_timeNew);
+		// 账户发表加一(删除不减)
+		Accounts accounts = this.accountsDao.queryById(Acc_ID);
+		accounts.setAcc_pub(accounts.getAcc_pub() + 1);
+		flag = flag && this.accountsDao.updateAccounts(accounts);
 		if (flag) {
 			return Post_IDNew;
 		} else {

@@ -3,9 +3,9 @@ package com.xuyihao.dao.impl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.xuyihao.common.ConnDB;
 import com.xuyihao.dao.AccountsDao;
 import com.xuyihao.entity.Accounts;
-import com.xuyihao.tools.ConnDB;
 
 /*
  * created by xuyihao on 2016/4/1

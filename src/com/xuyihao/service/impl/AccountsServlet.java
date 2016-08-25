@@ -13,8 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import com.xuyihao.common.ThreadLocalContext;
 import com.xuyihao.entity.Accounts;
 import com.xuyihao.entity.Address;
 import com.xuyihao.entity.Cart;
@@ -67,6 +67,7 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 			Accounts account = new Accounts();
 			account.setAcc_name(request.getParameter("Acc_name"));
 			account.setAcc_pwd(request.getParameter("Acc_pwd"));
+			account.setAcc_sex(request.getParameter("Acc_sex"));
 			account.setAcc_loc(request.getParameter("Acc_loc"));
 			account.setAcc_no(request.getParameter("Acc_no"));
 			account.setAcc_name2(request.getParameter("Acc_name2"));
@@ -88,6 +89,7 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 			account.setAcc_ID(session.getAttribute("Acc_ID").toString());
 			account.setAcc_name(request.getParameter("Acc_name"));
 			account.setAcc_pwd(request.getParameter("Acc_pwd"));
+			account.setAcc_sex(request.getParameter("Acc_sex"));
 			account.setAcc_loc(request.getParameter("Acc_loc"));
 			account.setAcc_shop(Boolean.parseBoolean(request.getParameter("Acc_shop")));
 			account.setAcc_no(request.getParameter("Acc_no"));
@@ -149,9 +151,10 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		} else if (action.equals("changeAddInfo")) {
 			Address address = new Address();
 			// XXX Add_ID必须设置
-			address.setAcc_ID(request.getParameter("Add_ID"));
+			address.setAdd_ID(request.getParameter("Add_ID"));
 			address.setConsign(request.getParameter("Consign"));
 			address.setCon_tel(request.getParameter("Con_tel"));
+			address.setAdd_info(request.getParameter("Add_info"));
 			String message = this.changeAddressInformation(address);
 			response.getWriter().println(message);
 		} else if (action.equals("getAddInfo")) {
@@ -176,7 +179,7 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 			String message = this.changeProductCount(cartId, cartCount);
 			response.getWriter().println(message);
 		} else if (action.equals("deleteCart")) {
-			String cartId = request.getParameter("CartId");
+			String cartId = request.getParameter("Cart_ID");
 			String message = this.deleteCart(cartId);
 			response.getWriter().println(message);
 		} else if (action.equals("addOrd")) {
@@ -204,7 +207,7 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 			order.setProd_price(Float.parseFloat(request.getParameter("Prod_price")));
 			order.setPro_num(Integer.parseInt(request.getParameter("Pro_num")));
 			order.setAdd_ID(request.getParameter("Add_ID"));
-			String message = "";
+			String message = this.changeOrderInformation(order);
 			response.getWriter().println(message);
 		} else if (action.equals("commProd")) {
 			CommentProduct commentProduct = new CommentProduct();
@@ -230,8 +233,9 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		ServletContext servletContext = this.getServletContext();
-		WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+		// XXX servlet中没法通过Autowired注解从Spring容器中获取logic
+		ServletContext ctx = this.getServletContext();
+		WebApplicationContext context = ThreadLocalContext.setContextAndRet(ctx);
 		this.accountsLogic = (AccountsLogic) context.getBean("AccountsLogic");
 		this.addressLogic = (AddressLogic) context.getBean("AddressLogic");
 		this.cartLogic = (CartLogic) context.getBean("CartLogic");
@@ -253,6 +257,12 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 
 	@Override
 	public String register(Accounts account) {
+		// XXX 检查是否已经有账号登录
+		Object a = this.session.getAttribute("Acc_ID");
+		if (a != null) {
+			this.session.removeAttribute("Acc_ID");
+			this.session.removeAttribute("Acc_name");
+		}
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.accountsLogic.saveAccounts(account);
 		if (Acc_ID.equals("")) {
@@ -271,7 +281,10 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		if (Acc_ID.equals(accountId)) {
-			this.session.invalidate();
+			// this.session.invalidate();
+			// XXX 这里需要思考一下是remove掉attr好还是直接invalidate
+			this.session.removeAttribute("Acc_ID");
+			this.session.removeAttribute("Acc_name");
 			json.put("result", true);
 		} else {
 			json.put("result", false);
@@ -499,7 +512,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 	public String changeAddressInformation(Address address) {
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
-		if (requestAccId.equals(address.getAcc_ID())) {// 请求修改自己的收货地址
+		Address requestAddress = this.addressLogic.getAddressInfo(address.getAdd_ID());
+		if (requestAccId.equals(requestAddress.getAcc_ID())) {// 请求修改自己的收货地址
 			boolean flag = this.addressLogic.changeAddressInfo(address);
 			if (flag) {
 				json.put("result", true);
@@ -649,7 +663,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 	public String changeOrderInformation(Orders order) {
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
-		if (requestAccId.equals(order.getAcc_ID())) {// 请求自己的订单
+		Orders queryOrder = this.ordersLogic.getOrderInfo(order.getOrd_ID());
+		if (requestAccId.equals(queryOrder.getAcc_ID())) {// 请求自己的订单
 			boolean flag = this.ordersLogic.changeOrderInfo(order);
 			if (flag) {
 				json.put("result", true);

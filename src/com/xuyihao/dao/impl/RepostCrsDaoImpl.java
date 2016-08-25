@@ -1,7 +1,7 @@
 package com.xuyihao.dao.impl;
 
+import com.xuyihao.common.ConnDB;
 import com.xuyihao.dao.RepostCrsDao;
-import com.xuyihao.tools.ConnDB;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
