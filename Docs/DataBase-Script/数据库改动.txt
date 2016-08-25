@@ -1,0 +1,18 @@
+改动2016/4/13
+
+客户端登陆token识别及其实现需要添加表tokens
+
+表名	Tokens
+
+字段名		数据类型	约束条件	说明
+token_ID	bigint		主键		token的ID
+Acc_ID		bigint		外键(Accounts)	用户ID
+token_content	varchar(50)	非空		token的具体内容
+token_time	int		非空		token的有效时间（天）递减
+
+
+2016/8/10
+将各个业务模型的ID换成String类型
+
+2016/8/13
+各表添加时间戳字段
