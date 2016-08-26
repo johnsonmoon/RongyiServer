@@ -5,22 +5,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.xuyihao.common.ConnDB;
+import com.xuyihao.common.DatabaseConnector;
 import com.xuyihao.dao.ProductsDao;
 import com.xuyihao.entity.Products;
 
-/*
+/**
  * created by xuyihao on 2016/4/28
+ * 
  * @description 产品数据库操作工具类
  * @attention 删除产品时候由于完整性约束，应提前删除有关表项的相关数据
- * */
+ */
 public class ProductsDaoImpl implements ProductsDao {
-	private ConnDB conn = new ConnDB();
+	private DatabaseConnector conn = new DatabaseConnector();
 
 	public ProductsDaoImpl() {
 	}
 
-	public void setConn(ConnDB conn) {
+	public void setConn(DatabaseConnector conn) {
 		this.conn = conn;
 	}
 

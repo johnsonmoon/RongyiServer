@@ -11,10 +11,11 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/*
+/**
  * modified by xuyihao on 2016/4/3
+ * 
  * @description: 用来解决post，get请求乱码问题
- * */
+ */
 public class CharacterEncodingFilter implements Filter {
 
 	protected String encoding = null; // 定义编码格式变量

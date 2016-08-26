@@ -7,10 +7,11 @@ import com.xuyihao.common.AppPropertiesLoader;
 
 import java.util.Properties;
 
-/*
+/**
  * create by xuyihao on 2016/4/3
+ * 
  * @description: 重写HttpServletRequest的部分方法实现post，get请求中文乱码问题
- * */
+ */
 public class MyCharacterEncodingRequest extends HttpServletRequestWrapper {
 	/*
 	 * fields

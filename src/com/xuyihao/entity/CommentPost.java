@@ -1,8 +1,8 @@
 package com.xuyihao.entity;
 
-/*
+/**
  * created by xuyihao on 2016/4/26
- * */
+ */
 public class CommentPost {
 	public static final String BASE_TABLE_NAME = "CommentPost";
 	public static final String BASE_COMMENTPOST_PHYSICAL_ID = "_id";

@@ -3,22 +3,23 @@ package com.xuyihao.dao.impl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.xuyihao.common.ConnDB;
+import com.xuyihao.common.DatabaseConnector;
 import com.xuyihao.dao.AccountsDao;
 import com.xuyihao.entity.Accounts;
 
-/*
+/**
  * created by xuyihao on 2016/4/1
+ * 
  * @describe 用户相关数据库操作封装类
- * */
+ */
 public class AccountsDaoImpl implements AccountsDao {
-	private ConnDB conn = new ConnDB();
+	private DatabaseConnector conn = new DatabaseConnector();
 
 	public AccountsDaoImpl() {
 
 	}
 
-	public void setConn(ConnDB conn) {
+	public void setConn(DatabaseConnector conn) {
 		this.conn = conn;
 	}
 

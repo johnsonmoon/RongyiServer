@@ -1,9 +1,8 @@
 package com.xuyihao.entity;
 
-/*
- * created by xuyihao on 2016/4/30
- * 评论产品（交易完成）的java bean
- * */
+/**
+ * created by xuyihao on 2016/4/30 评论产品（交易完成）的java bean
+ */
 public class CommentProduct {
 	public static final String BASE_TABLE_NAME = "CommentProduct";
 	public static final String BASE_COMMENTPRODUCT_PHYSICAL_ID = "_id";

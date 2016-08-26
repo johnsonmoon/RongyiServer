@@ -1,8 +1,8 @@
 package com.xuyihao.entity;
 
-/*
+/**
  * created by xuyihao on 2016/4/26
- * */
+ */
 public class Posts {
 	public static final String BASE_TABLE_NAME = "Posts";
 	public static final String BASE_POSTS_PHYSICAL_ID = "_id";

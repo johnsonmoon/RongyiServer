@@ -5,22 +5,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.xuyihao.common.ConnDB;
+import com.xuyihao.common.DatabaseConnector;
 import com.xuyihao.dao.LikeCrsDao;
 import com.xuyihao.entity.LikeCrs;
 
-/*
+/**
  * create by xuyihao on 2016/4/28
+ * 
  * @describe 打赏视频相关数据库操作封装类
  * @attention 打赏视频的数据库操作，只有添加信息入表，没有删除操作，因为打赏是不可以撤销的
- * */
+ */
 public class LikeCrsDaoImpl implements LikeCrsDao {
-	private ConnDB conn = new ConnDB();
+	private DatabaseConnector conn = new DatabaseConnector();
 
 	public LikeCrsDaoImpl() {
 	}
 
-	public void setConn(ConnDB conn) {
+	public void setConn(DatabaseConnector conn) {
 		this.conn = conn;
 	}
 

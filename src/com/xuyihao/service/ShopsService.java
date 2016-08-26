@@ -1,5 +1,7 @@
 package com.xuyihao.service;
 
+import javax.servlet.http.HttpSession;
+
 import com.xuyihao.entity.Category;
 import com.xuyihao.entity.Products;
 import com.xuyihao.entity.Shops;
@@ -13,6 +15,13 @@ public interface ShopsService {
 	/**
 	 * XXX ShopsLogic
 	 */
+	/**
+	 * 初始化会话信息
+	 * 
+	 * @param session
+	 */
+	public void setSessionInfo(HttpSession session);
+
 	/**
 	 * 新建店铺
 	 * 

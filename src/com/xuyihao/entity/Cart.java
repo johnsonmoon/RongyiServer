@@ -1,9 +1,8 @@
 package com.xuyihao.entity;
 
-/*
- * created by xuyihao on 2016/4/30
- * 购物车的java bean
- * */
+/**
+ * created by xuyihao on 2016/4/30 购物车的java bean
+ */
 public class Cart {
 	public static final String BASE_TABLE_NAME = "Cart";
 	public static final String BASE_CART_PHYSICAL_ID = "_id";

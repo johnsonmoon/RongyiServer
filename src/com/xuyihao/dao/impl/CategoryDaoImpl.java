@@ -3,22 +3,23 @@ package com.xuyihao.dao.impl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.xuyihao.common.ConnDB;
+import com.xuyihao.common.DatabaseConnector;
 import com.xuyihao.dao.CategoryDao;
 import com.xuyihao.entity.Category;
 
-/*
+/**
  * created by xuyihao on 2016/4/28
+ * 
  * @description 商品分类的数据库操作工具类
  * @attention 商品分类不提供删除方法
- * */
+ */
 public class CategoryDaoImpl implements CategoryDao {
-	private ConnDB conn = new ConnDB();
+	private DatabaseConnector conn = new DatabaseConnector();
 
 	public CategoryDaoImpl() {
 	}
 
-	public void setConn(ConnDB conn) {
+	public void setConn(DatabaseConnector conn) {
 		this.conn = conn;
 	}
 

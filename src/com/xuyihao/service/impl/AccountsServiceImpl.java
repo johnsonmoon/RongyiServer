@@ -1,18 +1,8 @@
 package com.xuyihao.service.impl;
 
-import java.io.IOException;
-
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.WebApplicationContext;
 
 import com.xuyihao.common.ThreadLocalContext;
 import com.xuyihao.entity.Accounts;
@@ -29,14 +19,11 @@ import com.xuyihao.service.AccountsService;
 
 import net.sf.json.JSONObject;
 
-@MultipartConfig
-public class AccountsServlet extends HttpServlet implements AccountsService {
-
-	/**
-	 * <code>serialVersionUID</code>
-	 */
-	private static final long serialVersionUID = 9019941573067632809L;
-
+/**
+ * 
+ * @Author Xuyh created at 2016年8月26日 下午1:18:39
+ */
+public class AccountsServiceImpl implements AccountsService {
 	@Autowired
 	private AccountsLogic accountsLogic;
 
@@ -52,234 +39,55 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 	@Autowired
 	private OrdersLogic ordersLogic;
 
+	/**
+	 * 用来保存会话信息
+	 */
 	private HttpSession session = null;
 
-	@Override
-	protected void service(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// 设置会话信息
-		this.session = request.getSession();
-		String action = request.getParameter("action").trim();
-		if (action.equals("accountNameExists")) {
-			String message = this.isAccountNameExists(request.getParameter("Acc_name"));
-			response.getWriter().println(message);
-		} else if (action.equals("register")) {
-			Accounts account = new Accounts();
-			account.setAcc_name(request.getParameter("Acc_name"));
-			account.setAcc_pwd(request.getParameter("Acc_pwd"));
-			account.setAcc_sex(request.getParameter("Acc_sex"));
-			account.setAcc_loc(request.getParameter("Acc_loc"));
-			account.setAcc_no(request.getParameter("Acc_no"));
-			account.setAcc_name2(request.getParameter("Acc_name2"));
-			account.setAcc_tel(request.getParameter("Acc_tel"));
-			String message = this.register(account);
-			response.getWriter().println(message);
-		} else if (action.equals("login")) {
-			String Acc_name = request.getParameter("Acc_name");
-			String Acc_pwd = request.getParameter("Acc_pwd");
-			String message = this.login(Acc_name, Acc_pwd);
-			response.getWriter().println(message);
-		} else if (action.equals("logout")) {
-			String Acc_ID = session.getAttribute("Acc_ID").toString();
-			String message = this.logout(Acc_ID);
-			response.getWriter().println(message);
-		} else if (action.equals("changeAccInfo")) {
-			Accounts account = new Accounts();
-			// XXX Acc_ID必须设置
-			account.setAcc_ID(session.getAttribute("Acc_ID").toString());
-			account.setAcc_name(request.getParameter("Acc_name"));
-			account.setAcc_pwd(request.getParameter("Acc_pwd"));
-			account.setAcc_sex(request.getParameter("Acc_sex"));
-			account.setAcc_loc(request.getParameter("Acc_loc"));
-			boolean ownShop = false;
-			try {
-				ownShop = Boolean.parseBoolean(request.getParameter("Acc_shop"));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			account.setAcc_shop(ownShop);
-			account.setAcc_no(request.getParameter("Acc_no"));
-			account.setAcc_name2(request.getParameter("Acc_name2"));
-			account.setAcc_tel(request.getParameter("Acc_tel"));
-			String message = this.changeAccountInformation(account);
-			response.getWriter().println(message);
-		} else if (action.equals("getAccInfoByName")) {
-			String Acc_name = request.getParameter("Acc_name");
-			String message = this.getAccountInformationByName(Acc_name);
-			response.getWriter().println(message);
-		} else if (action.equals("getAccInfoById")) {
-			String Acc_ID = request.getParameter("Acc_ID");
-			String message = this.getAccountInformationById(Acc_ID);
-			response.getWriter().println(message);
-		} else if (action.equals("att")) {
-			String atnId = session.getAttribute("Acc_ID").toString();
-			String atndId = request.getParameter("atndId");
-			String message = this.attention(atnId, atndId);
-			response.getWriter().println(message);
-		} else if (action.equals("cancelAtt")) {
-			String atnId = session.getAttribute("Acc_ID").toString();
-			String atndId = request.getParameter("atndId");
-			String message = this.cancelAttention(atnId, atndId);
-			response.getWriter().println(message);
-		} else if (action.equals("favo")) {
-			String accountId = session.getAttribute("Acc_ID").toString();
-			String shopId = request.getParameter("Shop_ID");
-			String message = this.favourite(accountId, shopId);
-			response.getWriter().println(message);
-		} else if (action.equals("cancelFavo")) {
-			String accountId = session.getAttribute("Acc_ID").toString();
-			String shopId = request.getParameter("Shop_ID");
-			String message = this.cancelFavourite(accountId, shopId);
-			response.getWriter().println(message);
-		} else if (action.equals("want")) {
-			String accountId = session.getAttribute("Acc_ID").toString();
-			String productId = request.getParameter("Prod_ID");
-			String message = this.want(accountId, productId);
-			response.getWriter().println(message);
-		} else if (action.equals("cancelWant")) {
-			String accountId = session.getAttribute("Acc_ID").toString();
-			String productId = request.getParameter("Prod_ID");
-			String message = this.cancelWant(accountId, productId);
-			response.getWriter().println(message);
-		} else if (action.equals("addAdd")) {
-			Address address = new Address();
-			address.setAdd_info(request.getParameter("Add_info"));
-			// XXX 账户ID设置为当前会话的账户ID
-			address.setAcc_ID(session.getAttribute("Acc_ID").toString());
-			address.setConsign(request.getParameter("Consign"));
-			address.setCon_tel(request.getParameter("Con_tel"));
-			String message = this.addAddress(address);
-			response.getWriter().println(message);
-		} else if (action.equals("deleteAdd")) {
-			String addressId = request.getParameter("Add_ID");
-			String message = this.deleteAddress(addressId);
-			response.getWriter().println(message);
-		} else if (action.equals("changeAddInfo")) {
-			Address address = new Address();
-			// XXX Add_ID必须设置
-			address.setAdd_ID(request.getParameter("Add_ID"));
-			address.setConsign(request.getParameter("Consign"));
-			address.setCon_tel(request.getParameter("Con_tel"));
-			address.setAdd_info(request.getParameter("Add_info"));
-			String message = this.changeAddressInformation(address);
-			response.getWriter().println(message);
-		} else if (action.equals("getAddInfo")) {
-			String addressId = request.getParameter("Add_ID");
-			String message = this.getAddressInformation(addressId);
-			response.getWriter().println(message);
-		} else if (action.equals("addCart")) {
-			Cart cart = new Cart();
-			cart.setAcc_ID(session.getAttribute("Acc_ID").toString());
-			cart.setProd_ID(request.getParameter("Prod_ID"));
-			float price = 0f;
-			int num = 0;
-			try {
-				price = Float.parseFloat(request.getParameter("Prod_price"));
-				num = Integer.parseInt(request.getParameter("Pro_num"));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			cart.setPro_num(num);
-			cart.setProd_price(price);
-			String message = this.addCart(cart);
-			response.getWriter().println(message);
-		} else if (action.equals("getCartInfo")) {
-			String cartId = request.getParameter("Cart_ID");
-			String message = this.getCartInformation(cartId);
-			response.getWriter().println(message);
-		} else if (action.equals("changeProdCount")) {
-			String cartId = request.getParameter("Cart_ID");
-			int num = 0;
-			try {
-				num = Integer.parseInt(request.getParameter("Pro_num"));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			String message = this.changeProductCount(cartId, num);
-			response.getWriter().println(message);
-		} else if (action.equals("deleteCart")) {
-			String cartId = request.getParameter("Cart_ID");
-			String message = this.deleteCart(cartId);
-			response.getWriter().println(message);
-		} else if (action.equals("addOrd")) {
-			Orders order = new Orders();
-			order.setAcc_ID(session.getAttribute("Acc_ID").toString());
-			order.setProd_ID(request.getParameter("Prod_ID"));
-			float price = 0f;
-			int num = 0;
-			try {
-				price = Float.parseFloat(request.getParameter("Prod_price"));
-				num = Integer.parseInt(request.getParameter("Pro_num"));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			order.setProd_price(price);
-			order.setPro_num(num);
-			order.setAdd_ID(request.getParameter("Add_ID"));
-			String message = this.addOrder(order);
-			response.getWriter().println(message);
-		} else if (action.equals("getOrdInfo")) {
-			String orderId = request.getParameter("Ord_ID");
-			String message = this.getOrderInformation(orderId);
-			response.getWriter().println(message);
-		} else if (action.equals("deleteOrd")) {
-			String orderId = request.getParameter("Ord_ID");
-			String message = this.deleteOrder(orderId);
-			response.getWriter().println(message);
-		} else if (action.equals("changeOrdInfo")) {
-			Orders order = new Orders();
-			// XXX Ord_ID 为必须量
-			order.setOrd_ID(request.getParameter("Ord_ID"));
-			order.setProd_ID(request.getParameter("Prod_ID"));
-			float price = 0f;
-			int num = 0;
-			try {
-				price = Float.parseFloat(request.getParameter("Prod_price"));
-				num = Integer.parseInt(request.getParameter("Pro_num"));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			order.setProd_price(price);
-			order.setPro_num(num);
-			order.setAdd_ID(request.getParameter("Add_ID"));
-			String message = this.changeOrderInformation(order);
-			response.getWriter().println(message);
-		} else if (action.equals("commProd")) {
-			CommentProduct commentProduct = new CommentProduct();
-			commentProduct.setAcc_ID(session.getAttribute("Acc_ID").toString());
-			commentProduct.setProd_ID(request.getParameter("Prod_ID"));
-			commentProduct.setOrd_ID(request.getParameter("Ord_ID"));
-			commentProduct.setComm_desc(request.getParameter("Comm_desc"));
-			String message = this.addCommentProduct(commentProduct);
-			response.getWriter().println(message);
-		} else if (action.equals("changeCommProd")) {
-			String commentId = request.getParameter("Comm_ID");
-			String commentDescription = request.getParameter("Comm_desc");
-			String message = this.changeCommentProduct(commentId, commentDescription);
-			response.getWriter().println(message);
-		} else if (action.equals("getCommProdInfo")) {
-			String commentId = request.getParameter("Comm_ID");
-			String message = this.getCommentProductInformation(commentId);
-			response.getWriter().println(message);
-		} else {
+	public void setAccountsLogic(AccountsLogic accountsLogic) {
+		this.accountsLogic = accountsLogic;
+	}
+
+	public void setAddressLogic(AddressLogic addressLogic) {
+		this.addressLogic = addressLogic;
+	}
+
+	public void setCartLogic(CartLogic cartLogic) {
+		this.cartLogic = cartLogic;
+	}
+
+	public void setCommentProductLogic(CommentProductLogic commentProductLogic) {
+		this.commentProductLogic = commentProductLogic;
+	}
+
+	public void setOrdersLogic(OrdersLogic ordersLogic) {
+		this.ordersLogic = ordersLogic;
+	}
+
+	public void init() {
+		if (accountsLogic == null) {
+			accountsLogic = (AccountsLogic) ThreadLocalContext.getBean("AccountsLogic");
+		}
+		if (addressLogic == null) {
+			addressLogic = (AddressLogic) ThreadLocalContext.getBean("AddressLogic");
+		}
+		if (cartLogic == null) {
+			cartLogic = (CartLogic) ThreadLocalContext.getBean("CartLogic");
+		}
+		if (commentProductLogic == null) {
+			commentProductLogic = (CommentProductLogic) ThreadLocalContext.getBean("CommentProductLogic");
+		}
+		if (ordersLogic == null) {
+			ordersLogic = (OrdersLogic) ThreadLocalContext.getBean("OrdersLogic");
 		}
 	}
 
-	@Override
-	public void init(ServletConfig config) throws ServletException {
-		super.init(config);
-		// XXX servlet中没法通过Autowired注解从Spring容器中获取logic
-		ServletContext ctx = this.getServletContext();
-		WebApplicationContext context = ThreadLocalContext.setContextAndRet(ctx);
-		this.accountsLogic = (AccountsLogic) context.getBean("AccountsLogic");
-		this.addressLogic = (AddressLogic) context.getBean("AddressLogic");
-		this.cartLogic = (CartLogic) context.getBean("CartLogic");
-		this.commentProductLogic = (CommentProductLogic) context.getBean("CommentProductLogic");
-		this.ordersLogic = (OrdersLogic) context.getBean("OrdersLogic");
+	public void setSessionInfo(HttpSession session) {
+		this.session = session;
 	}
 
-	@Override
 	public String isAccountNameExists(String name) {
+		this.init();
 		JSONObject json = new JSONObject();
 		boolean exists = this.accountsLogic.accountNameExist(name);
 		if (exists) {
@@ -290,8 +98,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		return json.toString();
 	}
 
-	@Override
 	public String register(Accounts account) {
+		this.init();
 		// XXX 检查是否已经有账号登录
 		Object a = this.session.getAttribute("Acc_ID");
 		if (a != null) {
@@ -313,24 +121,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		return json.toString();
 	}
 
-	@Override
-	public String logout(String accountId) {
-		JSONObject json = new JSONObject();
-		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
-		if (Acc_ID.equals(accountId)) {
-			// this.session.invalidate();
-			// XXX 这里需要思考一下是remove掉attr好还是直接invalidate
-			this.session.removeAttribute("Acc_ID");
-			this.session.removeAttribute("Acc_name");
-			json.put("result", true);
-		} else {
-			json.put("result", false);
-		}
-		return json.toString();
-	}
-
-	@Override
 	public String login(String name, String password) {
+		this.init();
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.accountsLogic.login(name, password);
 		if (Acc_ID.equals("")) {
@@ -346,8 +138,24 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		return json.toString();
 	}
 
-	@Override
+	public String logout(String accountId) {
+		this.init();
+		JSONObject json = new JSONObject();
+		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
+		if (Acc_ID.equals(accountId)) {
+			// this.session.invalidate();
+			// XXX 这里需要思考一下是remove掉attr好还是直接invalidate
+			this.session.removeAttribute("Acc_ID");
+			this.session.removeAttribute("Acc_name");
+			json.put("result", true);
+		} else {
+			json.put("result", false);
+		}
+		return json.toString();
+	}
+
 	public String changeAccountInformation(Accounts account) {
+		this.init();
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		if (Acc_ID.equals(account.getAcc_ID())) {
@@ -363,8 +171,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		return json.toString();
 	}
 
-	@Override
 	public String getAccountInformationByName(String name) {
+		this.init();
 		JSONObject json = new JSONObject();
 		String queryAcc_ID = this.session.getAttribute("Acc_ID").toString();
 		Accounts account = this.accountsLogic.getAccountsInformationByName(name);
@@ -385,8 +193,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		}
 	}
 
-	@Override
 	public String getAccountInformationById(String id) {
+		this.init();
 		JSONObject json = new JSONObject();
 		String queryAcc_ID = this.session.getAttribute("Acc_ID").toString();
 		Accounts account = this.accountsLogic.getAccountsInformationById(id);
@@ -407,8 +215,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		}
 	}
 
-	@Override
 	public String attention(String atnId, String atndId) {
+		this.init();
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		if (atnId.equals(Acc_ID)) {
@@ -424,8 +232,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		return json.toString();
 	}
 
-	@Override
 	public String cancelAttention(String atnId, String atndId) {
+		this.init();
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		if (atnId.equals(Acc_ID)) {
@@ -441,8 +249,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		return json.toString();
 	}
 
-	@Override
 	public String favourite(String accountId, String shopId) {
+		this.init();
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		if (accountId.equals(Acc_ID)) {
@@ -458,8 +266,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		return json.toString();
 	}
 
-	@Override
 	public String cancelFavourite(String accountId, String shopId) {
+		this.init();
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		if (accountId.equals(Acc_ID)) {
@@ -475,8 +283,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		return json.toString();
 	}
 
-	@Override
 	public String want(String accountId, String productId) {
+		this.init();
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		if (accountId.equals(Acc_ID)) {
@@ -492,8 +300,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		return json.toString();
 	}
 
-	@Override
 	public String cancelWant(String accountId, String productId) {
+		this.init();
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		if (accountId.equals(Acc_ID)) {
@@ -509,8 +317,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		return json.toString();
 	}
 
-	@Override
 	public String addAddress(Address address) {
+		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		if (requestAccId.equals(address.getAcc_ID())) {// 是否为登录用户
@@ -529,8 +337,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		return json.toString();
 	}
 
-	@Override
 	public String deleteAddress(String addressId) {
+		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		Address queryAddress = this.addressLogic.getAddressInfo(addressId);
@@ -547,8 +355,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		return json.toString();
 	}
 
-	@Override
 	public String changeAddressInformation(Address address) {
+		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		Address requestAddress = this.addressLogic.getAddressInfo(address.getAdd_ID());
@@ -565,8 +373,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		return json.toString();
 	}
 
-	@Override
 	public String getAddressInformation(String addressId) {
+		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		Address queryAddress = this.addressLogic.getAddressInfo(addressId);
@@ -578,8 +386,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		}
 	}
 
-	@Override
 	public String addCart(Cart cart) {
+		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		if (requestAccId.equals(cart.getAcc_ID())) {// 是否为登录用户
@@ -598,8 +406,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		return json.toString();
 	}
 
-	@Override
 	public String getCartInformation(String cartId) {
+		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		Cart queryCart = this.cartLogic.getCartInfo(cartId);
@@ -611,8 +419,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		}
 	}
 
-	@Override
 	public String changeProductCount(String cartId, int cartCount) {
+		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		Cart queryCart = this.cartLogic.getCartInfo(cartId);
@@ -629,8 +437,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		return json.toString();
 	}
 
-	@Override
 	public String deleteCart(String cartId) {
+		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		Cart queryCart = this.cartLogic.getCartInfo(cartId);
@@ -647,8 +455,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		return json.toString();
 	}
 
-	@Override
 	public String addOrder(Orders order) {
+		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		if (requestAccId.equals(order.getAcc_ID())) {// 是否为登录用户
@@ -667,8 +475,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		return json.toString();
 	}
 
-	@Override
 	public String getOrderInformation(String OrderId) {
+		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		Orders queryOrder = this.ordersLogic.getOrderInfo(OrderId);
@@ -680,8 +488,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		}
 	}
 
-	@Override
 	public String deleteOrder(String orderId) {
+		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		Orders queryOrder = this.ordersLogic.getOrderInfo(orderId);
@@ -698,8 +506,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		return json.toString();
 	}
 
-	@Override
 	public String changeOrderInformation(Orders order) {
+		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		Orders queryOrder = this.ordersLogic.getOrderInfo(order.getOrd_ID());
@@ -716,8 +524,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		return json.toString();
 	}
 
-	@Override
 	public String addCommentProduct(CommentProduct commentProduct) {
+		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		if (requestAccId.equals(commentProduct.getAcc_ID())) {// 是否为登录用户
@@ -736,8 +544,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		return json.toString();
 	}
 
-	@Override
 	public String changeCommentProduct(String commentId, String commentDescription) {
+		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		CommentProduct queryCommentProduct = this.commentProductLogic.getCommentProductInfo(commentId);
@@ -754,8 +562,8 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 		return json.toString();
 	}
 
-	@Override
 	public String getCommentProductInformation(String commentId) {
+		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		CommentProduct queryCommentProduct = this.commentProductLogic.getCommentProductInfo(commentId);
@@ -765,25 +573,5 @@ public class AccountsServlet extends HttpServlet implements AccountsService {
 			json.put("result", false);
 			return json.toString();
 		}
-	}
-
-	public void setAccountsLogic(AccountsLogic accountsLogic) {
-		this.accountsLogic = accountsLogic;
-	}
-
-	public void setAddressLogic(AddressLogic addressLogic) {
-		this.addressLogic = addressLogic;
-	}
-
-	public void setCartLogic(CartLogic cartLogic) {
-		this.cartLogic = cartLogic;
-	}
-
-	public void setCommentProductLogic(CommentProductLogic commentProductLogic) {
-		this.commentProductLogic = commentProductLogic;
-	}
-
-	public void setOrdersLogic(OrdersLogic ordersLogic) {
-		this.ordersLogic = ordersLogic;
 	}
 }

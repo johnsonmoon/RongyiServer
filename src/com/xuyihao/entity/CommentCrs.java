@@ -1,8 +1,8 @@
 package com.xuyihao.entity;
 
-/*
+/**
  * created by xuyihao on 2016/4/26
- * */
+ */
 public class CommentCrs {
 	public static final String BASE_TABLE_NAME = "CommentCrs";
 	public static final String BASE_COMMENTCOURSE_PHYSICAL_ID = "_id";
@@ -46,11 +46,11 @@ public class CommentCrs {
 	 * @return
 	 */
 	public String toJSONString() {
-		String returnString = "{\"" + BASE_COMMENTCOURSE_PHYSICAL_ID + "\":\"" + this._id + "\", \""
-				+ BASE_COMMENTCOURSE_ID + "\":\"" + this.Comm_ID + "\", \"" + BASE_COMMENTCOURSE_DESCRIPTION + "\":\""
-				+ this.Comm_desc + "\", \"" + BASE_COMMENTCOURSE_ACCOUNT_ID + "\":\"" + this.Acc_ID + "\", \""
-				+ BASE_COMMENTCOURSE_PUBLISHER_REP_ID + "\":\"" + this.Rep_ID + "\", \"" + BASE_COMMENTCOURSE_COURSE_ID
-				+ "\":\"" + this.Crs_ID + "\", \"" + BASE_COMMENTCOURSE_ADD_TIME + "\":\"" + this.Comm_addTime + "\"}";
+		String returnString = "{\"" + BASE_COMMENTCOURSE_PHYSICAL_ID + "\":\"" + this._id + "\", \"" + BASE_COMMENTCOURSE_ID
+				+ "\":\"" + this.Comm_ID + "\", \"" + BASE_COMMENTCOURSE_DESCRIPTION + "\":\"" + this.Comm_desc + "\", \""
+				+ BASE_COMMENTCOURSE_ACCOUNT_ID + "\":\"" + this.Acc_ID + "\", \"" + BASE_COMMENTCOURSE_PUBLISHER_REP_ID
+				+ "\":\"" + this.Rep_ID + "\", \"" + BASE_COMMENTCOURSE_COURSE_ID + "\":\"" + this.Crs_ID + "\", \""
+				+ BASE_COMMENTCOURSE_ADD_TIME + "\":\"" + this.Comm_addTime + "\"}";
 		return returnString;
 	}
 

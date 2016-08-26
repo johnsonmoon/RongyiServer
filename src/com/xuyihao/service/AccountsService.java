@@ -1,5 +1,7 @@
 package com.xuyihao.service;
 
+import javax.servlet.http.HttpSession;
+
 import com.xuyihao.entity.Accounts;
 import com.xuyihao.entity.Address;
 import com.xuyihao.entity.Cart;
@@ -16,6 +18,13 @@ public interface AccountsService {
 	/**
 	 * XXX AccountsLogic
 	 */
+	/**
+	 * 设置会话信息(根据不同的MVC框架进行变化)
+	 * 
+	 * @param session
+	 */
+	public void setSessionInfo(HttpSession session);
+
 	/**
 	 * 账户名是否存在
 	 * 

@@ -1,6 +1,6 @@
 package com.xuyihao.dao.impl;
 
-import com.xuyihao.common.ConnDB;
+import com.xuyihao.common.DatabaseConnector;
 import com.xuyihao.dao.RepostPostDao;
 
 import java.sql.ResultSet;
@@ -12,9 +12,9 @@ import java.util.List;
  * Created by Xuyh at 16-8-13 下午3:23
  */
 public class RepostPostDaoImpl implements RepostPostDao {
-	private ConnDB connDB = new ConnDB();
+	private DatabaseConnector connDB = new DatabaseConnector();
 
-	public void setConnDB(ConnDB connDB) {
+	public void setConnDB(DatabaseConnector connDB) {
 		this.connDB = connDB;
 	}
 

@@ -3,7 +3,11 @@ package com.xuyihao.common;
 import java.sql.*;
 import java.util.Properties;
 
-public class ConnDB {
+/**
+ * 
+ * @Author Xuyh created at 2016年8月26日 下午1:22:41
+ */
+public class DatabaseConnector {
 	public Connection conn = null;
 	public Statement stmt = null;
 	public ResultSet rs = null;
@@ -22,10 +26,7 @@ public class ConnDB {
 		propForManager.put("useUnicode", prop.getProperty("useUnicode"));
 	}
 
-	/**
-	 * constructor
-	 */
-	public ConnDB() {
+	public DatabaseConnector() {
 	}
 
 	/**

@@ -10,7 +10,7 @@ import java.util.zip.ZipOutputStream;
 /**
  * Created by Xuyh at 2016/08/03 上午 11:24.
  */
-public class ZIPUtil {
+public class ZIPUtils {
 	/**
 	 * 通过传入的文件名、文件路径名生成相应的zip压缩包
 	 *

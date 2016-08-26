@@ -39,7 +39,7 @@
 		<description>Accounts</description>
 		<display-name>AccountsServlet</display-name>
 		<servlet-name>AccountsServlet</servlet-name>
-		<servlet-class>com.xuyihao.service.impl.AccountsServlet</servlet-class>
+		<servlet-class>com.xuyihao.servlet.AccountsServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AccountsServlet</servlet-name>
@@ -50,7 +50,7 @@
 		<description>Courses</description>
 		<display-name>CoursesServlet</display-name>
 		<servlet-name>CoursesServlet</servlet-name>
-		<servlet-class>com.xuyihao.service.impl.CoursesServlet</servlet-class>
+		<servlet-class>com.xuyihao.servlet.CoursesServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>CoursesServlet</servlet-name>
@@ -61,7 +61,7 @@
 		<description>Posts</description>
 		<display-name>PostsServlet</display-name>
 		<servlet-name>PostsServlet</servlet-name>
-		<servlet-class>com.xuyihao.service.impl.PostsServlet</servlet-class>
+		<servlet-class>com.xuyihao.servlet.PostsServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>PostsServlet</servlet-name>
@@ -72,7 +72,7 @@
 		<description>Shops</description>
 		<display-name>ShopsServlet</display-name>
 		<servlet-name>ShopsServlet</servlet-name>
-		<servlet-class>com.xuyihao.service.impl.ShopsServlet</servlet-class>
+		<servlet-class>com.xuyihao.servlet.ShopsServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ShopsServlet</servlet-name>

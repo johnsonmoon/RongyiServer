@@ -3,23 +3,24 @@ package com.xuyihao.dao.impl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.xuyihao.common.ConnDB;
+import com.xuyihao.common.DatabaseConnector;
 import com.xuyihao.dao.ShopsDao;
 import com.xuyihao.entity.Shops;
 
 import java.util.*;
 
-/*
+/**
  * created by xuyihao on 2016/4/28
+ * 
  * @attention 平台暂时不开放删除店铺功能
- * */
+ */
 public class ShopsDaoImpl implements ShopsDao {
-	private ConnDB conn = new ConnDB();
+	private DatabaseConnector conn = new DatabaseConnector();
 
 	public ShopsDaoImpl() {
 	}
 
-	public void setConn(ConnDB conn) {
+	public void setConn(DatabaseConnector conn) {
 		this.conn = conn;
 	}
 

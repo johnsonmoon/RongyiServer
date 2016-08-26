@@ -1,9 +1,8 @@
 package com.xuyihao.entity;
 
-/*
- * created by xuyihao on 2016/4/28
- * 商品分类的java bean
- * */
+/**
+ * created by xuyihao on 2016/4/28 商品分类的java bean
+ */
 public class Category {
 	public static final String BASE_TABLE_NAME = "Category";
 	public static final String BASE_CATEGORY_PHYSICAL_ID = "_id";
@@ -39,10 +38,9 @@ public class Category {
 	 * @return
 	 */
 	public String toJSONString() {
-		String returnString = "{\"" + BASE_CATEGORY_PHYSICAL_ID + "\":\"" + this._id + "\", \"" + BASE_CATEGORY_ID
-				+ "\":\"" + this.Cat_ID + "\", \"" + BASE_CATEGORY_NAME + "\":\"" + this.Cat_name + "\", \""
-				+ BASE_CATEGORY_DESCRIPTION + "\":\"" + this.Cat_desc + "\", \"" + BASE_CATEGORY_ADD_TIME + "\":\""
-				+ this.Cat_addTime + "\"}";
+		String returnString = "{\"" + BASE_CATEGORY_PHYSICAL_ID + "\":\"" + this._id + "\", \"" + BASE_CATEGORY_ID + "\":\""
+				+ this.Cat_ID + "\", \"" + BASE_CATEGORY_NAME + "\":\"" + this.Cat_name + "\", \"" + BASE_CATEGORY_DESCRIPTION
+				+ "\":\"" + this.Cat_desc + "\", \"" + BASE_CATEGORY_ADD_TIME + "\":\"" + this.Cat_addTime + "\"}";
 		return returnString;
 	}
 

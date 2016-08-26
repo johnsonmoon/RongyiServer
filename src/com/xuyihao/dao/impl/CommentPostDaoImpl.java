@@ -5,21 +5,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.xuyihao.common.ConnDB;
+import com.xuyihao.common.DatabaseConnector;
 import com.xuyihao.dao.CommentPostDao;
 import com.xuyihao.entity.CommentPost;
 
-/*
+/**
  * created by xuyihao on 2016/4/26
+ * 
  * @describe 帖子评论相关数据库操作封装类
- * */
+ */
 public class CommentPostDaoImpl implements CommentPostDao {
-	private ConnDB conn = new ConnDB();
+	private DatabaseConnector conn = new DatabaseConnector();
 
 	public CommentPostDaoImpl() {
 	}
 
-	public void setConn(ConnDB conn) {
+	public void setConn(DatabaseConnector conn) {
 		this.conn = conn;
 	}
 

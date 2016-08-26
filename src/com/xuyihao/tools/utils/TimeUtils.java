@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * Created by Xuyh at 2016/08/08 下午 03:16.
  */
-public class TimeUtil {
+public class TimeUtils {
 	/**
 	 * 一天二十四小时的毫秒数
 	 *

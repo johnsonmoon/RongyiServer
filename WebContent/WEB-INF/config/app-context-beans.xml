@@ -40,4 +40,14 @@
 	<bean id="ProductsLogic" class="com.xuyihao.logic.impl.ProductsLogicImpl"></bean>
 	<bean id="ShopsLogic" class="com.xuyihao.logic.impl.ShopsLogicImpl"></bean>
 
+	<!-- service beans -->
+	<bean id="AccountsService" class="com.xuyihao.service.impl.AccountsServiceImpl"
+		init-method="init"></bean>
+	<bean id="CoursesService" class="com.xuyihao.service.impl.CoursesServiceImpl"
+		init-method="init"></bean>
+	<bean id="PostsService" class="com.xuyihao.service.impl.PostsServiceImpl"
+		init-method="init"></bean>
+	<bean id="ShopsService" class="com.xuyihao.service.impl.ShopsServiceImpl"
+		init-method="init"></bean>
+
 </beans>

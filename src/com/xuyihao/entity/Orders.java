@@ -1,9 +1,8 @@
 package com.xuyihao.entity;
 
-/*
- * created by xuyihao on 2016/4/30
- * 订单的java bean
- * */
+/**
+ * created by xuyihao on 2016/4/30 订单的java bean
+ */
 public class Orders {
 	public static final String BASE_TABLE_NAME = "Orders";
 	public static final String BASE_ORDERS_PHYSICAL_ID = "_id";

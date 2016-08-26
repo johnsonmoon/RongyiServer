@@ -1,9 +1,8 @@
 package com.xuyihao.entity;
 
-/*
- * create by xuyihao on 2016/4/28
- * 商家的java bean
- * */
+/**
+ * create by xuyihao on 2016/4/28 商家的java bean
+ */
 public class Shops {
 	public static final String BASE_TABLE_NAME = "Shops";
 	public static final String BASE_SHOP_PHYSICAL_ID = "_id";

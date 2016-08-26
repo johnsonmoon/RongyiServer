@@ -5,21 +5,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.xuyihao.common.ConnDB;
+import com.xuyihao.common.DatabaseConnector;
 import com.xuyihao.dao.CartDao;
 import com.xuyihao.entity.Cart;
 
-/*
+/**
  * created by xuyihao on 2016/4/30
+ * 
  * @description 购物车数据库操作工具类
- * */
+ */
 public class CartDaoImpl implements CartDao {
-	private ConnDB conn = new ConnDB();
+	private DatabaseConnector conn = new DatabaseConnector();
 
 	public CartDaoImpl() {
 	}
 
-	public void setConn(ConnDB conn) {
+	public void setConn(DatabaseConnector conn) {
 		this.conn = conn;
 	}
 

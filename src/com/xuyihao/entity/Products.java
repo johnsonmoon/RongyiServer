@@ -1,9 +1,8 @@
 package com.xuyihao.entity;
 
-/*
- * created by xuyihao on 2016/4/28
- * 产品的java bean
- * */
+/**
+ * created by xuyihao on 2016/4/28 产品的java bean
+ */
 public class Products {
 	public static final String BASE_TABLE_NAME = "Products";
 	public static final String BASE_PRODUCT_PHYSICAL_ID = "_id";

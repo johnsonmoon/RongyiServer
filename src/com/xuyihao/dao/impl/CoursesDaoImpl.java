@@ -5,21 +5,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.xuyihao.common.ConnDB;
+import com.xuyihao.common.DatabaseConnector;
 import com.xuyihao.dao.CoursesDao;
 import com.xuyihao.entity.Courses;
 
-/*
+/**
  * created by xuyihao on 2016/4/25
+ * 
  * @describe 视频(视频教学)相关数据库操作封装类
- * */
+ */
 public class CoursesDaoImpl implements CoursesDao {
-	private ConnDB conn = new ConnDB();
+	private DatabaseConnector conn = new DatabaseConnector();
 
 	public CoursesDaoImpl() {
 	}
 
-	public void setConn(ConnDB conn) {
+	public void setConn(DatabaseConnector conn) {
 		this.conn = conn;
 	}
 

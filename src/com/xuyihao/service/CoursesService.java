@@ -1,5 +1,7 @@
 package com.xuyihao.service;
 
+import javax.servlet.http.HttpSession;
+
 import com.xuyihao.entity.CommentCrs;
 import com.xuyihao.entity.Courses;
 import com.xuyihao.entity.LikeCrs;
@@ -13,6 +15,13 @@ public interface CoursesService {
 	/**
 	 * XXX CoursesLogic
 	 */
+	/**
+	 * 初始化会话信息
+	 * 
+	 * @param session
+	 */
+	public void setSessionInfo(HttpSession session);
+
 	/**
 	 * 新建发布视频课程
 	 * 

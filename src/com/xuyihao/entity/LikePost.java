@@ -1,8 +1,8 @@
 package com.xuyihao.entity;
 
-/*
+/**
  * created by xuyihao on 2016/4/28
- * */
+ */
 public class LikePost {
 	public static final String BASE_TABLE_NAME = "LikePost";
 	public static final String BASE_LIKE_POST_PHYSICAL_ID = "_id";

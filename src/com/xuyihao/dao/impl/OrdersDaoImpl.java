@@ -5,21 +5,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.xuyihao.common.ConnDB;
+import com.xuyihao.common.DatabaseConnector;
 import com.xuyihao.dao.OrdersDao;
 import com.xuyihao.entity.Orders;
 
-/*
+/**
  * created by xuyihao on 2016/4/30
+ * 
  * @description 订单的数据库操作工具类
- * */
+ */
 public class OrdersDaoImpl implements OrdersDao {
-	private ConnDB conn = new ConnDB();
+	private DatabaseConnector conn = new DatabaseConnector();
 
 	public OrdersDaoImpl() {
 	}
 
-	public void setConn(ConnDB conn) {
+	public void setConn(DatabaseConnector conn) {
 		this.conn = conn;
 	}
 

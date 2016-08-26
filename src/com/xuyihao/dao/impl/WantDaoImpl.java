@@ -1,6 +1,6 @@
 package com.xuyihao.dao.impl;
 
-import com.xuyihao.common.ConnDB;
+import com.xuyihao.common.DatabaseConnector;
 import com.xuyihao.dao.WantDao;
 
 import java.sql.ResultSet;
@@ -12,7 +12,7 @@ import java.util.List;
  * Created by Xuyh at 16-8-13 上午10:29
  */
 public class WantDaoImpl implements WantDao {
-	private ConnDB connDB = new ConnDB();
+	private DatabaseConnector connDB = new DatabaseConnector();
 
 	@Override
 	public boolean saveWant(String Acc_ID, String Prod_ID, String Want_addTime) {
@@ -89,7 +89,7 @@ public class WantDaoImpl implements WantDao {
 		return accountIdList;
 	}
 
-	public void setConnDB(ConnDB connDB) {
+	public void setConnDB(DatabaseConnector connDB) {
 		this.connDB = connDB;
 	}
 

@@ -1,8 +1,8 @@
 package com.xuyihao.entity;
 
-/*
+/**
  * created by xuyihao on 2016/4/25
- * */
+ */
 public class Courses {
 	public static final String BASE_TABLE_NAME = "Courses";
 	public static final String BASE_COURSES_PHYSICAL_ID = "_id";
@@ -59,8 +59,8 @@ public class Courses {
 	 */
 	public String toJSONString() {
 		String returnString = "{\"" + BASE_COURSES_PHYSICAL_ID + "\":\"" + this._id + "\", \"" + BASE_COURSES_ID + "\":\""
-				+ this.Crs_ID + "\", \"" + BASE_COURSES_NAME + "\":\"" + this.Crs_name + "\", \"" + BASE_COURSES_ROUTE
-				+ "\":\"" + this.Crs_route + "\", \"" + BASE_COURSES_ACCOUNT_ID + "\":\"" + this.Acc_ID + "\", \""
+				+ this.Crs_ID + "\", \"" + BASE_COURSES_NAME + "\":\"" + this.Crs_name + "\", \"" + BASE_COURSES_ROUTE + "\":\""
+				+ this.Crs_route + "\", \"" + BASE_COURSES_ACCOUNT_ID + "\":\"" + this.Acc_ID + "\", \""
 				+ BASE_COURSES_AUTHOR_ACCOUNT_ID + "\":\"" + this.Author_ID + "\", \"" + BASE_COURSES_REPOST_COUNT + "\":\""
 				+ this.Crs_rep + "\", \"" + BASE_COURSES_COMMON_COUNT + "\":\"" + this.Crs_comm + "\", \""
 				+ BASE_COURSES_LIKE_COUNT + "\":\"" + this.Crs_like + "\", \"" + BASE_COURSES_ADD_TIME + "\":\""

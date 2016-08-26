@@ -1,8 +1,8 @@
 package com.xuyihao.entity;
 
-/*
+/**
  * created by xuyihao on 2016/4/1
- * */
+ */
 public class Accounts {
 	public static final String BASE_TABLE_NAME = "Accounts";
 	public static final String BASE_ACCOUNT_PHYSICAL_ID = "_id";
@@ -92,8 +92,8 @@ public class Accounts {
 				+ this.Acc_shop + "\", \"" + BASE_ACCOUNT_ATTENTION_COUNT + "\":\"" + this.Acc_atn + "\", \""
 				+ BASE_ACCOUNT_ATTENED_COUNT + "\":\"" + this.Acc_atnd + "\", \"" + BASE_ACCOUNT_PUBLISH + "\":\""
 				+ this.Acc_pub + "\", \"" + BASE_ACCOUNT_NO + "\":\"" + this.Acc_no + "\", \"" + BASE_ACCOUNT_NAME2 + "\":\""
-				+ this.Acc_name2 + "\", \"" + BASE_ACCOUNT_TELEPHONE + "\":\"" + this.Acc_tel + "\", \""
-				+ BASE_ACCOUNT_ADD_TIME + "\":\"" + this.Acc_addTime + "\"}";
+				+ this.Acc_name2 + "\", \"" + BASE_ACCOUNT_TELEPHONE + "\":\"" + this.Acc_tel + "\", \"" + BASE_ACCOUNT_ADD_TIME
+				+ "\":\"" + this.Acc_addTime + "\"}";
 		return value;
 	}
 

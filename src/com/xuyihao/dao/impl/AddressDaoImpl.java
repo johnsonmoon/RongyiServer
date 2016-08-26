@@ -5,21 +5,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.xuyihao.common.ConnDB;
+import com.xuyihao.common.DatabaseConnector;
 import com.xuyihao.dao.AddressDao;
 import com.xuyihao.entity.Address;
 
-/*
+/**
  * created by xuyihao on 2016/4/29
+ * 
  * @description 收货地址的数据库操作工具类
- * */
+ */
 public class AddressDaoImpl implements AddressDao {
-	private ConnDB conn = new ConnDB();
+	private DatabaseConnector conn = new DatabaseConnector();
 
 	public AddressDaoImpl() {
 	}
 
-	public void setConn(ConnDB conn) {
+	public void setConn(DatabaseConnector conn) {
 		this.conn = conn;
 	}
 
