@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java8">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_91">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
@@ -34,8 +34,8 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-test-4.2.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-tx-4.2.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-web-4.2.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/Tomcat 8.0/lib/jsp-api.jar"/>
-	<classpathentry kind="lib" path="D:/Tomcat 8.0/lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-oxm-4.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/opt/apache-tomcat-8.5.4/lib/jsp-api.jar"/>
+	<classpathentry kind="lib" path="/opt/apache-tomcat-8.5.4/lib/servlet-api.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
