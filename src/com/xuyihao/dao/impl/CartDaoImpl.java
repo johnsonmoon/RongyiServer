@@ -29,7 +29,7 @@ public class CartDaoImpl implements CartDao {
 		boolean flag = false;
 		String sql = "insert into " + Cart.BASE_TABLE_NAME + " values(null, '" + cart.getCart_ID() + "', '"
 				+ cart.getProd_ID() + "', '" + cart.getAcc_ID() + "', " + cart.getProd_price() + ", " + cart.getPro_num()
-				+ ", '" + cart.getCart_addTime() + "')";
+				+ ", DATE_FORMAT('" + cart.getCart_addTime() + "', '%Y-%m-%d %H:%i:%s'))";
 		if (this.conn.executeUpdate(sql) != 0) {
 			flag = true;
 		}

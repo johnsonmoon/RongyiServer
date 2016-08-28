@@ -17,7 +17,8 @@ public class WantDaoImpl implements WantDao {
 	@Override
 	public boolean saveWant(String Acc_ID, String Prod_ID, String Want_addTime) {
 		boolean flag = false;
-		String sql = "insert into Want values(null, '" + Acc_ID + "', '" + Prod_ID + "', '" + Want_addTime + "')";
+		String sql = "insert into Want values(null, '" + Acc_ID + "', '" + Prod_ID + "', DATE_FORMAT('" + Want_addTime
+				+ "', '%Y-%m-%d %H:%i:%s'))";
 		if (this.connDB.executeUpdate(sql) != 0) {
 			flag = true;
 		}

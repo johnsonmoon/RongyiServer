@@ -31,7 +31,7 @@ public class AccountsDaoImpl implements AccountsDao {
 				+ accounts.getAcc_loc() + "', " + accounts.getAcc_lvl() + ", " + accounts.getAcc_ryb() + ", "
 				+ accounts.isAcc_shop() + ", " + accounts.getAcc_atn() + ", " + accounts.getAcc_atnd() + ", "
 				+ accounts.getAcc_pub() + ", '" + accounts.getAcc_no() + "', '" + accounts.getAcc_name2() + "', '"
-				+ accounts.getAcc_tel() + "', '" + accounts.getAcc_addTime() + "')";
+				+ accounts.getAcc_tel() + "', DATE_FORMAT('" + accounts.getAcc_addTime() + "', '%Y-%m-%d %H:%i:%s'))";
 		if (this.conn.executeUpdate(sql) != 0) {
 			flag = true;
 		}

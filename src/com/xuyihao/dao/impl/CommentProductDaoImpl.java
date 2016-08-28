@@ -30,8 +30,8 @@ public class CommentProductDaoImpl implements CommentProductDao {
 		boolean flag = false;
 		String sql = "insert into " + CommentProduct.BASE_TABLE_NAME + " values(null, '" + commentProduct.getComm_ID()
 				+ "', '" + commentProduct.getComm_desc() + "', '" + commentProduct.getAcc_ID() + "', '"
-				+ commentProduct.getProd_ID() + "', '" + commentProduct.getOrd_ID() + "', '" + commentProduct.getComm_addTime()
-				+ "')";
+				+ commentProduct.getProd_ID() + "', '" + commentProduct.getOrd_ID() + "', DATE_FORMAT('"
+				+ commentProduct.getComm_addTime() + "', '%Y-%m-%d %H:%i:%s'))";
 		if (this.conn.executeUpdate(sql) != 0) {
 			flag = true;
 		}

@@ -29,7 +29,7 @@ public class LikePostDaoImpl implements LikePostDao {
 	public boolean saveLikePost(LikePost likePost) {
 		String sql = "insert into " + LikePost.BASE_TABLE_NAME + " values(null, '" + likePost.getLike_ID() + "', '"
 				+ likePost.getAcc_ID() + "', '" + likePost.getRep_ID() + "', '" + likePost.getPost_ID() + "', "
-				+ likePost.getLike_ryb() + ", '" + likePost.getLike_addTime() + "')";
+				+ likePost.getLike_ryb() + ", DATE_FORMAT('" + likePost.getLike_addTime() + "', '%Y-%m-%d %H:%i:%s'))";
 		boolean flag = false;
 		if (this.conn.executeUpdate(sql) != 0) {
 			flag = true;

@@ -1,3 +1,4 @@
+drop database EBTest;
 create database EBTest;
 use EBTest;
 
@@ -18,7 +19,7 @@ Acc_pub int not null,
 Acc_no varchar(20),
 Acc_name2 varchar(100),
 Acc_tel varchar(20),
-Acc_addTime varchar(20)
+Acc_addTime datetime
 )engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;
 
 create table Shops
@@ -32,7 +33,7 @@ Shop_lvl int not null,
 Shop_ryb int not null,
 Shop_favo int not null,
 Acc_ID varchar(20),
-Shop_addTime varchar(20)
+Shop_addTime datetime
 )engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;
 
 create table Category
@@ -41,7 +42,7 @@ _id bigint primary key AUTO_INCREMENT,
 Cat_ID varchar(20) not null,
 Cat_name varchar(100) not null,
 Cat_desc varchar(2000),
-Cat_addTime varchar(20)
+Cat_addTime datetime
 )engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;
 
 create table Products
@@ -56,7 +57,7 @@ Prod_info varchar(500) not null,
 Prod_price float(8, 2) not null,
 Prod_num int not null,
 Prod_sold int not null,
-Prod_addTime varchar(20)
+Prod_addTime datetime
 )engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;
 
 create table Attention
@@ -64,7 +65,7 @@ create table Attention
 _id bigint primary key AUTO_INCREMENT,
 Acc_ID varchar(20) not null,
 Att_ID varchar(20) not null,
-Att_addTime varchar(20)
+Att_addTime datetime
 )engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;
 
 create table Courses
@@ -78,7 +79,7 @@ Author_ID varchar(20) not null,
 Crs_rep int not null,
 Crs_comm int not null,
 Crs_like int not null,
-Crs_addTime varchar(20)
+Crs_addTime datetime
 )engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;
 
 create table Posts
@@ -92,7 +93,7 @@ Author_ID varchar(20) not null,
 Post_rep int not null,
 Post_comm int not null,
 Post_like int not null,
-Post_addTime varchar(20)
+Post_addTime datetime
 )engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;
 
 create table RepostCrs
@@ -101,7 +102,7 @@ _id bigint primary key AUTO_INCREMENT,
 Acc_ID varchar(20) not null,
 Rep_ID varchar(20) not null,
 Crs_ID varchar(20) not null,
-Rep_addTime varchar(20)
+Rep_addTime datetime
 )engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;
 
 create table RepostPost
@@ -110,7 +111,7 @@ _id bigint primary key AUTO_INCREMENT,
 Acc_ID varchar(20) not null,
 Rep_ID varchar(20) not null,
 Post_ID varchar(20) not null,
-Rep_addTime varchar(20)
+Rep_addTime datetime
 )engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;
 
 create table CommentCrs
@@ -121,7 +122,7 @@ Comm_desc varchar(2000) not null,
 Acc_ID varchar(20) not null,
 Rep_ID varchar(20) not null,
 Crs_ID varchar(20) not null,
-Comm_addTime varchar(20)
+Comm_addTime datetime
 )engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;
 
 create table CommentPost
@@ -132,7 +133,7 @@ Comm_desc varchar(2000) not null,
 Acc_ID varchar(20) not null,
 Rep_ID varchar(20) not null,
 Post_ID varchar(20) not null,
-Comm_addTime varchar(20)
+Comm_addTime datetime
 )engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;
 
 create table LikeCrs
@@ -143,7 +144,7 @@ Acc_ID varchar(20) not null,
 Rep_ID varchar(20) not null,
 Crs_ID varchar(20) not null,
 Like_ryb int not null,
-Like_addTime varchar(20)
+Like_addTime datetime
 )engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;
 
 create table LikePost
@@ -154,7 +155,7 @@ Acc_ID varchar(20) not null,
 Rep_ID varchar(20) not null,
 Post_ID varchar(20) not null,
 Like_ryb int not null,
-Like_addTime varchar(20)
+Like_addTime datetime
 )engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;
 
 create table Favourite
@@ -162,7 +163,7 @@ create table Favourite
 _id bigint primary key AUTO_INCREMENT,
 Acc_ID varchar(20) not null,
 Shop_ID varchar(20) not null,
-Favo_addTime varchar(20)
+Favo_addTime datetime
 )engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;
 
 create table Want
@@ -170,7 +171,7 @@ create table Want
 _id bigint primary key AUTO_INCREMENT,
 Acc_ID varchar(20) not null,
 Prod_ID varchar(20) not null,
-Want_addTime varchar(20)
+Want_addTime datetime
 )engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;
 
 create table Address
@@ -181,7 +182,7 @@ Add_info varchar(500) not null,
 Acc_ID varchar(20) not null,
 Consign varchar(100) not null,
 Con_tel varchar(20) not null,
-Add_addTime varchar(20)
+Add_addTime datetime
 )engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;
 
 create table Cart
@@ -192,7 +193,7 @@ Prod_ID varchar(20) not null,
 Acc_ID varchar(20) not null,
 Prod_price float(8,2) not null,
 Pro_num int not null,
-Cart_addTime varchar(20)
+Cart_addTime datetime
 )engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;
 
 create table Orders
@@ -209,7 +210,7 @@ Ord_sent bool not null,
 Ord_received bool not null,
 Ord_comment bool not null,
 Add_ID varchar(20),
-Ord_addTime varchar(20)
+Ord_addTime datetime
 )engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;
 
 create table CommentProduct
@@ -220,6 +221,50 @@ Comm_desc varchar(2000) not null,
 Acc_ID varchar(20) not null,
 Prod_ID varchar(20) not null,
 Ord_ID varchar(20) not null,
-Comm_addTime varchar(20)
+Comm_addTime datetime
 )engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;
 
+create table VedioPath
+(
+_id bigint primary key AUTO_INCREMENT,
+Vedio_ID varchar(20) not null,
+Vedio_pathName varchar(200) not null,
+Thumbnail_pathName varchar(200) not null,
+Vedio_addTime datetime
+)engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;
+
+create table PhotoPath
+(
+_id bigint primary key AUTO_INCREMENT,
+Photo_ID varchar(20) not null,
+Photo_pathName varchar(200) not null,
+Thumbnail_pathName varchar(200) not null,
+Photo_addTime datetime
+)engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;
+
+create table AccountsPhotos
+(
+_id bigint primary key AUTO_INCREMENT,
+Acc_ID varchar(20) not null,
+HeadPhoto_ID varchar(20) not null,
+Photo_ID_Combine varchar(400),
+AccPhoto_addTime datetime
+)engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;
+
+create table CoursesPhotos
+(
+_id bigint primary key AUTO_INCREMENT,
+Crs_ID varchar(20) not null,
+HeadPhoto_ID varchar(20) not null,
+Photo_ID_Combine varchar(400),
+CrsPhoto_addTime datetime
+)engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;
+
+create table PostsPhotos
+(
+_id bigint primary key AUTO_INCREMENT,
+Post_ID varchar(20) not null,
+HeadPhoto_ID varchar(20) not null,
+Photo_ID_Combine varchar(400),
+PostPhoto_addTime datetime
+)engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;

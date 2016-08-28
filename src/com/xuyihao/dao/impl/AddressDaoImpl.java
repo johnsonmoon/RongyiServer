@@ -29,7 +29,7 @@ public class AddressDaoImpl implements AddressDao {
 		boolean flag = false;
 		String sql = "insert into " + Address.BASE_TABLE_NAME + " values(null, '" + address.getAdd_ID() + "', '"
 				+ address.getAdd_info() + "', '" + address.getAcc_ID() + "', '" + address.getConsign() + "', '"
-				+ address.getCon_tel() + "', '" + address.getAdd_addTime() + "')";
+				+ address.getCon_tel() + "', DATE_FORMAT('" + address.getAdd_addTime() + "', '%Y-%m-%d %H:%i:%s'))";
 		if (this.conn.executeUpdate(sql) != 0) {
 			flag = true;
 		}

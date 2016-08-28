@@ -29,7 +29,7 @@ public class CoursesDaoImpl implements CoursesDao {
 		String sql = "insert into " + Courses.BASE_TABLE_NAME + " values(null, '" + course.getCrs_ID() + "', '"
 				+ course.getCrs_name() + "','" + course.getCrs_route() + "', '" + course.getAcc_ID() + "', '"
 				+ course.getAuthor_ID() + "', " + course.getCrs_rep() + ", " + course.getCrs_comm() + ", "
-				+ course.getCrs_like() + ", '" + course.getCrs_addTime() + "')";
+				+ course.getCrs_like() + ", DATE_FORMAT('" + course.getCrs_addTime() + "', '%Y-%m-%d %H:%i:%s'))";
 		boolean flag = false;
 		if (this.conn.executeUpdate(sql) != 0) {
 			flag = true;

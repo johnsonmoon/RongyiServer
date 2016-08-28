@@ -29,7 +29,7 @@ public class LikeCrsDaoImpl implements LikeCrsDao {
 	public boolean saveLikeCrs(LikeCrs likeCrs) {
 		String sql = "insert into " + LikeCrs.BASE_TABLE_NAME + " values(null, '" + likeCrs.getLike_ID() + "', '"
 				+ likeCrs.getAcc_ID() + "', '" + likeCrs.getRep_ID() + "', '" + likeCrs.getCrs_ID() + "', "
-				+ likeCrs.getLike_ryb() + ", '" + likeCrs.getLike_addTime() + "')";
+				+ likeCrs.getLike_ryb() + ", DATE_FORMAT('" + likeCrs.getLike_addTime() + "', '%Y-%m-%d %H:%i:%s'))";
 		boolean flag = false;
 		if (this.conn.executeUpdate(sql) != 0) {
 			flag = true;

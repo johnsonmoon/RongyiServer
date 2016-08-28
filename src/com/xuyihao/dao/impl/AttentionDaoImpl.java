@@ -21,7 +21,8 @@ public class AttentionDaoImpl implements AttentionDao {
 	@Override
 	public boolean saveAttention(String Acc_Id, String Att_Id, String Att_addTime) {
 		boolean flag = false;
-		String sql = "insert into Attention values(null, '" + Acc_Id + "', '" + Att_Id + "', '" + Att_addTime + "')";
+		String sql = "insert into Attention values(null, '" + Acc_Id + "', '" + Att_Id + "', DATE_FORMAT('" + Att_addTime
+				+ "', '%Y-%m-%d %H:%i:%s'))";
 		if (this.connDB.executeUpdate(sql) != 0) {
 			flag = true;
 		}

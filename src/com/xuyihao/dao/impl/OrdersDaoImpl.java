@@ -29,8 +29,8 @@ public class OrdersDaoImpl implements OrdersDao {
 		String sql = "insert into " + Orders.BASE_TABLE_NAME + " values(null, '" + orders.getOrd_ID() + "', '"
 				+ orders.getOrd_date() + "', '" + orders.getAcc_ID() + "', '" + orders.getProd_ID() + "', "
 				+ orders.getProd_price() + ", " + orders.getPro_num() + ", " + orders.isOrd_paid() + ", " + orders.isOrd_sent()
-				+ ", " + orders.isOrd_received() + ", " + orders.isOrd_comment() + ", '" + orders.getAdd_ID() + "', '"
-				+ orders.getOrd_addTime() + "')";
+				+ ", " + orders.isOrd_received() + ", " + orders.isOrd_comment() + ", '" + orders.getAdd_ID()
+				+ "', DATE_FORMAT('" + orders.getOrd_addTime() + "', '%Y-%m-%d %H:%i:%s'))";
 		boolean flag = false;
 		if (this.conn.executeUpdate(sql) != 0) {
 			flag = true;

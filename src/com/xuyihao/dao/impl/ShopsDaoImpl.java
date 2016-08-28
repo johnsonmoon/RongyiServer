@@ -29,7 +29,7 @@ public class ShopsDaoImpl implements ShopsDao {
 		String sql = "insert into " + Shops.BASE_TABLE_NAME + " values(null, '" + shop.getShop_ID() + "', '"
 				+ shop.getShop_name() + "', '" + shop.getShop_info() + "', '" + shop.getShop_licen() + "', "
 				+ shop.getShop_lvl() + ", " + shop.getShop_ryb() + ", " + shop.getShop_favo() + ", '" + shop.getAcc_ID()
-				+ "', '" + shop.getShop_addTime() + "')";
+				+ "', DATE_FORMAT('" + shop.getShop_addTime() + "', '%Y-%m-%d %H:%i:%s'))";
 		boolean flag = false;
 		if (this.conn.executeUpdate(sql) != 0) {
 			flag = true;

@@ -29,7 +29,7 @@ public class CommentCrsDaoImpl implements CommentCrsDao {
 		boolean flag = false;
 		String sql = "insert into " + CommentCrs.BASE_TABLE_NAME + " values(null, '" + commentCrs.getComm_ID() + "', '"
 				+ commentCrs.getComm_desc() + "', '" + commentCrs.getAcc_ID() + "', '" + commentCrs.getRep_ID() + "', '"
-				+ commentCrs.getCrs_ID() + "', '" + commentCrs.getComm_addTime() + "')";
+				+ commentCrs.getCrs_ID() + "', DATE_FORMAT('" + commentCrs.getComm_addTime() + "', '%Y-%m-%d %H:%i:%s'))";
 		if (this.conn.executeUpdate(sql) != 0) {
 			flag = true;
 		}

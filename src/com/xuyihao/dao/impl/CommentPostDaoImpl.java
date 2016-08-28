@@ -29,7 +29,7 @@ public class CommentPostDaoImpl implements CommentPostDao {
 		boolean flag = false;
 		String sql = "insert into " + CommentPost.BASE_TABLE_NAME + " values(null, '" + commentPost.getComm_ID() + "', '"
 				+ commentPost.getComm_desc() + "', '" + commentPost.getAcc_ID() + "', '" + commentPost.getRep_ID() + "', '"
-				+ commentPost.getPost_ID() + "', '" + commentPost.getComm_addTime() + "')";
+				+ commentPost.getPost_ID() + "', DATE_FORMAT('" + commentPost.getComm_addTime() + "', '%Y-%m-%d %H:%i:%s'))";
 		if (this.conn.executeUpdate(sql) != 0) {
 			flag = true;
 		}

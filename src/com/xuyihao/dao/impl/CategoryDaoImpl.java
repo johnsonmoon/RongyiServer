@@ -27,7 +27,8 @@ public class CategoryDaoImpl implements CategoryDao {
 	public boolean saveCategory(Category category) {
 		boolean flag = false;
 		String sql = "insert into " + Category.BASE_TABLE_NAME + " values(null, '" + category.getCat_ID() + "', '"
-				+ category.getCat_name() + "', '" + category.getCat_desc() + "', '" + category.getCat_addTime() + "')";
+				+ category.getCat_name() + "', '" + category.getCat_desc() + "', DATE_FORMAT('" + category.getCat_addTime()
+				+ "', '%Y-%m-%d %H:%i:%s'))";
 		if (this.conn.executeUpdate(sql) != 0) {
 			flag = true;
 		}

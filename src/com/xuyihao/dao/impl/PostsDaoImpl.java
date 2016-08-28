@@ -28,8 +28,8 @@ public class PostsDaoImpl implements PostsDao {
 	public boolean savePosts(Posts post) {
 		String sql = "insert into " + Posts.BASE_TABLE_NAME + " values(null, '" + post.getPost_ID() + "', '"
 				+ post.getPost_name() + "', '" + post.getPost_route() + "', '" + post.getAcc_ID() + "', '" + post.getAuthor_ID()
-				+ "', " + post.getPost_rep() + ", " + post.getPost_comm() + ", " + post.getPost_like() + ", '"
-				+ post.getPost_addTime() + "')";
+				+ "', " + post.getPost_rep() + ", " + post.getPost_comm() + ", " + post.getPost_like() + ", DATE_FORMAT('"
+				+ post.getPost_addTime() + "', '%Y-%m-%d %H:%i:%s'))";
 		boolean flag = false;
 		if (this.conn.executeUpdate(sql) != 0) {
 			flag = true;

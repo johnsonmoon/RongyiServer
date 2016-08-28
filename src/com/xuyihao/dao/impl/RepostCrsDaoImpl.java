@@ -21,8 +21,8 @@ public class RepostCrsDaoImpl implements RepostCrsDao {
 	@Override
 	public boolean saveRepostCrs(String Acc_Id, String Rep_Id, String Crs_Id, String Rep_addTime) {
 		boolean flag = false;
-		String sql = "insert into RepostCrs values(null, '" + Acc_Id + "', '" + Rep_Id + "', '" + Crs_Id + "', '"
-				+ Rep_addTime + "')";
+		String sql = "insert into RepostCrs values(null, '" + Acc_Id + "', '" + Rep_Id + "', '" + Crs_Id
+				+ "', DATE_FORMAT('" + Rep_addTime + "', '%Y-%m-%d %H:%i:%s'))";
 		if (this.connDB.executeUpdate(sql) != 0) {
 			flag = true;
 		}

@@ -21,7 +21,8 @@ public class FavouriteDaoImpl implements FavouriteDao {
 	@Override
 	public boolean saveFavourite(String Acc_Id, String Shop_Id, String Favo_addTime) {
 		boolean flag = false;
-		String sql = "insert into Favourite values(null, '" + Acc_Id + "', '" + Shop_Id + "', '" + Favo_addTime + "')";
+		String sql = "insert into Favourite values(null, '" + Acc_Id + "', '" + Shop_Id + "', DATE_FORMAT('" + Favo_addTime
+				+ "', '%Y-%m-%d %H:%i:%s'))";
 		if (this.connDB.executeUpdate(sql) != 0) {
 			flag = true;
 		}
