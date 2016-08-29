@@ -4,7 +4,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.xuyihao.common.ThreadLocalContext;
 import com.xuyihao.entity.CommentPost;
 import com.xuyihao.entity.LikePost;
 import com.xuyihao.entity.Posts;
@@ -47,20 +46,7 @@ public class PostsServiceImpl implements com.xuyihao.service.PostsService {
 		this.session = session;
 	}
 
-	public void init() {
-		if (postsLogic == null) {
-			this.postsLogic = (PostsLogic) ThreadLocalContext.getBean("PostsLogic");
-		}
-		if (commentPostLogic == null) {
-			this.commentPostLogic = (CommentPostLogic) ThreadLocalContext.getBean("CommentPostLogic");
-		}
-		if (likePostLogic == null) {
-			this.likePostLogic = (LikePostLogic) ThreadLocalContext.getBean("LikePostLogic");
-		}
-	}
-
 	public String addPost(Posts post) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String Post_ID = this.postsLogic.savePost(post);
 		if (Post_ID == null || Post_ID.equals("")) {
@@ -74,7 +60,6 @@ public class PostsServiceImpl implements com.xuyihao.service.PostsService {
 	}
 
 	public String deletePost(String postId) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		Posts queryPost = this.postsLogic.getPostInfo(postId);
@@ -92,7 +77,6 @@ public class PostsServiceImpl implements com.xuyihao.service.PostsService {
 	}
 
 	public String changePostInformation(Posts post) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		Posts queryPost = this.postsLogic.getPostInfo(post.getPost_ID());
@@ -110,14 +94,13 @@ public class PostsServiceImpl implements com.xuyihao.service.PostsService {
 	}
 
 	public String getPostInformation(String postId) {
-		this.init();
+		
 		Posts post = this.postsLogic.getPostInfo(postId);
 		// XXX 所有人都可以查看，因此无需检查发布者
 		return post.toJSONString();
 	}
 
 	public String sharePost(String accountId, String PostId) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String Post_ID = this.postsLogic.sharePost(accountId, PostId);
 		if (Post_ID == null || Post_ID.equals("")) {
@@ -131,7 +114,6 @@ public class PostsServiceImpl implements com.xuyihao.service.PostsService {
 	}
 
 	public String addCommentPost(CommentPost commentPost) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String Comm_ID = this.commentPostLogic.saveCommentPost(commentPost);
 		if (Comm_ID == null || Comm_ID.equals("")) {
@@ -145,7 +127,6 @@ public class PostsServiceImpl implements com.xuyihao.service.PostsService {
 	}
 
 	public String deleteCommentPost(String commentId) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		CommentPost commentPost = this.commentPostLogic.getCommentInfo(commentId);
@@ -163,14 +144,12 @@ public class PostsServiceImpl implements com.xuyihao.service.PostsService {
 	}
 
 	public String getCommentPostInformation(String commentId) {
-		this.init();
 		// XXX 所有人可查看
 		CommentPost commentPost = this.commentPostLogic.getCommentInfo(commentId);
 		return commentPost.toJSONString();
 	}
 
 	public String addLikePost(LikePost likePost) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String Like_ID = this.likePostLogic.saveLikePost(likePost);
 		if (Like_ID == null || Like_ID.equals("")) {
@@ -184,7 +163,6 @@ public class PostsServiceImpl implements com.xuyihao.service.PostsService {
 	}
 
 	public String getLikePostInformation(String likeId) {
-		this.init();
 		// XXX 所有人可查看
 		LikePost likePost = this.likePostLogic.getLikePostInfo(likeId);
 		return likePost.toJSONString();

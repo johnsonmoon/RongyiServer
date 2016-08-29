@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    	http://www.springframework.org/schema/context 
+    	http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    	http://www.springframework.org/schema/task 
+    	http://www.springframework.org/schema/task/spring-task-4.0.xsd">
+
+	<!-- base configurations -->
+	<context:annotation-config />
 
 	<!-- dao beans -->
 	<bean id="AccountsDao" class="com.xuyihao.dao.impl.AccountsDaoImpl"></bean>
@@ -41,13 +50,9 @@
 	<bean id="ShopsLogic" class="com.xuyihao.logic.impl.ShopsLogicImpl"></bean>
 
 	<!-- service beans -->
-	<bean id="AccountsService" class="com.xuyihao.service.impl.AccountsServiceImpl"
-		init-method="init"></bean>
-	<bean id="CoursesService" class="com.xuyihao.service.impl.CoursesServiceImpl"
-		init-method="init"></bean>
-	<bean id="PostsService" class="com.xuyihao.service.impl.PostsServiceImpl"
-		init-method="init"></bean>
-	<bean id="ShopsService" class="com.xuyihao.service.impl.ShopsServiceImpl"
-		init-method="init"></bean>
+	<bean id="AccountsService" class="com.xuyihao.service.impl.AccountsServiceImpl"></bean>
+	<bean id="CoursesService" class="com.xuyihao.service.impl.CoursesServiceImpl"></bean>
+	<bean id="PostsService" class="com.xuyihao.service.impl.PostsServiceImpl"></bean>
+	<bean id="ShopsService" class="com.xuyihao.service.impl.ShopsServiceImpl"></bean>
 
 </beans>

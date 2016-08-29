@@ -2,7 +2,6 @@ package com.xuyihao.logic.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.xuyihao.common.ThreadLocalContext;
 import com.xuyihao.dao.LikePostDao;
 import com.xuyihao.dao.PostsDao;
 import com.xuyihao.entity.LikePost;
@@ -21,16 +20,6 @@ public class LikePostLogicImpl implements LikePostLogic {
 	@Autowired
 	private PostsDao postsDao;
 
-	// XXX 无法通过Autowired注解从Spring容器中获取DAO
-	public void initBeans() {
-		if (likePostDao == null) {
-			likePostDao = (LikePostDao) ThreadLocalContext.getBean("LikePostDao");
-		}
-		if (postsDao == null) {
-			postsDao = (PostsDao) ThreadLocalContext.getBean("PostsDao");
-		}
-	}
-
 	public void setLikePostDao(LikePostDao likePostDao) {
 		this.likePostDao = likePostDao;
 	}
@@ -41,7 +30,6 @@ public class LikePostLogicImpl implements LikePostLogic {
 
 	@Override
 	public String saveLikePost(LikePost likePost) {
-		this.initBeans();
 		boolean flag = true;
 		Posts post = this.postsDao.queryById(likePost.getPost_ID());
 		if ((post.getPost_ID() == null) || (post.getPost_ID().equals(""))) {
@@ -63,7 +51,6 @@ public class LikePostLogicImpl implements LikePostLogic {
 
 	@Override
 	public LikePost getLikePostInfo(String Like_ID) {
-		this.initBeans();
 		LikePost likePost = this.likePostDao.queryById(Like_ID);
 		return likePost;
 	}

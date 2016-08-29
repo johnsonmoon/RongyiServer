@@ -2,7 +2,6 @@ package com.xuyihao.logic.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.xuyihao.common.ThreadLocalContext;
 import com.xuyihao.dao.CommentCrsDao;
 import com.xuyihao.dao.CoursesDao;
 import com.xuyihao.entity.CommentCrs;
@@ -21,16 +20,6 @@ public class CommentCrsLogicImpl implements CommentCrsLogic {
 	@Autowired
 	private CoursesDao coursesDao;
 
-	// XXX 无法通过Autowired注解从Spring容器中获取DAO
-	public void initBeans() {
-		if (commentCrsDao == null) {
-			commentCrsDao = (CommentCrsDao) ThreadLocalContext.getBean("CommentCrsDao");
-		}
-		if (coursesDao == null) {
-			coursesDao = (CoursesDao) ThreadLocalContext.getBean("CoursesDao");
-		}
-	}
-
 	public void setCommentCrsDao(CommentCrsDao commentCrsDao) {
 		this.commentCrsDao = commentCrsDao;
 	}
@@ -41,7 +30,6 @@ public class CommentCrsLogicImpl implements CommentCrsLogic {
 
 	@Override
 	public String saveCommentCrs(CommentCrs commentCrs) {
-		this.initBeans();
 		boolean flag = true;
 		String Comm_ID = RandomUtils.getRandomString(15) + "Comm";
 		String Add_time = DateUtils.currentDateTime();
@@ -62,7 +50,6 @@ public class CommentCrsLogicImpl implements CommentCrsLogic {
 
 	@Override
 	public boolean deleteCommentCrs(String Comm_ID) {
-		this.initBeans();
 		boolean flag = true;
 		Courses course = this.coursesDao.queryById(this.commentCrsDao.queryById(Comm_ID).getCrs_ID());
 		if ((course.getCrs_ID() == null) || (course.getCrs_ID().equals(""))) {
@@ -77,7 +64,6 @@ public class CommentCrsLogicImpl implements CommentCrsLogic {
 
 	@Override
 	public CommentCrs getCommentCrsInfo(String Comm_ID) {
-		this.initBeans();
 		CommentCrs commentCrs = this.commentCrsDao.queryById(Comm_ID);
 		return commentCrs;
 	}

@@ -4,7 +4,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.xuyihao.common.ThreadLocalContext;
 import com.xuyihao.entity.Category;
 import com.xuyihao.entity.Products;
 import com.xuyihao.entity.Shops;
@@ -43,24 +42,11 @@ public class ShopsServiceImpl implements com.xuyihao.service.ShopsService {
 		this.productsLogic = productsLogic;
 	}
 
-	public void init() {
-		if (shopsLogic == null) {
-			this.shopsLogic = (ShopsLogic) ThreadLocalContext.getBean("ShopsLogic");
-		}
-		if (categoryLogic == null) {
-			this.categoryLogic = (CategoryLogic) ThreadLocalContext.getBean("CategoryLogic");
-		}
-		if (productsLogic == null) {
-			this.productsLogic = (ProductsLogic) ThreadLocalContext.getBean("ProductsLogic");
-		}
-	}
-
 	public void setSessionInfo(HttpSession session) {
 		this.session = session;
 	}
 
 	public String addShop(Shops shop) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		if (Acc_ID.equals(shop.getAcc_ID())) {
@@ -80,7 +66,6 @@ public class ShopsServiceImpl implements com.xuyihao.service.ShopsService {
 	}
 
 	public String isShopNameExists(String shopName) {
-		this.init();
 		JSONObject json = new JSONObject();
 		boolean flag = this.shopsLogic.shopNameExist(shopName);
 		if (flag) {
@@ -92,7 +77,6 @@ public class ShopsServiceImpl implements com.xuyihao.service.ShopsService {
 	}
 
 	public String getShopIdByName(String shopName) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String id = this.shopsLogic.getShopID(shopName);
 		if (id == null || id.equals("")) {
@@ -106,13 +90,11 @@ public class ShopsServiceImpl implements com.xuyihao.service.ShopsService {
 	}
 
 	public String getShopInformationById(String shopId) {
-		this.init();
 		Shops shop = this.shopsLogic.getShopInfo(shopId);
 		return shop.toJSONString();
 	}
 
 	public String changeShopInformation(Shops shop) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		Shops queryShop = this.shopsLogic.getShopInfo(shop.getShop_ID());
@@ -130,7 +112,6 @@ public class ShopsServiceImpl implements com.xuyihao.service.ShopsService {
 	}
 
 	public String deleteShop(String shopId) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		Shops queryShop = this.shopsLogic.getShopInfo(shopId);
@@ -148,7 +129,6 @@ public class ShopsServiceImpl implements com.xuyihao.service.ShopsService {
 	}
 
 	public String addCategory(Category category) {
-		this.init();
 		// XXX Category 还需要进一步设计，即添加Shop_ID 关联等
 		JSONObject json = new JSONObject();
 		String Cat_ID = this.categoryLogic.saveCategory(category);
@@ -163,13 +143,11 @@ public class ShopsServiceImpl implements com.xuyihao.service.ShopsService {
 	}
 
 	public String getCategoryInformationById(String categoryId) {
-		this.init();
 		Category category = this.categoryLogic.getCategoryInfoById(categoryId);
 		return category.toJSONString();
 	}
 
 	public String addProduct(Products product) {
-		this.init();
 		// XXX 还需要进一步设计，即添加Shop_ID 关联等
 		JSONObject json = new JSONObject();
 		String Prod_ID = this.productsLogic.saveProduct(product);
@@ -184,13 +162,11 @@ public class ShopsServiceImpl implements com.xuyihao.service.ShopsService {
 	}
 
 	public String getProductInformation(String productId) {
-		this.init();
 		Products product = this.productsLogic.getProductInfo(productId);
 		return product.toJSONString();
 	}
 
 	public String deleteProduct(String productId) {
-		this.init();
 		JSONObject json = new JSONObject();
 		boolean flag = this.productsLogic.deleteProduct(productId);
 		if (flag) {

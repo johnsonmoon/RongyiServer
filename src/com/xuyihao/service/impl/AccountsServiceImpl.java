@@ -4,7 +4,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.xuyihao.common.ThreadLocalContext;
 import com.xuyihao.entity.Accounts;
 import com.xuyihao.entity.Address;
 import com.xuyihao.entity.Cart;
@@ -64,30 +63,11 @@ public class AccountsServiceImpl implements AccountsService {
 		this.ordersLogic = ordersLogic;
 	}
 
-	public void init() {
-		if (accountsLogic == null) {
-			accountsLogic = (AccountsLogic) ThreadLocalContext.getBean("AccountsLogic");
-		}
-		if (addressLogic == null) {
-			addressLogic = (AddressLogic) ThreadLocalContext.getBean("AddressLogic");
-		}
-		if (cartLogic == null) {
-			cartLogic = (CartLogic) ThreadLocalContext.getBean("CartLogic");
-		}
-		if (commentProductLogic == null) {
-			commentProductLogic = (CommentProductLogic) ThreadLocalContext.getBean("CommentProductLogic");
-		}
-		if (ordersLogic == null) {
-			ordersLogic = (OrdersLogic) ThreadLocalContext.getBean("OrdersLogic");
-		}
-	}
-
 	public void setSessionInfo(HttpSession session) {
 		this.session = session;
 	}
 
 	public String isAccountNameExists(String name) {
-		this.init();
 		JSONObject json = new JSONObject();
 		boolean exists = this.accountsLogic.accountNameExist(name);
 		if (exists) {
@@ -99,7 +79,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String register(Accounts account) {
-		this.init();
 		// XXX 检查是否已经有账号登录
 		Object a = this.session.getAttribute("Acc_ID");
 		if (a != null) {
@@ -122,7 +101,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String login(String name, String password) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.accountsLogic.login(name, password);
 		if (Acc_ID.equals("")) {
@@ -139,7 +117,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String logout(String accountId) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		if (Acc_ID.equals(accountId)) {
@@ -155,7 +132,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String changeAccountInformation(Accounts account) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		if (Acc_ID.equals(account.getAcc_ID())) {
@@ -172,7 +148,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String getAccountInformationByName(String name) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String queryAcc_ID = this.session.getAttribute("Acc_ID").toString();
 		Accounts account = this.accountsLogic.getAccountsInformationByName(name);
@@ -194,7 +169,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String getAccountInformationById(String id) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String queryAcc_ID = this.session.getAttribute("Acc_ID").toString();
 		Accounts account = this.accountsLogic.getAccountsInformationById(id);
@@ -216,7 +190,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String attention(String atnId, String atndId) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		if (atnId.equals(Acc_ID)) {
@@ -233,7 +206,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String cancelAttention(String atnId, String atndId) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		if (atnId.equals(Acc_ID)) {
@@ -250,7 +222,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String favourite(String accountId, String shopId) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		if (accountId.equals(Acc_ID)) {
@@ -267,7 +238,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String cancelFavourite(String accountId, String shopId) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		if (accountId.equals(Acc_ID)) {
@@ -284,7 +254,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String want(String accountId, String productId) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		if (accountId.equals(Acc_ID)) {
@@ -301,7 +270,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String cancelWant(String accountId, String productId) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		if (accountId.equals(Acc_ID)) {
@@ -318,7 +286,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String addAddress(Address address) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		if (requestAccId.equals(address.getAcc_ID())) {// 是否为登录用户
@@ -338,7 +305,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String deleteAddress(String addressId) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		Address queryAddress = this.addressLogic.getAddressInfo(addressId);
@@ -356,7 +322,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String changeAddressInformation(Address address) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		Address requestAddress = this.addressLogic.getAddressInfo(address.getAdd_ID());
@@ -374,7 +339,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String getAddressInformation(String addressId) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		Address queryAddress = this.addressLogic.getAddressInfo(addressId);
@@ -387,7 +351,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String addCart(Cart cart) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		if (requestAccId.equals(cart.getAcc_ID())) {// 是否为登录用户
@@ -407,7 +370,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String getCartInformation(String cartId) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		Cart queryCart = this.cartLogic.getCartInfo(cartId);
@@ -420,7 +382,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String changeProductCount(String cartId, int cartCount) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		Cart queryCart = this.cartLogic.getCartInfo(cartId);
@@ -438,7 +399,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String deleteCart(String cartId) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		Cart queryCart = this.cartLogic.getCartInfo(cartId);
@@ -456,7 +416,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String addOrder(Orders order) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		if (requestAccId.equals(order.getAcc_ID())) {// 是否为登录用户
@@ -476,7 +435,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String getOrderInformation(String OrderId) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		Orders queryOrder = this.ordersLogic.getOrderInfo(OrderId);
@@ -489,7 +447,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String deleteOrder(String orderId) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		Orders queryOrder = this.ordersLogic.getOrderInfo(orderId);
@@ -507,7 +464,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String changeOrderInformation(Orders order) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		Orders queryOrder = this.ordersLogic.getOrderInfo(order.getOrd_ID());
@@ -525,7 +481,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String addCommentProduct(CommentProduct commentProduct) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		if (requestAccId.equals(commentProduct.getAcc_ID())) {// 是否为登录用户
@@ -545,7 +500,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String changeCommentProduct(String commentId, String commentDescription) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		CommentProduct queryCommentProduct = this.commentProductLogic.getCommentProductInfo(commentId);
@@ -563,7 +517,6 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String getCommentProductInformation(String commentId) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String requestAccId = this.session.getAttribute("Acc_ID").toString();
 		CommentProduct queryCommentProduct = this.commentProductLogic.getCommentProductInfo(commentId);

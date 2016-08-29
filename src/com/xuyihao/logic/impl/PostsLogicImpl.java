@@ -2,7 +2,6 @@ package com.xuyihao.logic.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.xuyihao.common.ThreadLocalContext;
 import com.xuyihao.dao.AccountsDao;
 import com.xuyihao.dao.PostsDao;
 import com.xuyihao.dao.RepostPostDao;
@@ -25,19 +24,6 @@ public class PostsLogicImpl implements PostsLogic {
 	@Autowired
 	private AccountsDao accountsDao;
 
-	// XXX 无法通过Autowired注解从Spring容器中获取DAO
-	public void initBeans() {
-		if (postDao == null) {
-			postDao = (PostsDao) ThreadLocalContext.getBean("PostsDao");
-		}
-		if (repostPostDao == null) {
-			repostPostDao = (RepostPostDao) ThreadLocalContext.getBean("RepostPostDao");
-		}
-		if (accountsDao == null) {
-			accountsDao = (AccountsDao) ThreadLocalContext.getBean("AccountsDao");
-		}
-	}
-
 	public void setAccountsDao(AccountsDao accountsDao) {
 		this.accountsDao = accountsDao;
 	}
@@ -52,7 +38,6 @@ public class PostsLogicImpl implements PostsLogic {
 
 	@Override
 	public String savePost(Posts posts) {
-		this.initBeans();
 		boolean flag = true;
 		String Post_ID = RandomUtils.getRandomString(15) + "Post";
 		String Add_time = DateUtils.currentDateTime();
@@ -72,14 +57,12 @@ public class PostsLogicImpl implements PostsLogic {
 
 	@Override
 	public boolean deletePost(String Post_ID) {
-		this.initBeans();
 		boolean flag = this.postDao.deletePosts(Post_ID);
 		return flag;
 	}
 
 	@Override
 	public boolean changePostInfo(Posts post) {
-		this.initBeans();
 		Posts DBpost = this.postDao.queryById(post.getPost_ID());
 		if ((DBpost.getPost_ID() == null) || (DBpost.getPost_ID().equals(""))) {
 			return false;
@@ -102,14 +85,12 @@ public class PostsLogicImpl implements PostsLogic {
 
 	@Override
 	public Posts getPostInfo(String Post_ID) {
-		this.initBeans();
 		Posts post = this.postDao.queryById(Post_ID);
 		return post;
 	}
 
 	@Override
 	public String sharePost(String Acc_ID, String Post_ID) {
-		this.initBeans();
 		boolean flag = true;
 		Posts postOld = this.postDao.queryById(Post_ID);
 		postOld.setPost_rep(postOld.getPost_rep() + 1);

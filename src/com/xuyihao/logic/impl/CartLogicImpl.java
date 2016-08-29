@@ -2,7 +2,6 @@ package com.xuyihao.logic.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.xuyihao.common.ThreadLocalContext;
 import com.xuyihao.dao.CartDao;
 import com.xuyihao.entity.Cart;
 import com.xuyihao.logic.CartLogic;
@@ -16,20 +15,12 @@ public class CartLogicImpl implements CartLogic {
 	@Autowired
 	private CartDao cartDao;
 
-	// XXX 无法通过Autowired注解从Spring容器中获取DAO
-	public void initBeans() {
-		if (cartDao == null) {
-			cartDao = (CartDao) ThreadLocalContext.getBean("CartDao");
-		}
-	}
-
 	public void setCartDao(CartDao cartDao) {
 		this.cartDao = cartDao;
 	}
 
 	@Override
 	public String saveCart(Cart cart) {
-		this.initBeans();
 		String Cart_ID = RandomUtils.getRandomString(15) + "Cart";
 		cart.setCart_ID(Cart_ID);
 		String Add_time = DateUtils.currentDateTime();
@@ -43,14 +34,12 @@ public class CartLogicImpl implements CartLogic {
 
 	@Override
 	public Cart getCartInfo(String Cart_ID) {
-		this.initBeans();
 		Cart cart = this.cartDao.queryById(Cart_ID);
 		return cart;
 	}
 
 	@Override
 	public boolean changeProductNumber(String Cart_ID, int Pro_num) {
-		this.initBeans();
 		Cart cart = this.cartDao.queryById(Cart_ID);
 		cart.setPro_num(Pro_num);
 		if (this.cartDao.updateCart(cart)) {
@@ -62,7 +51,6 @@ public class CartLogicImpl implements CartLogic {
 
 	@Override
 	public boolean deleteCart(String Cart_ID) {
-		this.initBeans();
 		boolean flag = this.cartDao.deleteCart(Cart_ID);
 		return flag;
 	}

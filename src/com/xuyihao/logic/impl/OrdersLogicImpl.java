@@ -2,7 +2,6 @@ package com.xuyihao.logic.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.xuyihao.common.ThreadLocalContext;
 import com.xuyihao.dao.OrdersDao;
 import com.xuyihao.entity.Orders;
 import com.xuyihao.logic.OrdersLogic;
@@ -16,20 +15,12 @@ public class OrdersLogicImpl implements OrdersLogic {
 	@Autowired
 	private OrdersDao ordersDao;
 
-	// XXX 无法通过Autowired注解从Spring容器中获取DAO
-	public void initBeans() {
-		if (ordersDao == null) {
-			ordersDao = (OrdersDao) ThreadLocalContext.getBean("OrdersDao");
-		}
-	}
-
 	public void setOrderOrd(OrdersDao ordersDao) {
 		this.ordersDao = ordersDao;
 	}
 
 	@Override
 	public String saveOrder(Orders orders) {
-		this.initBeans();
 		boolean flag = true;
 		String Ord_ID = RandomUtils.getRandomString(15) + "Ord";
 		String Ord_date = DateUtils.currentDate();
@@ -47,14 +38,12 @@ public class OrdersLogicImpl implements OrdersLogic {
 
 	@Override
 	public Orders getOrderInfo(String Ord_ID) {
-		this.initBeans();
 		Orders order = this.ordersDao.queryById(Ord_ID);
 		return order;
 	}
 
 	@Override
 	public boolean deleteOrder(String Ord_ID) {
-		this.initBeans();
 		boolean flag = true;
 		flag = flag && this.ordersDao.deleteOrders(Ord_ID);
 		return flag;
@@ -62,7 +51,6 @@ public class OrdersLogicImpl implements OrdersLogic {
 
 	@Override
 	public boolean changeOrderInfo(Orders orders) {
-		this.initBeans();
 		Orders DBorder = this.getOrderInfo(orders.getOrd_ID());
 		if (!DBorder.getOrd_ID().equals(orders.getOrd_ID())) {
 			return false;

@@ -4,7 +4,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.xuyihao.common.ThreadLocalContext;
 import com.xuyihao.entity.CommentCrs;
 import com.xuyihao.entity.Courses;
 import com.xuyihao.entity.LikeCrs;
@@ -42,24 +41,11 @@ public class CoursesServiceImpl implements com.xuyihao.service.CoursesService {
 		this.likeCrsLogic = likeCrsLogic;
 	}
 
-	public void init() {
-		if (commentCrsLogic == null) {
-			this.commentCrsLogic = (CommentCrsLogic) ThreadLocalContext.getBean("CommentCrsLogic");
-		}
-		if (coursesLogic == null) {
-			this.coursesLogic = (CoursesLogic) ThreadLocalContext.getBean("CoursesLogic");
-		}
-		if (likeCrsLogic == null) {
-			this.likeCrsLogic = (LikeCrsLogic) ThreadLocalContext.getBean("LikeCrsLogic");
-		}
-	}
-
 	public void setSessionInfo(HttpSession session) {
 		this.session = session;
 	}
 
 	public String addCourse(Courses course) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String Crs_ID = this.coursesLogic.saveCourse(course);
 		if (Crs_ID == null || Crs_ID.equals("")) {
@@ -73,7 +59,6 @@ public class CoursesServiceImpl implements com.xuyihao.service.CoursesService {
 	}
 
 	public String deleteCourse(String courseId) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		Courses queryCourse = this.coursesLogic.getCoursesInfo(courseId);
@@ -91,7 +76,6 @@ public class CoursesServiceImpl implements com.xuyihao.service.CoursesService {
 	}
 
 	public String changeCourseInformation(Courses course) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		if (Acc_ID.equals(course.getAcc_ID())) {
@@ -108,14 +92,12 @@ public class CoursesServiceImpl implements com.xuyihao.service.CoursesService {
 	}
 
 	public String getCourseInformation(String courseId) {
-		this.init();
 		Courses course = this.coursesLogic.getCoursesInfo(courseId);
 		// XXX 所有人都可以查看，因此无需检查发布者
 		return course.toJSONString();
 	}
 
 	public String shareCourse(String accountId, String courseId) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String Crs_ID = this.coursesLogic.shareCourse(accountId, courseId);
 		if (Crs_ID == null || Crs_ID.equals("")) {
@@ -129,7 +111,6 @@ public class CoursesServiceImpl implements com.xuyihao.service.CoursesService {
 	}
 
 	public String addCommentCourse(CommentCrs commentCrs) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String Comm_ID = this.commentCrsLogic.saveCommentCrs(commentCrs);
 		if (Comm_ID == null || Comm_ID.equals("")) {
@@ -143,7 +124,6 @@ public class CoursesServiceImpl implements com.xuyihao.service.CoursesService {
 	}
 
 	public String deleteCommentCourse(String commentId) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		CommentCrs commentCrs = this.commentCrsLogic.getCommentCrsInfo(commentId);
@@ -161,14 +141,12 @@ public class CoursesServiceImpl implements com.xuyihao.service.CoursesService {
 	}
 
 	public String getCommentCourseInformation(String commentId) {
-		this.init();
 		// XXX 所有人可查看
 		CommentCrs commentCrs = this.commentCrsLogic.getCommentCrsInfo(commentId);
 		return commentCrs.toJSONString();
 	}
 
 	public String addLikeCourse(LikeCrs likeCrs) {
-		this.init();
 		JSONObject json = new JSONObject();
 		String Like_ID = this.likeCrsLogic.saveLikeCrs(likeCrs);
 		if (Like_ID == null || Like_ID.equals("")) {
@@ -182,7 +160,6 @@ public class CoursesServiceImpl implements com.xuyihao.service.CoursesService {
 	}
 
 	public String getLikeCourseInformation(String likeId) {
-		this.init();
 		// XXX 所有人可查看
 		LikeCrs likeCrs = this.likeCrsLogic.getLikeCrsInfo(likeId);
 		return likeCrs.toJSONString();

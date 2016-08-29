@@ -2,7 +2,6 @@ package com.xuyihao.logic.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.xuyihao.common.ThreadLocalContext;
 import com.xuyihao.dao.CommentProductDao;
 import com.xuyihao.dao.OrdersDao;
 import com.xuyihao.entity.CommentProduct;
@@ -21,16 +20,6 @@ public class CommentProductLogicImpl implements CommentProductLogic {
 	@Autowired
 	private OrdersDao ordersDao;
 
-	// XXX 无法通过Autowired注解从Spring容器中获取DAO
-	public void initBeans() {
-		if (commentProductDao == null) {
-			commentProductDao = (CommentProductDao) ThreadLocalContext.getBean("CommentProductDao");
-		}
-		if (ordersDao == null) {
-			ordersDao = (OrdersDao) ThreadLocalContext.getBean("OrdersDao");
-		}
-	}
-
 	public void setOrdersDao(OrdersDao ordersDao) {
 		this.ordersDao = ordersDao;
 	}
@@ -41,7 +30,6 @@ public class CommentProductLogicImpl implements CommentProductLogic {
 
 	@Override
 	public String saveCommentProduct(CommentProduct commentProduct) {
-		this.initBeans();
 		boolean flag = true;
 		String Comm_ID = RandomUtils.getRandomString(15) + "Comm";
 		String Add_time = DateUtils.currentDateTime();
@@ -64,7 +52,6 @@ public class CommentProductLogicImpl implements CommentProductLogic {
 
 	@Override
 	public boolean changeCommentDescription(String Comm_ID, String Comm_desc) {
-		this.initBeans();
 		boolean flag = true;
 		CommentProduct commentProduct = this.commentProductDao.queryById(Comm_ID);
 		if (commentProduct == null) {
@@ -78,7 +65,6 @@ public class CommentProductLogicImpl implements CommentProductLogic {
 
 	@Override
 	public CommentProduct getCommentProductInfo(String Comm_ID) {
-		this.initBeans();
 		CommentProduct commentProduct = this.commentProductDao.queryById(Comm_ID);
 		if (commentProduct == null) {
 			return null;

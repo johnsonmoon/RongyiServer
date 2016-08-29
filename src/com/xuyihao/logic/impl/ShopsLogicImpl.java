@@ -2,7 +2,6 @@ package com.xuyihao.logic.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.xuyihao.common.ThreadLocalContext;
 import com.xuyihao.dao.ShopsDao;
 import com.xuyihao.entity.Shops;
 import com.xuyihao.logic.ShopsLogic;
@@ -16,20 +15,12 @@ public class ShopsLogicImpl implements ShopsLogic {
 	@Autowired
 	private ShopsDao shopsDao;
 
-	// XXX 无法通过Autowired注解从Spring容器中获取DAO
-	public void initBeans() {
-		if (shopsDao == null) {
-			shopsDao = (ShopsDao) ThreadLocalContext.getBean("ShopsDao");
-		}
-	}
-
 	public void setShopsDao(ShopsDao shopsDao) {
 		this.shopsDao = shopsDao;
 	}
 
 	@Override
 	public String saveShop(Shops shops) {
-		this.initBeans();
 		boolean flag = true;
 		String Shop_ID = RandomUtils.getRandomString(15) + "Shop";
 		String Add_time = DateUtils.currentDateTime();
@@ -45,7 +36,6 @@ public class ShopsLogicImpl implements ShopsLogic {
 
 	@Override
 	public boolean shopNameExist(String Shop_name) {
-		this.initBeans();
 		Shops shop = this.shopsDao.queryByName(Shop_name);
 		if ((shop.get_id() == 0) || (shop.getShop_ID().equals(""))) {
 			return false;
@@ -56,21 +46,18 @@ public class ShopsLogicImpl implements ShopsLogic {
 
 	@Override
 	public String getShopID(String name) {
-		this.initBeans();
 		Shops shop = this.shopsDao.queryByName(name);
 		return shop.getShop_ID();
 	}
 
 	@Override
 	public Shops getShopInfo(String Shop_ID) {
-		this.initBeans();
 		Shops shop = this.shopsDao.queryById(Shop_ID);
 		return shop;
 	}
 
 	@Override
 	public boolean changeShopInfo(Shops shop) {
-		this.initBeans();
 		boolean flag = true;
 		Shops DBshop = this.shopsDao.queryById(shop.getShop_ID());
 		shop.setShop_name(DBshop.getShop_name());
@@ -97,7 +84,6 @@ public class ShopsLogicImpl implements ShopsLogic {
 
 	@Override
 	public boolean deleteShop(String Shop_ID) {
-		this.initBeans();
 		return this.shopsDao.deleteShops(Shop_ID);
 	}
 }

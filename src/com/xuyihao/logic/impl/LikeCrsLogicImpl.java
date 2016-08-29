@@ -2,7 +2,6 @@ package com.xuyihao.logic.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.xuyihao.common.ThreadLocalContext;
 import com.xuyihao.dao.CoursesDao;
 import com.xuyihao.dao.LikeCrsDao;
 import com.xuyihao.entity.Courses;
@@ -21,16 +20,6 @@ public class LikeCrsLogicImpl implements LikeCrsLogic {
 	@Autowired
 	private CoursesDao coursesDao;
 
-	// XXX 无法通过Autowired注解从Spring容器中获取DAO
-	public void initBeans() {
-		if (likeCrsDao == null) {
-			likeCrsDao = (LikeCrsDao) ThreadLocalContext.getBean("LikeCrsDao");
-		}
-		if (coursesDao == null) {
-			coursesDao = (CoursesDao) ThreadLocalContext.getBean("CoursesDao");
-		}
-	}
-
 	public void setLikeCrsDao(LikeCrsDao likeCrsDao) {
 		this.likeCrsDao = likeCrsDao;
 	}
@@ -41,7 +30,6 @@ public class LikeCrsLogicImpl implements LikeCrsLogic {
 
 	@Override
 	public String saveLikeCrs(LikeCrs likeCrs) {
-		this.initBeans();
 		boolean flag = true;
 		String Crs_ID = likeCrs.getCrs_ID();
 		Courses course = this.coursesDao.queryById(Crs_ID);
@@ -64,7 +52,6 @@ public class LikeCrsLogicImpl implements LikeCrsLogic {
 
 	@Override
 	public LikeCrs getLikeCrsInfo(String Like_ID) {
-		this.initBeans();
 		LikeCrs likeCrs = this.likeCrsDao.queryById(Like_ID);
 		return likeCrs;
 	}

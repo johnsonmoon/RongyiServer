@@ -2,7 +2,6 @@ package com.xuyihao.logic.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.xuyihao.common.ThreadLocalContext;
 import com.xuyihao.dao.AccountsDao;
 import com.xuyihao.dao.CoursesDao;
 import com.xuyihao.dao.RepostCrsDao;
@@ -25,19 +24,6 @@ public class CoursesLogicImpl implements CoursesLogic {
 	@Autowired
 	private AccountsDao accountsDao;
 
-	// XXX 无法通过Autowired注解从Spring容器中获取DAO
-	public void initBeans() {
-		if (coursesDao == null) {
-			coursesDao = (CoursesDao) ThreadLocalContext.getBean("CoursesDao");
-		}
-		if (repostCrsDao == null) {
-			repostCrsDao = (RepostCrsDao) ThreadLocalContext.getBean("RepostCrsDao");
-		}
-		if (accountsDao == null) {
-			accountsDao = (AccountsDao) ThreadLocalContext.getBean("AccountsDao");
-		}
-	}
-
 	public void setAccountsDao(AccountsDao accountsDao) {
 		this.accountsDao = accountsDao;
 	}
@@ -52,7 +38,6 @@ public class CoursesLogicImpl implements CoursesLogic {
 
 	@Override
 	public String saveCourse(Courses courses) {
-		this.initBeans();
 		boolean flag = true;
 		String Crs_ID = RandomUtils.getRandomString(15) + "Crs";
 		String Add_time = DateUtils.currentDateTime();
@@ -72,14 +57,12 @@ public class CoursesLogicImpl implements CoursesLogic {
 
 	@Override
 	public boolean deleteCourse(String Crs_ID) {
-		this.initBeans();
 		boolean flag = this.coursesDao.deleteCourses(Crs_ID);
 		return flag;
 	}
 
 	@Override
 	public boolean changeCourseInfo(Courses course) {
-		this.initBeans();
 		Courses DBcourse = this.coursesDao.queryById(course.getCrs_ID());
 		if ((course.getCrs_name() == null) || (course.getCrs_name().equals(""))) {
 			course.setCrs_name(DBcourse.getCrs_name());
@@ -100,14 +83,12 @@ public class CoursesLogicImpl implements CoursesLogic {
 
 	@Override
 	public Courses getCoursesInfo(String Crs_ID) {
-		this.initBeans();
 		Courses course = this.coursesDao.queryById(Crs_ID);
 		return course;
 	}
 
 	@Override
 	public String shareCourse(String Acc_ID, String Crs_ID) {
-		this.initBeans();
 		boolean flag = true;
 		Courses courseOld = this.coursesDao.queryById(Crs_ID);
 		courseOld.setCrs_rep(courseOld.getCrs_rep() + 1);// 被分享数加一

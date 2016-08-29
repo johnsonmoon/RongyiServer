@@ -1,4 +1,4 @@
-package com.xuyihao.entity;
+package com.xuyihao.filerelate.entity;
 
 /**
  * 

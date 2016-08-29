@@ -1,6 +1,5 @@
 package com.xuyihao.logic.impl;
 
-import com.xuyihao.common.ThreadLocalContext;
 import com.xuyihao.dao.AddressDao;
 import com.xuyihao.entity.Address;
 import com.xuyihao.logic.AddressLogic;
@@ -15,13 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class AddressLogicImpl implements AddressLogic {
 	@Autowired
 	private AddressDao addressDao;
-	
-	// XXX 无法通过Autowired注解从Spring容器中获取DAO
-	public void initBeans() {
-		if (addressDao == null) {
-			addressDao = (AddressDao) ThreadLocalContext.getBean("AddressDao");
-		}
-	}
 
 	public void setAddressDao(AddressDao addressDao) {
 		this.addressDao = addressDao;
@@ -29,7 +21,6 @@ public class AddressLogicImpl implements AddressLogic {
 
 	@Override
 	public String saveAddress(Address address) {
-		this.initBeans();
 		// 生成随机ID
 		String Add_ID = RandomUtils.getRandomString(15) + "Add";
 		address.setAdd_ID(Add_ID);
@@ -44,13 +35,11 @@ public class AddressLogicImpl implements AddressLogic {
 
 	@Override
 	public Address getAddressInfo(String Add_ID) {
-		this.initBeans();
 		return this.addressDao.queryById(Add_ID);
 	}
 
 	@Override
 	public boolean changeAddressInfo(Address address) {
-		this.initBeans();
 		Address DBaddress = this.addressDao.queryById(address.getAdd_ID());
 		if ((DBaddress.getAdd_ID() == null) || (DBaddress.getAdd_ID().equals(""))) {
 			return false;
@@ -71,7 +60,6 @@ public class AddressLogicImpl implements AddressLogic {
 
 	@Override
 	public boolean deleteAddress(String Add_ID) {
-		this.initBeans();
 		return this.addressDao.deleteAddress(Add_ID);
 	}
 }
