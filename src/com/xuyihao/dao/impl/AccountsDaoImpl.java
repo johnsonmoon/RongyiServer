@@ -15,15 +15,6 @@ import com.xuyihao.entity.Accounts;
 public class AccountsDaoImpl implements AccountsDao {
 	private DatabaseConnector conn = new DatabaseConnector();
 
-	public AccountsDaoImpl() {
-
-	}
-
-	public void setConn(DatabaseConnector conn) {
-		this.conn = conn;
-	}
-
-	@Override
 	public boolean saveAccounts(Accounts accounts) {
 		boolean flag = false;
 		String sql = "insert into " + Accounts.BASE_TABLE_NAME + " values(null, '" + accounts.getAcc_ID() + "', '"
@@ -39,7 +30,6 @@ public class AccountsDaoImpl implements AccountsDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteAccounts(String Acc_ID) {
 		boolean flag = false;
 		String sql = "delete from " + Accounts.BASE_TABLE_NAME + " where " + Accounts.BASE_ACCOUNT_ID + " = '" + Acc_ID
@@ -51,7 +41,6 @@ public class AccountsDaoImpl implements AccountsDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updateAccounts(Accounts accounts) {
 		boolean flag = false;
 		String sql = "update " + Accounts.BASE_TABLE_NAME + " set " + Accounts.BASE_ACCOUNT_NAME + " = '"
@@ -72,7 +61,6 @@ public class AccountsDaoImpl implements AccountsDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updateAccounts(String update) {
 		boolean flag = false;
 		String sql = update;
@@ -83,7 +71,6 @@ public class AccountsDaoImpl implements AccountsDao {
 		return flag;
 	}
 
-	@Override
 	public Accounts queryByName(String Acc_name) {
 		String sql = "select * from " + Accounts.BASE_TABLE_NAME + " where " + Accounts.BASE_ACCOUNT_NAME + " = '"
 				+ Acc_name + "'";
@@ -93,7 +80,6 @@ public class AccountsDaoImpl implements AccountsDao {
 		return accounts;
 	}
 
-	@Override
 	public Accounts queryById(String Acc_ID) {
 		String sql = "select * from " + Accounts.BASE_TABLE_NAME + " where " + Accounts.BASE_ACCOUNT_ID + " = '" + Acc_ID
 				+ "'";
@@ -103,7 +89,6 @@ public class AccountsDaoImpl implements AccountsDao {
 		return accounts;
 	}
 
-	@Override
 	public ResultSet queryBySql(String query) {
 		ResultSet resultSet = this.conn.executeQuery(query);
 		return resultSet;
@@ -141,7 +126,6 @@ public class AccountsDaoImpl implements AccountsDao {
 		return accounts;
 	}
 
-	@Override
 	public void closeDBConnection() {
 		this.conn.close();
 	}
