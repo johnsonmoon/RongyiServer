@@ -28,7 +28,6 @@ public class CommentProductLogicImpl implements CommentProductLogic {
 		this.commentProductDao = commentProductDao;
 	}
 
-	@Override
 	public String saveCommentProduct(CommentProduct commentProduct) {
 		boolean flag = true;
 		String Comm_ID = RandomUtils.getRandomString(15) + "Comm";
@@ -50,7 +49,6 @@ public class CommentProductLogicImpl implements CommentProductLogic {
 		}
 	}
 
-	@Override
 	public boolean changeCommentDescription(String Comm_ID, String Comm_desc) {
 		boolean flag = true;
 		CommentProduct commentProduct = this.commentProductDao.queryById(Comm_ID);
@@ -63,7 +61,6 @@ public class CommentProductLogicImpl implements CommentProductLogic {
 		return flag;
 	}
 
-	@Override
 	public CommentProduct getCommentProductInfo(String Comm_ID) {
 		CommentProduct commentProduct = this.commentProductDao.queryById(Comm_ID);
 		if (commentProduct == null) {

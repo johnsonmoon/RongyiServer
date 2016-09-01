@@ -25,7 +25,6 @@ public class LikeCrsDaoImpl implements LikeCrsDao {
 		this.conn = conn;
 	}
 
-	@Override
 	public boolean saveLikeCrs(LikeCrs likeCrs) {
 		String sql = "insert into " + LikeCrs.BASE_TABLE_NAME + " values(null, '" + likeCrs.getLike_ID() + "', '"
 				+ likeCrs.getAcc_ID() + "', '" + likeCrs.getRep_ID() + "', '" + likeCrs.getCrs_ID() + "', "
@@ -38,7 +37,6 @@ public class LikeCrsDaoImpl implements LikeCrsDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteLikeCrs(String Like_ID) {
 		boolean flag = false;
 		String sql = "delete from " + LikeCrs.BASE_TABLE_NAME + " where " + LikeCrs.BASE_LIKE_COURSE_ID + " = '" + Like_ID
@@ -52,7 +50,6 @@ public class LikeCrsDaoImpl implements LikeCrsDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updateLikeCrs(LikeCrs likeCrs) {
 		boolean flag = false;
 		String sql = "update " + LikeCrs.BASE_TABLE_NAME + " set " + LikeCrs.BASE_LIKE_COURSE_ACCOUNT_ID + " = '"
@@ -67,7 +64,6 @@ public class LikeCrsDaoImpl implements LikeCrsDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updateLikeCrs(String update) {
 		boolean flag = false;
 		if (this.conn.executeUpdate(update) != 0) {
@@ -77,7 +73,6 @@ public class LikeCrsDaoImpl implements LikeCrsDao {
 		return flag;
 	}
 
-	@Override
 	public LikeCrs queryById(String Like_ID) {
 		String sql = "select * from " + LikeCrs.BASE_TABLE_NAME + " where " + LikeCrs.BASE_LIKE_COURSE_ID + " = '" + Like_ID
 				+ "'";
@@ -87,7 +82,6 @@ public class LikeCrsDaoImpl implements LikeCrsDao {
 		return likeCrs;
 	}
 
-	@Override
 	public List<LikeCrs> queryByAccountId(String Acc_ID) {
 		String sql = "select * from " + LikeCrs.BASE_TABLE_NAME + " where " + LikeCrs.BASE_LIKE_COURSE_ACCOUNT_ID + " = '"
 				+ Acc_ID + "'";
@@ -97,7 +91,6 @@ public class LikeCrsDaoImpl implements LikeCrsDao {
 		return likeCrsList;
 	}
 
-	@Override
 	public List<LikeCrs> queryByReporterId(String Rep_ID) {
 		String sql = "select * from " + LikeCrs.BASE_TABLE_NAME + " where " + LikeCrs.BASE_LIKE_COURSE_PUBLISHER_REP_ID
 				+ " = '" + Rep_ID + "'";
@@ -107,7 +100,6 @@ public class LikeCrsDaoImpl implements LikeCrsDao {
 		return likeCrsList;
 	}
 
-	@Override
 	public List<LikeCrs> queryByCourseId(String Crs_ID) {
 		String sql = "select * from " + LikeCrs.BASE_TABLE_NAME + " where " + LikeCrs.BASE_LIKE_COURSE_COURSE_ID + " = '"
 				+ Crs_ID + "'";
@@ -117,7 +109,6 @@ public class LikeCrsDaoImpl implements LikeCrsDao {
 		return likeCrsList;
 	}
 
-	@Override
 	public ResultSet queryBySql(String sql) {
 		ResultSet resultSet = this.conn.executeQuery(sql);
 		return resultSet;
@@ -171,7 +162,6 @@ public class LikeCrsDaoImpl implements LikeCrsDao {
 		return likeCrsList;
 	}
 
-	@Override
 	public void closeDBConnection() {
 		this.conn.close();
 	}

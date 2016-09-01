@@ -24,7 +24,6 @@ public class CoursesDaoImpl implements CoursesDao {
 		this.conn = conn;
 	}
 
-	@Override
 	public boolean saveCourses(Courses course) {
 		String sql = "insert into " + Courses.BASE_TABLE_NAME + " values(null, '" + course.getCrs_ID() + "', '"
 				+ course.getCrs_name() + "','" + course.getCrs_route() + "', '" + course.getAcc_ID() + "', '"
@@ -38,7 +37,6 @@ public class CoursesDaoImpl implements CoursesDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteCourses(String Crs_ID) {
 		boolean flag = false;
 		String sql = "delete from " + Courses.BASE_TABLE_NAME + " where " + Courses.BASE_COURSES_ID + " = '" + Crs_ID + "'";
@@ -51,7 +49,6 @@ public class CoursesDaoImpl implements CoursesDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updateCourses(Courses course) {
 		boolean flag = false;
 		String sql = "update " + Courses.BASE_TABLE_NAME + " set " + Courses.BASE_COURSES_NAME + " = '"
@@ -68,7 +65,6 @@ public class CoursesDaoImpl implements CoursesDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updateCourses(String update) {
 		boolean flag = false;
 		if (this.conn.executeUpdate(update) != 0) {
@@ -78,7 +74,6 @@ public class CoursesDaoImpl implements CoursesDao {
 		return flag;
 	}
 
-	@Override
 	public Courses queryByName(String Crs_name) {
 		String sql = "select * from " + Courses.BASE_TABLE_NAME + " where " + Courses.BASE_COURSES_NAME + " = '" + Crs_name
 				+ "'";
@@ -88,7 +83,6 @@ public class CoursesDaoImpl implements CoursesDao {
 		return courses;
 	}
 
-	@Override
 	public Courses queryById(String Crs_ID) {
 		String sql = "select * from " + Courses.BASE_TABLE_NAME + " where " + Courses.BASE_COURSES_ID + " = '" + Crs_ID
 				+ "'";
@@ -98,7 +92,6 @@ public class CoursesDaoImpl implements CoursesDao {
 		return courses;
 	}
 
-	@Override
 	public List<Courses> queryByAccountId(String Acc_ID) {
 		String sql = "select * from " + Courses.BASE_TABLE_NAME + " where " + Courses.BASE_COURSES_ACCOUNT_ID + " = '"
 				+ Acc_ID + "'";
@@ -108,7 +101,6 @@ public class CoursesDaoImpl implements CoursesDao {
 		return coursesList;
 	}
 
-	@Override
 	public List<Courses> queryByAuthorId(String Author_ID) {
 		String sql = "select * from " + Courses.BASE_TABLE_NAME + " where " + Courses.BASE_COURSES_AUTHOR_ACCOUNT_ID
 				+ " = '" + Author_ID + "'";
@@ -118,7 +110,6 @@ public class CoursesDaoImpl implements CoursesDao {
 		return coursesList;
 	}
 
-	@Override
 	public ResultSet queryBySql(String query) {
 		ResultSet resultSet = this.conn.executeQuery(query);
 		return resultSet;
@@ -173,7 +164,6 @@ public class CoursesDaoImpl implements CoursesDao {
 		return coursesList;
 	}
 
-	@Override
 	public void closeDBConnection() {
 		this.conn.close();
 	}

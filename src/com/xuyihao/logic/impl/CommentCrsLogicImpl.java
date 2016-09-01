@@ -28,7 +28,6 @@ public class CommentCrsLogicImpl implements CommentCrsLogic {
 		this.coursesDao = coursesDao;
 	}
 
-	@Override
 	public String saveCommentCrs(CommentCrs commentCrs) {
 		boolean flag = true;
 		String Comm_ID = RandomUtils.getRandomString(15) + "Comm";
@@ -48,7 +47,6 @@ public class CommentCrsLogicImpl implements CommentCrsLogic {
 		}
 	}
 
-	@Override
 	public boolean deleteCommentCrs(String Comm_ID) {
 		boolean flag = true;
 		Courses course = this.coursesDao.queryById(this.commentCrsDao.queryById(Comm_ID).getCrs_ID());
@@ -62,7 +60,6 @@ public class CommentCrsLogicImpl implements CommentCrsLogic {
 		return flag;
 	}
 
-	@Override
 	public CommentCrs getCommentCrsInfo(String Comm_ID) {
 		CommentCrs commentCrs = this.commentCrsDao.queryById(Comm_ID);
 		return commentCrs;

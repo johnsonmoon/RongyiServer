@@ -25,7 +25,6 @@ public class ProductsDaoImpl implements ProductsDao {
 		this.conn = conn;
 	}
 
-	@Override
 	public boolean saveProducts(Products product) {
 		String sql = "insert into " + Products.BASE_TABLE_NAME + " values(null, '" + product.getProd_ID() + "', '"
 				+ product.getCat_ID() + "', '" + product.getShop_ID() + "', '" + product.getProd_name() + "', '"
@@ -40,7 +39,6 @@ public class ProductsDaoImpl implements ProductsDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteProducts(String Prod_ID) {
 		boolean flag = false;
 		String sql = "delete from " + Products.BASE_TABLE_NAME + " where " + Products.BASE_PRODUCT_ID + " = '" + Prod_ID
@@ -54,7 +52,6 @@ public class ProductsDaoImpl implements ProductsDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updateProducts(Products product) {
 		boolean flag = false;
 		String sql = "update " + Products.BASE_TABLE_NAME + " set " + Products.BASE_PRODUCT_CATEGORY_ID + " = '"
@@ -72,7 +69,6 @@ public class ProductsDaoImpl implements ProductsDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updateProducts(String update) {
 		boolean flag = false;
 		if (this.conn.executeUpdate(update) != 0) {
@@ -82,7 +78,6 @@ public class ProductsDaoImpl implements ProductsDao {
 		return flag;
 	}
 
-	@Override
 	public Products queryById(String Prod_ID) {
 		String sql = "select * from " + Products.BASE_TABLE_NAME + " where " + Products.BASE_PRODUCT_ID + " = '" + Prod_ID
 				+ "'";
@@ -92,7 +87,6 @@ public class ProductsDaoImpl implements ProductsDao {
 		return products;
 	}
 
-	@Override
 	public List<Products> queryByName(String Prod_name) {
 		String sql = "select * from " + Products.BASE_TABLE_NAME + " where " + Products.BASE_PRODUCT_NAME + " = '"
 				+ Prod_name + "'";
@@ -102,7 +96,6 @@ public class ProductsDaoImpl implements ProductsDao {
 		return productsList;
 	}
 
-	@Override
 	public List<Products> queryByCategoryId(String Cat_ID) {
 		String sql = "select * from " + Products.BASE_TABLE_NAME + " where " + Products.BASE_PRODUCT_CATEGORY_ID + " = '"
 				+ Cat_ID + "'";
@@ -112,7 +105,6 @@ public class ProductsDaoImpl implements ProductsDao {
 		return productsList;
 	}
 
-	@Override
 	public List<Products> queryByShopId(String Shop_ID) {
 		String sql = "select * from " + Products.BASE_TABLE_NAME + " where " + Products.BASE_PRODUCT_SHOP_ID + " = '"
 				+ Shop_ID + "'";
@@ -122,7 +114,6 @@ public class ProductsDaoImpl implements ProductsDao {
 		return productsList;
 	}
 
-	@Override
 	public ResultSet queryBySql(String sql) {
 		ResultSet resultSet = this.conn.executeQuery(sql);
 		return resultSet;
@@ -184,7 +175,6 @@ public class ProductsDaoImpl implements ProductsDao {
 		return productsList;
 	}
 
-	@Override
 	public void closeDBConnection() {
 		this.conn.close();
 	}

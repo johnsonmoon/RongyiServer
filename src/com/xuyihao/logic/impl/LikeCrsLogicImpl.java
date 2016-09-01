@@ -28,7 +28,6 @@ public class LikeCrsLogicImpl implements LikeCrsLogic {
 		this.coursesDao = coursesDao;
 	}
 
-	@Override
 	public String saveLikeCrs(LikeCrs likeCrs) {
 		boolean flag = true;
 		String Crs_ID = likeCrs.getCrs_ID();
@@ -50,7 +49,6 @@ public class LikeCrsLogicImpl implements LikeCrsLogic {
 		}
 	}
 
-	@Override
 	public LikeCrs getLikeCrsInfo(String Like_ID) {
 		LikeCrs likeCrs = this.likeCrsDao.queryById(Like_ID);
 		return likeCrs;

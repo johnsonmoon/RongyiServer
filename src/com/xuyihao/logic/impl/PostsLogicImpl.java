@@ -36,7 +36,6 @@ public class PostsLogicImpl implements PostsLogic {
 		this.repostPostDao = repostPostDao;
 	}
 
-	@Override
 	public String savePost(Posts posts) {
 		boolean flag = true;
 		String Post_ID = RandomUtils.getRandomString(15) + "Post";
@@ -55,13 +54,11 @@ public class PostsLogicImpl implements PostsLogic {
 		}
 	}
 
-	@Override
 	public boolean deletePost(String Post_ID) {
 		boolean flag = this.postDao.deletePosts(Post_ID);
 		return flag;
 	}
 
-	@Override
 	public boolean changePostInfo(Posts post) {
 		Posts DBpost = this.postDao.queryById(post.getPost_ID());
 		if ((DBpost.getPost_ID() == null) || (DBpost.getPost_ID().equals(""))) {
@@ -83,13 +80,11 @@ public class PostsLogicImpl implements PostsLogic {
 		return flag;
 	}
 
-	@Override
 	public Posts getPostInfo(String Post_ID) {
 		Posts post = this.postDao.queryById(Post_ID);
 		return post;
 	}
 
-	@Override
 	public String sharePost(String Acc_ID, String Post_ID) {
 		boolean flag = true;
 		Posts postOld = this.postDao.queryById(Post_ID);

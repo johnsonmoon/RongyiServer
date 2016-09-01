@@ -28,7 +28,6 @@ public class LikePostLogicImpl implements LikePostLogic {
 		this.postsDao = postsDao;
 	}
 
-	@Override
 	public String saveLikePost(LikePost likePost) {
 		boolean flag = true;
 		Posts post = this.postsDao.queryById(likePost.getPost_ID());
@@ -49,7 +48,6 @@ public class LikePostLogicImpl implements LikePostLogic {
 		}
 	}
 
-	@Override
 	public LikePost getLikePostInfo(String Like_ID) {
 		LikePost likePost = this.likePostDao.queryById(Like_ID);
 		return likePost;

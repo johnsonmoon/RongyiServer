@@ -24,7 +24,6 @@ public class CommentCrsDaoImpl implements CommentCrsDao {
 		this.conn = conn;
 	}
 
-	@Override
 	public boolean saveCommentCrs(CommentCrs commentCrs) {
 		boolean flag = false;
 		String sql = "insert into " + CommentCrs.BASE_TABLE_NAME + " values(null, '" + commentCrs.getComm_ID() + "', '"
@@ -37,7 +36,6 @@ public class CommentCrsDaoImpl implements CommentCrsDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteCommentCrs(String Comm_ID) {
 		boolean flag = false;
 		String sql = "delete from " + CommentCrs.BASE_TABLE_NAME + " where " + CommentCrs.BASE_COMMENTCOURSE_ID + " = '"
@@ -51,7 +49,6 @@ public class CommentCrsDaoImpl implements CommentCrsDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updateCommentCrs(CommentCrs commentCrs) {
 		boolean flag = false;
 		String sql = "update " + CommentCrs.BASE_TABLE_NAME + " set " + CommentCrs.BASE_COMMENTCOURSE_DESCRIPTION + " = '"
@@ -67,7 +64,6 @@ public class CommentCrsDaoImpl implements CommentCrsDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updateCommentCrs(String update) {
 		boolean flag = false;
 		if (this.conn.executeUpdate(update) != 0) {
@@ -77,7 +73,6 @@ public class CommentCrsDaoImpl implements CommentCrsDao {
 		return flag;
 	}
 
-	@Override
 	public CommentCrs queryById(String Comm_ID) {
 		String sql = "select * from " + CommentCrs.BASE_TABLE_NAME + " where " + CommentCrs.BASE_COMMENTCOURSE_ID + " = '"
 				+ Comm_ID + "'";
@@ -87,7 +82,6 @@ public class CommentCrsDaoImpl implements CommentCrsDao {
 		return commentCrs;
 	}
 
-	@Override
 	public List<CommentCrs> queryByAccountId(String Acc_ID) {
 		String sql = "select * from " + CommentCrs.BASE_TABLE_NAME + " where " + CommentCrs.BASE_COMMENTCOURSE_ACCOUNT_ID
 				+ " = '" + Acc_ID + "'";
@@ -97,7 +91,6 @@ public class CommentCrsDaoImpl implements CommentCrsDao {
 		return commentCrsList;
 	}
 
-	@Override
 	public List<CommentCrs> queryByReporterId(String Rep_ID) {
 		String sql = "select * from " + CommentCrs.BASE_TABLE_NAME + " where "
 				+ CommentCrs.BASE_COMMENTCOURSE_PUBLISHER_REP_ID + " = '" + Rep_ID + "'";
@@ -107,7 +100,6 @@ public class CommentCrsDaoImpl implements CommentCrsDao {
 		return commentCrsList;
 	}
 
-	@Override
 	public List<CommentCrs> queryByCourseId(String Crs_ID) {
 		String sql = "select * from " + CommentCrs.BASE_TABLE_NAME + " where " + CommentCrs.BASE_COMMENTCOURSE_COURSE_ID
 				+ " = '" + Crs_ID + "'";
@@ -117,7 +109,6 @@ public class CommentCrsDaoImpl implements CommentCrsDao {
 		return commentCrsList;
 	}
 
-	@Override
 	public ResultSet queryBySql(String query) {
 		ResultSet resultSet = this.conn.executeQuery(query);
 		return resultSet;
@@ -171,7 +162,6 @@ public class CommentCrsDaoImpl implements CommentCrsDao {
 		return commentCrsList;
 	}
 
-	@Override
 	public void closeDBConnection() {
 		this.conn.close();
 	}

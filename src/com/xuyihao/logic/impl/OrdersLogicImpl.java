@@ -19,7 +19,6 @@ public class OrdersLogicImpl implements OrdersLogic {
 		this.ordersDao = ordersDao;
 	}
 
-	@Override
 	public String saveOrder(Orders orders) {
 		boolean flag = true;
 		String Ord_ID = RandomUtils.getRandomString(15) + "Ord";
@@ -36,20 +35,17 @@ public class OrdersLogicImpl implements OrdersLogic {
 		}
 	}
 
-	@Override
 	public Orders getOrderInfo(String Ord_ID) {
 		Orders order = this.ordersDao.queryById(Ord_ID);
 		return order;
 	}
 
-	@Override
 	public boolean deleteOrder(String Ord_ID) {
 		boolean flag = true;
 		flag = flag && this.ordersDao.deleteOrders(Ord_ID);
 		return flag;
 	}
 
-	@Override
 	public boolean changeOrderInfo(Orders orders) {
 		Orders DBorder = this.getOrderInfo(orders.getOrd_ID());
 		if (!DBorder.getOrd_ID().equals(orders.getOrd_ID())) {

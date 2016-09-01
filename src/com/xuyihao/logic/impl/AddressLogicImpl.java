@@ -19,7 +19,6 @@ public class AddressLogicImpl implements AddressLogic {
 		this.addressDao = addressDao;
 	}
 
-	@Override
 	public String saveAddress(Address address) {
 		// 生成随机ID
 		String Add_ID = RandomUtils.getRandomString(15) + "Add";
@@ -33,12 +32,10 @@ public class AddressLogicImpl implements AddressLogic {
 		}
 	}
 
-	@Override
 	public Address getAddressInfo(String Add_ID) {
 		return this.addressDao.queryById(Add_ID);
 	}
 
-	@Override
 	public boolean changeAddressInfo(Address address) {
 		Address DBaddress = this.addressDao.queryById(address.getAdd_ID());
 		if ((DBaddress.getAdd_ID() == null) || (DBaddress.getAdd_ID().equals(""))) {
@@ -58,7 +55,6 @@ public class AddressLogicImpl implements AddressLogic {
 		return this.addressDao.updateAddress(address);
 	}
 
-	@Override
 	public boolean deleteAddress(String Add_ID) {
 		return this.addressDao.deleteAddress(Add_ID);
 	}

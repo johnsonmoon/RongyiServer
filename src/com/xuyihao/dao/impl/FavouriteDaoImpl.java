@@ -18,7 +18,6 @@ public class FavouriteDaoImpl implements FavouriteDao {
 		this.connDB = connDB;
 	}
 
-	@Override
 	public boolean saveFavourite(String Acc_Id, String Shop_Id, String Favo_addTime) {
 		boolean flag = false;
 		String sql = "insert into Favourite values(null, '" + Acc_Id + "', '" + Shop_Id + "', DATE_FORMAT('" + Favo_addTime
@@ -30,7 +29,6 @@ public class FavouriteDaoImpl implements FavouriteDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteFavourite(String Acc_Id, String Shop_Id) {
 		boolean flag = false;
 		String sql = "delete from Favourite where Acc_ID = '" + Acc_Id + "' and Shop_ID = '" + Shop_Id + "'";
@@ -41,7 +39,6 @@ public class FavouriteDaoImpl implements FavouriteDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteFavouriteAll(String Acc_Id) {
 		boolean flag = false;
 		String sql = "delete from Favourite where Acc_Id = '" + Acc_Id + "'";
@@ -52,7 +49,6 @@ public class FavouriteDaoImpl implements FavouriteDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteFavouriteBySql(String sql) {
 		boolean flag = false;
 		if (this.connDB.executeUpdate(sql) != 0) {
@@ -62,7 +58,6 @@ public class FavouriteDaoImpl implements FavouriteDao {
 		return flag;
 	}
 
-	@Override
 	public List<String> queryByAccountId(String Acc_Id) {
 		String sql = "select * from Favourite where Acc_ID = '" + Acc_Id + "'";
 		ResultSet resultSet = this.connDB.executeQuery(sql);
@@ -78,7 +73,6 @@ public class FavouriteDaoImpl implements FavouriteDao {
 		return shopIdList;
 	}
 
-	@Override
 	public List<String> queryByShopId(String Shop_Id) {
 		String sql = "select * from Favourite where Shop_ID = '" + Shop_Id + "'";
 		ResultSet resultSet = this.connDB.executeQuery(sql);
@@ -94,7 +88,6 @@ public class FavouriteDaoImpl implements FavouriteDao {
 		return accountIdList;
 	}
 
-	@Override
 	public void closeDBConnection() {
 		this.connDB.close();
 	}

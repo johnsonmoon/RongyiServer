@@ -36,7 +36,6 @@ public class CoursesLogicImpl implements CoursesLogic {
 		this.repostCrsDao = repostCrsDao;
 	}
 
-	@Override
 	public String saveCourse(Courses courses) {
 		boolean flag = true;
 		String Crs_ID = RandomUtils.getRandomString(15) + "Crs";
@@ -55,13 +54,11 @@ public class CoursesLogicImpl implements CoursesLogic {
 		}
 	}
 
-	@Override
 	public boolean deleteCourse(String Crs_ID) {
 		boolean flag = this.coursesDao.deleteCourses(Crs_ID);
 		return flag;
 	}
 
-	@Override
 	public boolean changeCourseInfo(Courses course) {
 		Courses DBcourse = this.coursesDao.queryById(course.getCrs_ID());
 		if ((course.getCrs_name() == null) || (course.getCrs_name().equals(""))) {
@@ -81,13 +78,11 @@ public class CoursesLogicImpl implements CoursesLogic {
 		return flag;
 	}
 
-	@Override
 	public Courses getCoursesInfo(String Crs_ID) {
 		Courses course = this.coursesDao.queryById(Crs_ID);
 		return course;
 	}
 
-	@Override
 	public String shareCourse(String Acc_ID, String Crs_ID) {
 		boolean flag = true;
 		Courses courseOld = this.coursesDao.queryById(Crs_ID);

@@ -28,7 +28,6 @@ public class CommentPostLogicImpl implements CommentPostLogic {
 		this.postsDao = postsDao;
 	}
 
-	@Override
 	public String saveCommentPost(CommentPost commentPost) {
 		boolean flag = true;
 		String Comm_ID = RandomUtils.getRandomString(15) + "Comm";
@@ -49,7 +48,6 @@ public class CommentPostLogicImpl implements CommentPostLogic {
 		}
 	}
 
-	@Override
 	public boolean deleteCommentPost(String Comm_ID) {
 		boolean flag = true;
 		Posts post = this.postsDao.queryById(this.commentPostDao.queryById(Comm_ID).getPost_ID());
@@ -63,7 +61,6 @@ public class CommentPostLogicImpl implements CommentPostLogic {
 		return flag;
 	}
 
-	@Override
 	public CommentPost getCommentInfo(String Comm_ID) {
 		CommentPost commentPost = this.commentPostDao.queryById(Comm_ID);
 		if (commentPost == null) {

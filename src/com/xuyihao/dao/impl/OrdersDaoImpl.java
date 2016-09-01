@@ -24,7 +24,6 @@ public class OrdersDaoImpl implements OrdersDao {
 		this.conn = conn;
 	}
 
-	@Override
 	public boolean saveOrders(Orders orders) {
 		String sql = "insert into " + Orders.BASE_TABLE_NAME + " values(null, '" + orders.getOrd_ID() + "', '"
 				+ orders.getOrd_date() + "', '" + orders.getAcc_ID() + "', '" + orders.getProd_ID() + "', "
@@ -39,7 +38,6 @@ public class OrdersDaoImpl implements OrdersDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteOrders(String Ord_ID) {
 		boolean flag = false;
 		String sql = "delete from " + Orders.BASE_TABLE_NAME + " where " + Orders.BASE_ORDERS_ID + " = '" + Ord_ID + "'";
@@ -52,7 +50,6 @@ public class OrdersDaoImpl implements OrdersDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updateOrders(Orders orders) {
 		boolean flag = false;
 		String sql = "update " + Orders.BASE_TABLE_NAME + " set " + Orders.BASE_ORDERS_DATE + " = '" + orders.getOrd_date()
@@ -73,7 +70,6 @@ public class OrdersDaoImpl implements OrdersDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updateOrders(String update) {
 		boolean flag = false;
 		if (this.conn.executeUpdate(update) == 0) {
@@ -85,7 +81,6 @@ public class OrdersDaoImpl implements OrdersDao {
 		return flag;
 	}
 
-	@Override
 	public Orders queryById(String Ord_ID) {
 		String sql = "select * from " + Orders.BASE_TABLE_NAME + " where " + Orders.BASE_ORDERS_ID + " = '" + Ord_ID + "'";
 		ResultSet resultSet = this.conn.executeQuery(sql);
@@ -94,7 +89,6 @@ public class OrdersDaoImpl implements OrdersDao {
 		return orders;
 	}
 
-	@Override
 	public List<Orders> queryByAccountId(String Acc_ID) {
 		String sql = "select * from " + Orders.BASE_TABLE_NAME + " where " + Orders.BASE_ORDERS_ACCOUNT_ID + " = '" + Acc_ID
 				+ "'";
@@ -104,7 +98,6 @@ public class OrdersDaoImpl implements OrdersDao {
 		return ordersList;
 	}
 
-	@Override
 	public List<Orders> queryByOrderDate(String Ord_date) {
 		String sql = "select * from " + Orders.BASE_TABLE_NAME + " where " + Orders.BASE_ORDERS_DATE + " = '" + Ord_date
 				+ "'";
@@ -114,7 +107,6 @@ public class OrdersDaoImpl implements OrdersDao {
 		return ordersList;
 	}
 
-	@Override
 	public ResultSet queryBySql(String sql) {
 		ResultSet resultSet = this.conn.executeQuery(sql);
 		return resultSet;
@@ -180,7 +172,6 @@ public class OrdersDaoImpl implements OrdersDao {
 		return ordersList;
 	}
 
-	@Override
 	public void closeDBConnection() {
 		this.conn.close();
 	}

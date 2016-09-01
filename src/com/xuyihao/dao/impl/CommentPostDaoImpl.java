@@ -24,7 +24,6 @@ public class CommentPostDaoImpl implements CommentPostDao {
 		this.conn = conn;
 	}
 
-	@Override
 	public boolean saveCommentPost(CommentPost commentPost) {
 		boolean flag = false;
 		String sql = "insert into " + CommentPost.BASE_TABLE_NAME + " values(null, '" + commentPost.getComm_ID() + "', '"
@@ -37,7 +36,6 @@ public class CommentPostDaoImpl implements CommentPostDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteCommentPost(String Comm_ID) {
 		boolean flag = false;
 		String sql = "delete from " + CommentPost.BASE_TABLE_NAME + " where " + CommentPost.BASE_COMMENTPOST_ID + " = '"
@@ -51,7 +49,6 @@ public class CommentPostDaoImpl implements CommentPostDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updateCommentPost(CommentPost commentPost) {
 		boolean flag = false;
 		String sql = "update " + CommentPost.BASE_TABLE_NAME + " set " + CommentPost.BASE_COMMENTPOST_DESCRIPTION + " = '"
@@ -67,7 +64,6 @@ public class CommentPostDaoImpl implements CommentPostDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updateCommentPost(String update) {
 		boolean flag = false;
 		if (this.conn.executeUpdate(update) != 0) {
@@ -77,7 +73,6 @@ public class CommentPostDaoImpl implements CommentPostDao {
 		return flag;
 	}
 
-	@Override
 	public CommentPost queryById(String Comm_ID) {
 		String sql = "select * from " + CommentPost.BASE_TABLE_NAME + " where " + CommentPost.BASE_COMMENTPOST_ID + " = '"
 				+ Comm_ID + "'";
@@ -87,7 +82,6 @@ public class CommentPostDaoImpl implements CommentPostDao {
 		return commentPost;
 	}
 
-	@Override
 	public List<CommentPost> queryByAccountId(String Acc_ID) {
 		String sql = "select * from " + CommentPost.BASE_TABLE_NAME + " where " + CommentPost.BASE_COMMENTPOST_ACCOUNT_ID
 				+ " = '" + Acc_ID + "'";
@@ -97,7 +91,6 @@ public class CommentPostDaoImpl implements CommentPostDao {
 		return commentPostList;
 	}
 
-	@Override
 	public List<CommentPost> queryByReporterId(String Rep_ID) {
 		String sql = "select * from " + CommentPost.BASE_TABLE_NAME + " where "
 				+ CommentPost.BASE_COMMENTPOST_PUBLICSHER_REP_ID + " = '" + Rep_ID + "'";
@@ -107,7 +100,6 @@ public class CommentPostDaoImpl implements CommentPostDao {
 		return commentPostList;
 	}
 
-	@Override
 	public List<CommentPost> queryByPostId(String Post_ID) {
 		String sql = "select * from " + CommentPost.BASE_TABLE_NAME + " where " + CommentPost.BASE_COMMENTPOST_POST_ID
 				+ " = '" + Post_ID + "'";
@@ -117,7 +109,6 @@ public class CommentPostDaoImpl implements CommentPostDao {
 		return commentPostList;
 	}
 
-	@Override
 	public ResultSet queryBySql(String query) {
 		ResultSet resultSet = this.conn.executeQuery(query);
 		return resultSet;
@@ -171,7 +162,6 @@ public class CommentPostDaoImpl implements CommentPostDao {
 		return commentPostList;
 	}
 
-	@Override
 	public void closeDBConnection() {
 		this.conn.close();
 	}

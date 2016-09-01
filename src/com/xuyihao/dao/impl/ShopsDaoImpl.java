@@ -24,7 +24,6 @@ public class ShopsDaoImpl implements ShopsDao {
 		this.conn = conn;
 	}
 
-	@Override
 	public boolean saveShops(Shops shop) {
 		String sql = "insert into " + Shops.BASE_TABLE_NAME + " values(null, '" + shop.getShop_ID() + "', '"
 				+ shop.getShop_name() + "', '" + shop.getShop_info() + "', '" + shop.getShop_licen() + "', "
@@ -38,7 +37,6 @@ public class ShopsDaoImpl implements ShopsDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteShops(String Shop_ID) {
 		boolean flag = false;
 		String sql = "delete from " + Shops.BASE_TABLE_NAME + " where " + Shops.BASE_SHOP_ID + " = '" + Shop_ID + "'";
@@ -51,7 +49,6 @@ public class ShopsDaoImpl implements ShopsDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updateShops(Shops shop) {
 		boolean flag = false;
 		String sql = "update " + Shops.BASE_TABLE_NAME + " set " + Shops.BASE_SHOP_NAME + " = '" + shop.getShop_name()
@@ -67,7 +64,6 @@ public class ShopsDaoImpl implements ShopsDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updateShops(String update) {
 		boolean flag = false;
 		if (this.conn.executeUpdate(update) != 0) {
@@ -77,7 +73,6 @@ public class ShopsDaoImpl implements ShopsDao {
 		return flag;
 	}
 
-	@Override
 	public Shops queryById(String Shop_ID) {
 		String sql = "select * from " + Shops.BASE_TABLE_NAME + " where " + Shops.BASE_SHOP_ID + " = '" + Shop_ID + "'";
 		ResultSet resultSet = this.conn.executeQuery(sql);
@@ -86,7 +81,6 @@ public class ShopsDaoImpl implements ShopsDao {
 		return shops;
 	}
 
-	@Override
 	public Shops queryByName(String Shop_name) {
 		String sql = "select * from " + Shops.BASE_TABLE_NAME + " where " + Shops.BASE_SHOP_NAME + " = '" + Shop_name + "'";
 		ResultSet resultSet = this.conn.executeQuery(sql);
@@ -95,7 +89,6 @@ public class ShopsDaoImpl implements ShopsDao {
 		return shops;
 	}
 
-	@Override
 	public List<Shops> queryByAccountId(String Acc_ID) {
 		String sql = "select * from " + Shops.BASE_TABLE_NAME + " where " + Shops.BASE_SHOP_OWNER_ACCOUNT_ID + " = '"
 				+ Acc_ID + "'";
@@ -105,7 +98,6 @@ public class ShopsDaoImpl implements ShopsDao {
 		return shopsList;
 	}
 
-	@Override
 	public ResultSet queryBySql(String sql) {
 		ResultSet resultSet = this.conn.executeQuery(sql);
 		return resultSet;
@@ -166,7 +158,6 @@ public class ShopsDaoImpl implements ShopsDao {
 		return shopsList;
 	}
 
-	@Override
 	public void closeDBConnection() {
 		this.conn.close();
 	}

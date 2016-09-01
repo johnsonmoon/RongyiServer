@@ -24,7 +24,6 @@ public class CartDaoImpl implements CartDao {
 		this.conn = conn;
 	}
 
-	@Override
 	public boolean saveCart(Cart cart) {
 		boolean flag = false;
 		String sql = "insert into " + Cart.BASE_TABLE_NAME + " values(null, '" + cart.getCart_ID() + "', '"
@@ -37,7 +36,6 @@ public class CartDaoImpl implements CartDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteCart(String Cart_ID) {
 		boolean flag = false;
 		String sql = "delete from " + Cart.BASE_TABLE_NAME + " where " + Cart.BASE_CART_ID + " = '" + Cart_ID + "'";
@@ -50,7 +48,6 @@ public class CartDaoImpl implements CartDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updateCart(Cart cart) {
 		boolean flag = false;
 		String sql = "update " + Cart.BASE_TABLE_NAME + " set " + Cart.BASE_CART_PRODUCT_ID + " = '" + cart.getProd_ID()
@@ -67,7 +64,6 @@ public class CartDaoImpl implements CartDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updateCart(String update) {
 		boolean flag = false;
 		if (this.conn.executeUpdate(update) == 0) {
@@ -79,7 +75,6 @@ public class CartDaoImpl implements CartDao {
 		return flag;
 	}
 
-	@Override
 	public List<Cart> queryByAccountId(String Acc_ID) {
 		String sql = "select * from " + Cart.BASE_TABLE_NAME + " where " + Cart.BASE_CART_ACCOUNT_ID + " = '" + Acc_ID
 				+ "'";
@@ -89,7 +84,6 @@ public class CartDaoImpl implements CartDao {
 		return cartList;
 	}
 
-	@Override
 	public Cart queryById(String Cart_ID) {
 		String sql = "select * from " + Cart.BASE_TABLE_NAME + " where " + Cart.BASE_CART_ID + " = '" + Cart_ID + "'";
 		ResultSet rs = this.conn.executeQuery(sql);
@@ -98,7 +92,6 @@ public class CartDaoImpl implements CartDao {
 		return cart;
 	}
 
-	@Override
 	public ResultSet queryBySql(String query) {
 		ResultSet resultSet = this.conn.executeQuery(query);
 		return resultSet;
@@ -150,7 +143,6 @@ public class CartDaoImpl implements CartDao {
 		return cartList;
 	}
 
-	@Override
 	public void closeDBConnection() {
 		this.conn.close();
 	}

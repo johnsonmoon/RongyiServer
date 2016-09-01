@@ -18,7 +18,6 @@ public class AttentionDaoImpl implements AttentionDao {
 		this.connDB = connDB;
 	}
 
-	@Override
 	public boolean saveAttention(String Acc_Id, String Att_Id, String Att_addTime) {
 		boolean flag = false;
 		String sql = "insert into Attention values(null, '" + Acc_Id + "', '" + Att_Id + "', DATE_FORMAT('" + Att_addTime
@@ -30,7 +29,6 @@ public class AttentionDaoImpl implements AttentionDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteAttention(String Acc_Id, String Att_Id) {
 		boolean flag = false;
 		String sql = "delete from Attention where Acc_ID = '" + Acc_Id + "' and Att_ID = '" + Att_Id + "'";
@@ -41,7 +39,6 @@ public class AttentionDaoImpl implements AttentionDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteAttentionAll(String Acc_Id) {
 		boolean flag = false;
 		String sql = "delete from Attention where Acc_ID = '" + Acc_Id + "'";
@@ -52,7 +49,6 @@ public class AttentionDaoImpl implements AttentionDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteAttentionBySql(String sql) {
 		boolean flag = false;
 		if (this.connDB.executeUpdate(sql) != 0) {
@@ -62,7 +58,6 @@ public class AttentionDaoImpl implements AttentionDao {
 		return flag;
 	}
 
-	@Override
 	public List<String> queryByAtn(String Acc_Id) {
 		String sql = "select * from Attention where Acc_ID = '" + Acc_Id + "'";
 		ResultSet resultSet = this.connDB.executeQuery(sql);
@@ -79,7 +74,6 @@ public class AttentionDaoImpl implements AttentionDao {
 		return attenedAccountIdList;
 	}
 
-	@Override
 	public List<String> queryByAtned(String Att_Id) {
 		String sql = "select * from Attention where Att_ID = '" + Att_Id + "'";
 		ResultSet resultSet = this.connDB.executeQuery(sql);
@@ -96,7 +90,6 @@ public class AttentionDaoImpl implements AttentionDao {
 		return attenAccountIdList;
 	}
 
-	@Override
 	public void closeDBConnection() {
 		this.connDB.close();
 	}

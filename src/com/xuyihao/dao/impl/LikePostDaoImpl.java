@@ -25,7 +25,6 @@ public class LikePostDaoImpl implements LikePostDao {
 		this.conn = conn;
 	}
 
-	@Override
 	public boolean saveLikePost(LikePost likePost) {
 		String sql = "insert into " + LikePost.BASE_TABLE_NAME + " values(null, '" + likePost.getLike_ID() + "', '"
 				+ likePost.getAcc_ID() + "', '" + likePost.getRep_ID() + "', '" + likePost.getPost_ID() + "', "
@@ -38,7 +37,6 @@ public class LikePostDaoImpl implements LikePostDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteLikePost(String Like_ID) {
 		boolean flag = false;
 		String sql = "delete from " + LikePost.BASE_TABLE_NAME + " where " + LikePost.BASE_LIKE_POST_ID + " = '" + Like_ID
@@ -52,7 +50,6 @@ public class LikePostDaoImpl implements LikePostDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updateLikePost(LikePost likePost) {
 		boolean flag = false;
 		String sql = "update " + LikePost.BASE_TABLE_NAME + " set " + LikePost.BASE_LIKE_POST_ACCOUNT_ID + " = '"
@@ -68,7 +65,6 @@ public class LikePostDaoImpl implements LikePostDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updateLikePost(String update) {
 		boolean flag = false;
 		if (this.conn.executeUpdate(update) != 0) {
@@ -78,7 +74,6 @@ public class LikePostDaoImpl implements LikePostDao {
 		return flag;
 	}
 
-	@Override
 	public LikePost queryById(String Like_ID) {
 		String sql = "select * from " + LikePost.BASE_TABLE_NAME + " where " + LikePost.BASE_LIKE_POST_ID + " = '" + Like_ID
 				+ "'";
@@ -88,7 +83,6 @@ public class LikePostDaoImpl implements LikePostDao {
 		return likePost;
 	}
 
-	@Override
 	public List<LikePost> queryByAccountId(String Acc_ID) {
 		String sql = "select * from " + LikePost.BASE_TABLE_NAME + " where " + LikePost.BASE_LIKE_POST_ACCOUNT_ID + " = '"
 				+ Acc_ID + "'";
@@ -98,7 +92,6 @@ public class LikePostDaoImpl implements LikePostDao {
 		return likePostList;
 	}
 
-	@Override
 	public List<LikePost> queryByReporterId(String Rep_ID) {
 		String sql = "select * from " + LikePost.BASE_TABLE_NAME + " where " + LikePost.BASE_LIKE_POST_PUBLISHER_REP_ID
 				+ " = '" + Rep_ID + "'";
@@ -108,7 +101,6 @@ public class LikePostDaoImpl implements LikePostDao {
 		return likePostList;
 	}
 
-	@Override
 	public List<LikePost> queryByPostId(String Post_ID) {
 		String sql = "select * from " + LikePost.BASE_TABLE_NAME + " where " + LikePost.BASE_LIKE_POST_ID + " = '" + Post_ID
 				+ "'";
@@ -118,7 +110,6 @@ public class LikePostDaoImpl implements LikePostDao {
 		return likePostList;
 	}
 
-	@Override
 	public ResultSet queryBySql(String sql) {
 		ResultSet resultSet = this.conn.executeQuery(sql);
 		return resultSet;
@@ -172,7 +163,6 @@ public class LikePostDaoImpl implements LikePostDao {
 		return likePostList;
 	}
 
-	@Override
 	public void closeDBConnection() {
 		this.conn.close();
 	}

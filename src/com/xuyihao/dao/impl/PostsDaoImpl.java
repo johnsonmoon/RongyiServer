@@ -24,7 +24,6 @@ public class PostsDaoImpl implements PostsDao {
 		this.conn = conn;
 	}
 
-	@Override
 	public boolean savePosts(Posts post) {
 		String sql = "insert into " + Posts.BASE_TABLE_NAME + " values(null, '" + post.getPost_ID() + "', '"
 				+ post.getPost_name() + "', '" + post.getPost_route() + "', '" + post.getAcc_ID() + "', '" + post.getAuthor_ID()
@@ -38,7 +37,6 @@ public class PostsDaoImpl implements PostsDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deletePosts(String Post_ID) {
 		boolean flag = false;
 		String sql = "delete from " + Posts.BASE_TABLE_NAME + " where " + Posts.BASE_POSTS_ID + " = '" + Post_ID + "'";
@@ -51,7 +49,6 @@ public class PostsDaoImpl implements PostsDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updatePosts(Posts post) {
 		boolean flag = false;
 		String sql = "update " + Posts.BASE_TABLE_NAME + " set " + Posts.BASE_POSTS_NAME + " = '" + post.getPost_name()
@@ -68,7 +65,6 @@ public class PostsDaoImpl implements PostsDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updatePosts(String update) {
 		boolean flag = false;
 		if (this.conn.executeUpdate(update) != 0) {
@@ -78,7 +74,6 @@ public class PostsDaoImpl implements PostsDao {
 		return flag;
 	}
 
-	@Override
 	public Posts queryById(String Post_ID) {
 		String sql = "select * from " + Posts.BASE_TABLE_NAME + " where " + Posts.BASE_POSTS_ID + " = '" + Post_ID + "'";
 		ResultSet resultSet = this.conn.executeQuery(sql);
@@ -87,7 +82,6 @@ public class PostsDaoImpl implements PostsDao {
 		return posts;
 	}
 
-	@Override
 	public Posts queryByName(String Post_name) {
 		String sql = "select * from " + Posts.BASE_TABLE_NAME + " where " + Posts.BASE_POSTS_NAME + " = '" + Post_name
 				+ "'";
@@ -97,7 +91,6 @@ public class PostsDaoImpl implements PostsDao {
 		return posts;
 	}
 
-	@Override
 	public List<Posts> queryByAuthorId(String Author_ID) {
 		String sql = "select * from " + Posts.BASE_TABLE_NAME + " where " + Posts.BASE_POSTS_AUTHOR_ACCOUNT_ID + " = '"
 				+ Author_ID + "'";
@@ -107,7 +100,6 @@ public class PostsDaoImpl implements PostsDao {
 		return postsList;
 	}
 
-	@Override
 	public List<Posts> queryByAccountId(String Acc_ID) {
 		String sql = "select * from " + Posts.BASE_TABLE_NAME + " where " + Posts.BASE_POSTS_ACCOUNT_ID + " = '" + Acc_ID
 				+ "'";
@@ -117,7 +109,6 @@ public class PostsDaoImpl implements PostsDao {
 		return postsList;
 	}
 
-	@Override
 	public ResultSet queryBySql(String sql) {
 		ResultSet resultSet = this.conn.executeQuery(sql);
 		return resultSet;
@@ -177,7 +168,6 @@ public class PostsDaoImpl implements PostsDao {
 		return postsList;
 	}
 
-	@Override
 	public void closeDBConnection() {
 		this.conn.close();
 	}

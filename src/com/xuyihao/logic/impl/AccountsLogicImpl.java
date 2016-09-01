@@ -55,7 +55,6 @@ public class AccountsLogicImpl implements AccountsLogic {
 		this.accountsDao = accountsDao;
 	}
 
-	@Override
 	public boolean accountNameExist(String Acc_name) {
 		boolean result = false;
 		Accounts accounts = accountsDao.queryByName(Acc_name);
@@ -67,7 +66,6 @@ public class AccountsLogicImpl implements AccountsLogic {
 		return result;
 	}
 
-	@Override
 	public String saveAccounts(Accounts accounts) {
 		String Acc_ID = "";
 		if (accountNameExist(accounts.getAcc_name())) {
@@ -83,7 +81,6 @@ public class AccountsLogicImpl implements AccountsLogic {
 		return Acc_ID;
 	}
 
-	@Override
 	public String login(String Acc_name, String Acc_pwd) {
 		String result = "";
 		Accounts DBaccount = accountsDao.queryByName(Acc_name);
@@ -97,7 +94,6 @@ public class AccountsLogicImpl implements AccountsLogic {
 		return result;
 	}
 
-	@Override
 	public boolean changeAccountInfo(Accounts accounts) {
 		if ((accounts.getAcc_ID() == null) || (accounts.getAcc_ID().equals(""))) {
 			return false;
@@ -151,17 +147,14 @@ public class AccountsLogicImpl implements AccountsLogic {
 		}
 	}
 
-	@Override
 	public Accounts getAccountsInformationByName(String Acc_name) {
 		return accountsDao.queryByName(Acc_name);
 	}
 
-	@Override
 	public Accounts getAccountsInformationById(String Acc_ID) {
 		return accountsDao.queryById(Acc_ID);
 	}
 
-	@Override
 	public boolean attention(String atn_Id, String atned_Id) {
 		boolean result = false;
 		Accounts accountAtn = accountsDao.queryById(atn_Id);
@@ -177,7 +170,6 @@ public class AccountsLogicImpl implements AccountsLogic {
 		return result;
 	}
 
-	@Override
 	public boolean cancelAtention(String atn_Id, String atned_Id) {
 		boolean result = false;
 		Accounts accountAtn = accountsDao.queryById(atn_Id);
@@ -193,7 +185,6 @@ public class AccountsLogicImpl implements AccountsLogic {
 		return result;
 	}
 
-	@Override
 	public boolean favourite(String Acc_Id, String Shop_ID) {
 		List<String> shopIdList = this.favouriteDao.queryByAccountId(Acc_Id);
 		for (String shopId : shopIdList) {
@@ -208,7 +199,6 @@ public class AccountsLogicImpl implements AccountsLogic {
 		return (flag1 && flag2);
 	}
 
-	@Override
 	public boolean cancelFavourite(String Acc_Id, String Shop_ID) {
 		boolean flag1 = this.favouriteDao.deleteFavourite(Acc_Id, Shop_ID);
 		Shops shopUpdate = this.shopsDao.queryById(Shop_ID);
@@ -217,7 +207,6 @@ public class AccountsLogicImpl implements AccountsLogic {
 		return (flag1 && flag2);
 	}
 
-	@Override
 	public boolean want(String Acc_ID, String Prod_ID) {
 		List<String> productIdList = this.wantDao.queryByAccountId(Acc_ID);
 		for (String prodId : productIdList) {
@@ -228,7 +217,6 @@ public class AccountsLogicImpl implements AccountsLogic {
 		return this.wantDao.saveWant(Acc_ID, Prod_ID, DateUtils.currentDateTime());
 	}
 
-	@Override
 	public boolean cancelWant(String Acc_ID, String Prod_ID) {
 		return this.wantDao.deleteWant(Acc_ID, Prod_ID);
 	}

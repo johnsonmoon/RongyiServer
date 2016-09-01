@@ -19,7 +19,6 @@ public class ShopsLogicImpl implements ShopsLogic {
 		this.shopsDao = shopsDao;
 	}
 
-	@Override
 	public String saveShop(Shops shops) {
 		boolean flag = true;
 		String Shop_ID = RandomUtils.getRandomString(15) + "Shop";
@@ -34,7 +33,6 @@ public class ShopsLogicImpl implements ShopsLogic {
 		}
 	}
 
-	@Override
 	public boolean shopNameExist(String Shop_name) {
 		Shops shop = this.shopsDao.queryByName(Shop_name);
 		if ((shop.get_id() == 0) || (shop.getShop_ID().equals(""))) {
@@ -44,19 +42,16 @@ public class ShopsLogicImpl implements ShopsLogic {
 		}
 	}
 
-	@Override
 	public String getShopID(String name) {
 		Shops shop = this.shopsDao.queryByName(name);
 		return shop.getShop_ID();
 	}
 
-	@Override
 	public Shops getShopInfo(String Shop_ID) {
 		Shops shop = this.shopsDao.queryById(Shop_ID);
 		return shop;
 	}
 
-	@Override
 	public boolean changeShopInfo(Shops shop) {
 		boolean flag = true;
 		Shops DBshop = this.shopsDao.queryById(shop.getShop_ID());
@@ -82,7 +77,6 @@ public class ShopsLogicImpl implements ShopsLogic {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteShop(String Shop_ID) {
 		return this.shopsDao.deleteShops(Shop_ID);
 	}

@@ -14,7 +14,6 @@ import java.util.List;
 public class WantDaoImpl implements WantDao {
 	private DatabaseConnector connDB = new DatabaseConnector();
 
-	@Override
 	public boolean saveWant(String Acc_ID, String Prod_ID, String Want_addTime) {
 		boolean flag = false;
 		String sql = "insert into Want values(null, '" + Acc_ID + "', '" + Prod_ID + "', DATE_FORMAT('" + Want_addTime
@@ -26,7 +25,6 @@ public class WantDaoImpl implements WantDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteWant(String Acc_Id, String Prod_ID) {
 		boolean flag = false;
 		String sql = "delete from Want where Acc_ID = '" + Acc_Id + "' and Prod_ID = '" + Prod_ID + "'";
@@ -37,7 +35,6 @@ public class WantDaoImpl implements WantDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteWantAll(String Acc_Id) {
 		boolean flag = false;
 		String sql = "delete from Want where Acc_ID = '" + Acc_Id + "'";
@@ -48,7 +45,6 @@ public class WantDaoImpl implements WantDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteWantBySql(String sql) {
 		boolean flag = false;
 		if (this.connDB.executeUpdate(sql) != 0) {
@@ -58,7 +54,6 @@ public class WantDaoImpl implements WantDao {
 		return flag;
 	}
 
-	@Override
 	public List<String> queryByAccountId(String Acc_Id) {
 		String sql = "select * from Want where Acc_ID = '" + Acc_Id + "'";
 		ResultSet resultSet = this.connDB.executeQuery(sql);
@@ -74,7 +69,6 @@ public class WantDaoImpl implements WantDao {
 		return productIdList;
 	}
 
-	@Override
 	public List<String> queryByProductId(String Prod_Id) {
 		String sql = "select * from Want where Prod_ID = '" + Prod_Id + "'";
 		ResultSet resultSet = this.connDB.executeQuery(sql);
@@ -94,7 +88,6 @@ public class WantDaoImpl implements WantDao {
 		this.connDB = connDB;
 	}
 
-	@Override
 	public void closeDBConnection() {
 		this.connDB.close();
 	}

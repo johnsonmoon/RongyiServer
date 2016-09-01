@@ -23,7 +23,6 @@ public class CategoryDaoImpl implements CategoryDao {
 		this.conn = conn;
 	}
 
-	@Override
 	public boolean saveCategory(Category category) {
 		boolean flag = false;
 		String sql = "insert into " + Category.BASE_TABLE_NAME + " values(null, '" + category.getCat_ID() + "', '"
@@ -36,7 +35,6 @@ public class CategoryDaoImpl implements CategoryDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteCategory(String Cat_ID) {
 		boolean flag = false;
 		String sql = "delete from " + Category.BASE_TABLE_NAME + " where " + Category.BASE_CATEGORY_ID + " = '" + Cat_ID
@@ -48,7 +46,6 @@ public class CategoryDaoImpl implements CategoryDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updateCategory(Category category) {
 		boolean flag = false;
 		String sql = "update " + Category.BASE_TABLE_NAME + " set " + Category.BASE_CATEGORY_NAME + " = '"
@@ -62,7 +59,6 @@ public class CategoryDaoImpl implements CategoryDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updateCategory(String update) {
 		boolean flag = false;
 		if (this.conn.executeUpdate(update) != 0) {
@@ -72,7 +68,6 @@ public class CategoryDaoImpl implements CategoryDao {
 		return flag;
 	}
 
-	@Override
 	public Category queryById(String Cat_ID) {
 		String sql = "select * from " + Category.BASE_TABLE_NAME + " where " + Category.BASE_CATEGORY_ID + " = '" + Cat_ID
 				+ "'";
@@ -82,7 +77,6 @@ public class CategoryDaoImpl implements CategoryDao {
 		return category;
 	}
 
-	@Override
 	public Category queryByName(String Cat_name) {
 		String sql = "select * from " + Category.BASE_TABLE_NAME + " where " + Category.BASE_CATEGORY_NAME + " = '"
 				+ Cat_name + "'";
@@ -92,7 +86,6 @@ public class CategoryDaoImpl implements CategoryDao {
 		return category;
 	}
 
-	@Override
 	public ResultSet queryBySql(String query) {
 		ResultSet resultSet = this.conn.executeQuery(query);
 		return resultSet;
@@ -118,7 +111,6 @@ public class CategoryDaoImpl implements CategoryDao {
 		return category;
 	}
 
-	@Override
 	public void closeDBConnection() {
 		this.conn.close();
 	}

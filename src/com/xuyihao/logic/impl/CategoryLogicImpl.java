@@ -19,7 +19,6 @@ public class CategoryLogicImpl implements CategoryLogic {
 		this.categoryDao = categoryDao;
 	}
 
-	@Override
 	public String saveCategory(Category category) {
 		String Cat_ID = RandomUtils.getRandomString(15) + "Cat";
 		String Add_time = DateUtils.currentDateTime();
@@ -32,7 +31,6 @@ public class CategoryLogicImpl implements CategoryLogic {
 		}
 	}
 
-	@Override
 	public Category getCategoryInfoById(String Cat_ID) {
 		Category category = this.categoryDao.queryById(Cat_ID);
 		return category;

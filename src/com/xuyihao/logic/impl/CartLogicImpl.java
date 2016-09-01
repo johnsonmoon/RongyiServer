@@ -19,7 +19,6 @@ public class CartLogicImpl implements CartLogic {
 		this.cartDao = cartDao;
 	}
 
-	@Override
 	public String saveCart(Cart cart) {
 		String Cart_ID = RandomUtils.getRandomString(15) + "Cart";
 		cart.setCart_ID(Cart_ID);
@@ -32,13 +31,11 @@ public class CartLogicImpl implements CartLogic {
 		}
 	}
 
-	@Override
 	public Cart getCartInfo(String Cart_ID) {
 		Cart cart = this.cartDao.queryById(Cart_ID);
 		return cart;
 	}
 
-	@Override
 	public boolean changeProductNumber(String Cart_ID, int Pro_num) {
 		Cart cart = this.cartDao.queryById(Cart_ID);
 		cart.setPro_num(Pro_num);
@@ -49,10 +46,8 @@ public class CartLogicImpl implements CartLogic {
 		}
 	}
 
-	@Override
 	public boolean deleteCart(String Cart_ID) {
 		boolean flag = this.cartDao.deleteCart(Cart_ID);
 		return flag;
 	}
-
 }

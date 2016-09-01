@@ -1,5 +1,8 @@
 package com.xuyihao.filerelate.dao.impl;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import com.xuyihao.common.DatabaseConnector;
 import com.xuyihao.filerelate.dao.AccountsPhotosDao;
 import com.xuyihao.filerelate.entity.AccountsPhotos;
@@ -41,18 +44,39 @@ public class AccountsPhotosDaoImpl implements AccountsPhotosDao {
 	}
 
 	public boolean updateAccountsPhotosBySql(String update) {
-		// TODO Auto-generated method stub
-		return false;
+		if (this.databaseConnector.executeUpdate(update) != 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public AccountsPhotos query(String Acc_ID) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "select * from " + AccountsPhotos.BASE_TABLE_NAME + " where "
+				+ AccountsPhotos.BASE_ACCOUNTSPHOTOS_ACCOUNT_ID + " = '" + Acc_ID + "'";
+		ResultSet rs = this.databaseConnector.executeQuery(sql);
+		return this.getAccountsPhotoByResultSet(rs);
 	}
 
 	public AccountsPhotos queryBySql(String query) {
-		// TODO Auto-generated method stub
-		return null;
+		ResultSet rs = this.databaseConnector.executeQuery(query);
+		return this.getAccountsPhotoByResultSet(rs);
+	}
+
+	private AccountsPhotos getAccountsPhotoByResultSet(ResultSet resultSet) {
+		AccountsPhotos photo = new AccountsPhotos();
+		try {
+			if (resultSet.next()) {
+				photo.set_id(resultSet.getLong(AccountsPhotos.BASE_PHYSICAL_ID));
+				photo.setAcc_ID(resultSet.getString(AccountsPhotos.BASE_ACCOUNTSPHOTOS_ACCOUNT_ID));
+				photo.setHeadPhoto_ID(resultSet.getString(AccountsPhotos.BASE_ACCOUNTSPHOTOS_HEADPHOTO_ID));
+				photo.setPhoto_ID_Combine(resultSet.getString(AccountsPhotos.BASE_ACCOUNTSPHOTOS_PHOTO_ID_COMBINE));
+				photo.setAccPhoto_addTime(resultSet.getString(AccountsPhotos.BASE_ACCOUNTSPHOTOS_ADD_TIME));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return photo;
 	}
 
 	public void closeDBConnection() {

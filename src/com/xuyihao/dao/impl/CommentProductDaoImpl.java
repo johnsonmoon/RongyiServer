@@ -25,7 +25,6 @@ public class CommentProductDaoImpl implements CommentProductDao {
 		this.conn = conn;
 	}
 
-	@Override
 	public boolean saveCommentProduct(CommentProduct commentProduct) {
 		boolean flag = false;
 		String sql = "insert into " + CommentProduct.BASE_TABLE_NAME + " values(null, '" + commentProduct.getComm_ID()
@@ -39,7 +38,6 @@ public class CommentProductDaoImpl implements CommentProductDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteCommentProduct(String Comm_ID) {
 		boolean flag = false;
 		String sql = "delete from " + CommentProduct.BASE_TABLE_NAME + " where " + CommentProduct.BASE_COMMENTPRODUCT_ID
@@ -51,7 +49,6 @@ public class CommentProductDaoImpl implements CommentProductDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updateCommentProduct(CommentProduct commentProduct) {
 		boolean flag = false;
 		String sql = "update " + CommentProduct.BASE_TABLE_NAME + " set " + CommentProduct.BASE_COMMENTPRODUCT_DESCRIPTION
@@ -70,7 +67,6 @@ public class CommentProductDaoImpl implements CommentProductDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updateCommentProduct(String update) {
 		boolean flag = false;
 		if (this.conn.executeUpdate(update) == 0) {
@@ -82,7 +78,6 @@ public class CommentProductDaoImpl implements CommentProductDao {
 		return flag;
 	}
 
-	@Override
 	public CommentProduct queryById(String Comm_ID) {
 		String sql = "select * from " + CommentProduct.BASE_TABLE_NAME + " where " + CommentProduct.BASE_COMMENTPRODUCT_ID
 				+ " = '" + Comm_ID + "'";
@@ -92,7 +87,6 @@ public class CommentProductDaoImpl implements CommentProductDao {
 		return commentProduct;
 	}
 
-	@Override
 	public List<CommentProduct> queryByAccountId(String Acc_ID) {
 		String sql = "select * from " + CommentProduct.BASE_TABLE_NAME + " where "
 				+ CommentProduct.BASE_COMMENTPRODUCT_ACCOUNT_ID + " = '" + Acc_ID + "'";
@@ -102,7 +96,6 @@ public class CommentProductDaoImpl implements CommentProductDao {
 		return commentProductList;
 	}
 
-	@Override
 	public List<CommentProduct> queryByProductId(String Prod_ID) {
 		String sql = "select * from " + CommentProduct.BASE_TABLE_NAME + " where "
 				+ CommentProduct.BASE_COMMENTPRODUCT_PRODUCT_ID + " = '" + Prod_ID + "'";
@@ -112,7 +105,6 @@ public class CommentProductDaoImpl implements CommentProductDao {
 		return commentProductList;
 	}
 
-	@Override
 	public ResultSet queryBySql(String query) {
 		ResultSet resultSet = this.conn.executeQuery(query);
 		return resultSet;
@@ -166,7 +158,6 @@ public class CommentProductDaoImpl implements CommentProductDao {
 		return commentProductList;
 	}
 
-	@Override
 	public void closeDBConnection() {
 		this.conn.close();
 	}

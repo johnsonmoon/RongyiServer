@@ -24,7 +24,6 @@ public class AddressDaoImpl implements AddressDao {
 		this.conn = conn;
 	}
 
-	@Override
 	public boolean saveAddress(Address address) {
 		boolean flag = false;
 		String sql = "insert into " + Address.BASE_TABLE_NAME + " values(null, '" + address.getAdd_ID() + "', '"
@@ -37,7 +36,6 @@ public class AddressDaoImpl implements AddressDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteAddress(String Add_ID) {
 		boolean flag = false;
 		String sql = "delete from " + Address.BASE_TABLE_NAME + " where " + Address.BASE_ADDRESS_ID + " = '" + Add_ID + "'";
@@ -50,7 +48,6 @@ public class AddressDaoImpl implements AddressDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updateAddress(Address address) {
 		boolean flag = false;
 		String sql = "update " + Address.BASE_TABLE_NAME + " set " + Address.BASE_ADDRESS_INFORMATION + " = '"
@@ -66,7 +63,6 @@ public class AddressDaoImpl implements AddressDao {
 		return flag;
 	}
 
-	@Override
 	public boolean updateAddress(String update) {
 		boolean flag = false;
 		String sql = update;
@@ -79,7 +75,6 @@ public class AddressDaoImpl implements AddressDao {
 		return flag;
 	}
 
-	@Override
 	public List<Address> queryByAccountId(String Acc_ID) {
 		String sql = "select * from " + Address.BASE_TABLE_NAME + " where " + Address.BASE_ADDRESS_ID + " = '" + Acc_ID
 				+ "'";
@@ -89,7 +84,6 @@ public class AddressDaoImpl implements AddressDao {
 		return addressList;
 	}
 
-	@Override
 	public Address queryById(String Add_ID) {
 		String sql = "select * from " + Address.BASE_TABLE_NAME + " where " + Address.BASE_ADDRESS_ID + " = '" + Add_ID
 				+ "'";
@@ -99,7 +93,6 @@ public class AddressDaoImpl implements AddressDao {
 		return address;
 	}
 
-	@Override
 	public ResultSet queryBySql(String query) {
 		ResultSet resultSet = this.conn.executeQuery(query);
 		return resultSet;
@@ -151,7 +144,6 @@ public class AddressDaoImpl implements AddressDao {
 		return addressList;
 	}
 
-	@Override
 	public void closeDBConnection() {
 		this.conn.close();
 	}

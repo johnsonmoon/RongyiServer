@@ -18,7 +18,6 @@ public class RepostCrsDaoImpl implements RepostCrsDao {
 		this.connDB = connDB;
 	}
 
-	@Override
 	public boolean saveRepostCrs(String Acc_Id, String Rep_Id, String Crs_Id, String Rep_addTime) {
 		boolean flag = false;
 		String sql = "insert into RepostCrs values(null, '" + Acc_Id + "', '" + Rep_Id + "', '" + Crs_Id
@@ -30,7 +29,6 @@ public class RepostCrsDaoImpl implements RepostCrsDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteRepostCrs(String Acc_Id, String Rep_Id, String Crs_Id) {
 		boolean flag = false;
 		String sql = "delete from RepostCrs where Acc_ID = '" + Acc_Id + "' and Rep_ID = '" + Rep_Id + "' and Crs_ID = '"
@@ -42,7 +40,6 @@ public class RepostCrsDaoImpl implements RepostCrsDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteRepostCrs(String Acc_Id, String Rep_Id) {
 		boolean flag = false;
 		String sql = "delete from RepostCrs where Acc_ID = '" + Acc_Id + "' and Rep_ID = '" + Rep_Id + "'";
@@ -53,7 +50,6 @@ public class RepostCrsDaoImpl implements RepostCrsDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteRepostCrsAll(String Acc_Id) {
 		boolean flag = false;
 		String sql = "delete from RepostCrs where Acc_ID = '" + Acc_Id + "'";
@@ -64,7 +60,6 @@ public class RepostCrsDaoImpl implements RepostCrsDao {
 		return flag;
 	}
 
-	@Override
 	public boolean deleteBySql(String sql) {
 		boolean flag = false;
 		if (this.connDB.executeUpdate(sql) != 0) {
@@ -74,7 +69,6 @@ public class RepostCrsDaoImpl implements RepostCrsDao {
 		return flag;
 	}
 
-	@Override
 	public List<String> queryByAccountId(String Acc_Id) {
 		String sql = "select * from RepostCrs where Acc_ID = '" + Acc_Id + "'";
 		ResultSet resultSet = this.connDB.executeQuery(sql);
@@ -90,7 +84,6 @@ public class RepostCrsDaoImpl implements RepostCrsDao {
 		return courseIdList;
 	}
 
-	@Override
 	public List<String> query(String Acc_Id, String Rep_Id) {
 		String sql = "select * from RepostCrs where Acc_ID = '" + Acc_Id + "' and Rep_ID = '" + Rep_Id + "'";
 		ResultSet resultSet = this.connDB.executeQuery(sql);
@@ -106,13 +99,11 @@ public class RepostCrsDaoImpl implements RepostCrsDao {
 		return courseIdList;
 	}
 
-	@Override
 	public ResultSet queryBySql(String sql) {
 		ResultSet resultSet = this.connDB.executeQuery(sql);
 		return resultSet;
 	}
 
-	@Override
 	public void closeDBConnection() {
 		this.connDB.close();
 	}
