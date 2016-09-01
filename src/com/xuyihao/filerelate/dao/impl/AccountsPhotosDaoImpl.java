@@ -19,13 +19,25 @@ public class AccountsPhotosDaoImpl implements AccountsPhotosDao {
 	}
 
 	public boolean deleteAccountsPhotos(String Acc_ID) {
-		// TODO Auto-generated method stub
-		return false;
+		String sql = "delete from " + AccountsPhotos.BASE_TABLE_NAME + " where "
+				+ AccountsPhotos.BASE_ACCOUNTSPHOTOS_ACCOUNT_ID + " = '" + Acc_ID + "'";
+		if (this.databaseConnector.executeUpdate(sql) != 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public boolean updateAccountsPhotos(AccountsPhotos accountsPhotos) {
-		// TODO Auto-generated method stub
-		return false;
+		String sql = "update " + AccountsPhotos.BASE_TABLE_NAME + " set " + AccountsPhotos.BASE_ACCOUNTSPHOTOS_HEADPHOTO_ID
+				+ " = '" + accountsPhotos.getHeadPhoto_ID() + "', " + AccountsPhotos.BASE_ACCOUNTSPHOTOS_PHOTO_ID_COMBINE
+				+ " = '" + accountsPhotos.getPhoto_ID_Combine() + "' where " + AccountsPhotos.BASE_ACCOUNTSPHOTOS_ACCOUNT_ID
+				+ " = '" + accountsPhotos.getAcc_ID() + "'";
+		if (this.databaseConnector.executeUpdate(sql) != 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public boolean updateAccountsPhotosBySql(String update) {
