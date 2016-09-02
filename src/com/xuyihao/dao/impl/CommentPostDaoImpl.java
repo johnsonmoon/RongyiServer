@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.xuyihao.common.DatabaseConnector;
 import com.xuyihao.dao.CommentPostDao;
 import com.xuyihao.entity.CommentPost;
@@ -14,6 +16,7 @@ import com.xuyihao.entity.CommentPost;
  * 
  * @describe 帖子评论相关数据库操作封装类
  */
+@Component("CommentPostDao")
 public class CommentPostDaoImpl implements CommentPostDao {
 	private DatabaseConnector conn = new DatabaseConnector();
 

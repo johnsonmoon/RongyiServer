@@ -3,6 +3,8 @@ package com.xuyihao.dao.impl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.stereotype.Component;
+
 import com.xuyihao.common.DatabaseConnector;
 import com.xuyihao.dao.CategoryDao;
 import com.xuyihao.entity.Category;
@@ -13,6 +15,7 @@ import com.xuyihao.entity.Category;
  * @description 商品分类的数据库操作工具类
  * @attention 商品分类不提供删除方法
  */
+@Component("CategoryDao")
 public class CategoryDaoImpl implements CategoryDao {
 	private DatabaseConnector conn = new DatabaseConnector();
 

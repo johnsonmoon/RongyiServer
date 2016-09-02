@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.xuyihao.common.DatabaseConnector;
 import com.xuyihao.dao.CoursesDao;
 import com.xuyihao.entity.Courses;
@@ -14,6 +16,7 @@ import com.xuyihao.entity.Courses;
  * 
  * @describe 视频(视频教学)相关数据库操作封装类
  */
+@Component("CoursesDao")
 public class CoursesDaoImpl implements CoursesDao {
 	private DatabaseConnector conn = new DatabaseConnector();
 

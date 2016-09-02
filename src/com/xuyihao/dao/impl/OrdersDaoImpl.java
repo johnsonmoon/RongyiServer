@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.xuyihao.common.DatabaseConnector;
 import com.xuyihao.dao.OrdersDao;
 import com.xuyihao.entity.Orders;
@@ -14,6 +16,7 @@ import com.xuyihao.entity.Orders;
  * 
  * @description 订单的数据库操作工具类
  */
+@Component("OrdersDao")
 public class OrdersDaoImpl implements OrdersDao {
 	private DatabaseConnector conn = new DatabaseConnector();
 

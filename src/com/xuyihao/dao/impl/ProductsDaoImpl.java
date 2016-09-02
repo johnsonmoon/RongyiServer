@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.xuyihao.common.DatabaseConnector;
 import com.xuyihao.dao.ProductsDao;
 import com.xuyihao.entity.Products;
@@ -15,6 +17,7 @@ import com.xuyihao.entity.Products;
  * @description 产品数据库操作工具类
  * @attention 删除产品时候由于完整性约束，应提前删除有关表项的相关数据
  */
+@Component("ProductsDao")
 public class ProductsDaoImpl implements ProductsDao {
 	private DatabaseConnector conn = new DatabaseConnector();
 

@@ -8,9 +8,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 /**
  * Created by Xuyh at 16-8-13 下午3:38
  */
+@Component("AttentionDao")
 public class AttentionDaoImpl implements AttentionDao {
 	private DatabaseConnector connDB = new DatabaseConnector();
 

@@ -3,6 +3,7 @@ package com.xuyihao.service.impl;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.xuyihao.entity.CommentCrs;
 import com.xuyihao.entity.Courses;
@@ -17,6 +18,7 @@ import net.sf.json.JSONObject;
  * 
  * @Author Xuyh created at 2016年8月26日 下午1:18:45
  */
+@Component("CoursesService")
 public class CoursesServiceImpl implements com.xuyihao.service.CoursesService {
 	@Autowired
 	private CoursesLogic coursesLogic;

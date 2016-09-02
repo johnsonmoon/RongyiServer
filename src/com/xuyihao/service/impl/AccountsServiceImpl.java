@@ -3,6 +3,7 @@ package com.xuyihao.service.impl;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.xuyihao.entity.Accounts;
 import com.xuyihao.entity.Address;
@@ -22,6 +23,7 @@ import net.sf.json.JSONObject;
  * 
  * @Author Xuyh created at 2016年8月26日 下午1:18:39
  */
+@Component("AccountsService")
 public class AccountsServiceImpl implements AccountsService {
 	@Autowired
 	private AccountsLogic accountsLogic;

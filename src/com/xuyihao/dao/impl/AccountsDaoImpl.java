@@ -3,6 +3,8 @@ package com.xuyihao.dao.impl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.stereotype.Component;
+
 import com.xuyihao.common.DatabaseConnector;
 import com.xuyihao.dao.AccountsDao;
 import com.xuyihao.entity.Accounts;
@@ -12,6 +14,7 @@ import com.xuyihao.entity.Accounts;
  * 
  * @describe 用户相关数据库操作封装类
  */
+@Component("AccountsDao")
 public class AccountsDaoImpl implements AccountsDao {
 	private DatabaseConnector conn = new DatabaseConnector();
 

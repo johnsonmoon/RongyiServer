@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.xuyihao.common.DatabaseConnector;
 import com.xuyihao.dao.CartDao;
 import com.xuyihao.entity.Cart;
@@ -14,6 +16,7 @@ import com.xuyihao.entity.Cart;
  * 
  * @description 购物车数据库操作工具类
  */
+@Component("CartDao")
 public class CartDaoImpl implements CartDao {
 	private DatabaseConnector conn = new DatabaseConnector();
 

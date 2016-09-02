@@ -3,18 +3,26 @@ package com.xuyihao.filerelate.dao.impl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.stereotype.Component;
+
 import com.xuyihao.common.DatabaseConnector;
 import com.xuyihao.filerelate.dao.PhotoPathDao;
 import com.xuyihao.filerelate.entity.PhotoPath;
 
+/**
+ * 
+ * @author Xuyh at 2016年9月2日 下午10:23:35.
+ *
+ */
+@Component("PhotoPathDao")
 public class PhotoPathDaoImpl implements PhotoPathDao {
 	private DatabaseConnector databaseConnector = new DatabaseConnector();
 
 	public boolean savePhotoPath(PhotoPath photoPath) {
 		boolean flag = true;
-		String sql = "insert into PhotoPath values(null, '" + photoPath.getPhoto_ID() + "', '"
+		String sql = "insert into " + PhotoPath.BASE_TABLE_NAME + " values(null, '" + photoPath.getPhoto_ID() + "', '"
 				+ photoPath.getPhoto_pathName() + "', '" + photoPath.getThumbnail_pathName() + "', '"
-				+ photoPath.getThumbnail_pathName() + "')";
+				+ photoPath.getPhoto_addTime() + "')";
 		if (this.databaseConnector.executeUpdate(sql) != 0) {
 			flag = true;
 		} else {
@@ -25,7 +33,8 @@ public class PhotoPathDaoImpl implements PhotoPathDao {
 
 	public boolean deletePhotoPath(String Photo_ID) {
 		boolean flag = true;
-		String sql = "delete from PhotoPath where Photo_ID = '" + Photo_ID + "'";
+		String sql = "delete from " + PhotoPath.BASE_TABLE_NAME + " where " + PhotoPath.BASE_PHOTOPATH_ID + " = '"
+				+ Photo_ID + "'";
 		if (this.databaseConnector.executeUpdate(sql) != 0) {
 			flag = true;
 		} else {
@@ -35,8 +44,10 @@ public class PhotoPathDaoImpl implements PhotoPathDao {
 	}
 
 	public boolean updatePhotoPath(PhotoPath photoPath) {
-		String sql = "update PhotoPath set Photo_pathName = '" + photoPath.getPhoto_pathName()
-				+ "', set Thumbnail_pathName = '" + photoPath.getThumbnail_pathName() + "' where Photo_ID = '"
+		String sql = "update " + PhotoPath.BASE_TABLE_NAME + " set " + PhotoPath.BASE_PHOTOPATH_PATHNAME + " = '"
+				+ photoPath.getPhoto_pathName()
+				+ "', " + PhotoPath.BASE_PHOTOPATH_THUMBNAIL_PATHNAME + " = '" + photoPath.getThumbnail_pathName()
+				+ "' where " + PhotoPath.BASE_PHOTOPATH_ID + " = '"
 				+ photoPath.getPhoto_ID() + "'";
 		if (this.databaseConnector.executeUpdate(sql) != 0) {
 			return true;
@@ -54,7 +65,8 @@ public class PhotoPathDaoImpl implements PhotoPathDao {
 	}
 
 	public PhotoPath queryById(String Photo_ID) {
-		String sql = "select * from PhotoPath where Photo_ID = '" + Photo_ID + "'";
+		String sql = "select * from " + PhotoPath.BASE_TABLE_NAME + " where " + PhotoPath.BASE_PHOTOPATH_ID + " = '"
+				+ Photo_ID + "'";
 		ResultSet rs = this.databaseConnector.executeQuery(sql);
 		return this.getPhotoPathFromResultSet(rs);
 	}

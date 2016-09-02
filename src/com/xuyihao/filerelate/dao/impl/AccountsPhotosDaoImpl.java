@@ -3,10 +3,18 @@ package com.xuyihao.filerelate.dao.impl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.stereotype.Component;
+
 import com.xuyihao.common.DatabaseConnector;
 import com.xuyihao.filerelate.dao.AccountsPhotosDao;
 import com.xuyihao.filerelate.entity.AccountsPhotos;
 
+/**
+ * 
+ * @author Xuyh at 2016年9月2日 下午10:23:18.
+ *
+ */
+@Component("AccountsPhotosDao")
 public class AccountsPhotosDaoImpl implements AccountsPhotosDao {
 	private DatabaseConnector databaseConnector = new DatabaseConnector();
 

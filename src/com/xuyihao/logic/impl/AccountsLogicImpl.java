@@ -14,11 +14,13 @@ import com.xuyihao.tools.utils.RandomUtils;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * created by XuYihao at 2016/8/10 22:24
  */
+@Component("AccountsLogic")
 public class AccountsLogicImpl implements AccountsLogic {
 	@Autowired
 	private AccountsDao accountsDao;

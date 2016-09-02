@@ -1,6 +1,7 @@
 package com.xuyihao.logic.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.xuyihao.dao.LikePostDao;
 import com.xuyihao.dao.PostsDao;
@@ -13,6 +14,7 @@ import com.xuyihao.tools.utils.RandomUtils;
 /**
  * Created by Xuyh at 2016/7/21 20:27.
  */
+@Component("LikePostLogic")
 public class LikePostLogicImpl implements LikePostLogic {
 	@Autowired
 	private LikePostDao likePostDao;

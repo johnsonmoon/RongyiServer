@@ -1,6 +1,7 @@
 package com.xuyihao.logic.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.xuyihao.dao.ProductsDao;
 import com.xuyihao.entity.Products;
@@ -11,6 +12,7 @@ import com.xuyihao.tools.utils.RandomUtils;
 /**
  * Created by Xuyh at 2016/7/21 20:28.
  */
+@Component("ProductsLogic")
 public class ProductsLogicImpl implements ProductsLogic {
 	@Autowired
 	private ProductsDao productsDao;

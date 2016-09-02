@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.xuyihao.common.DatabaseConnector;
 import com.xuyihao.dao.LikeCrsDao;
 import com.xuyihao.entity.LikeCrs;
@@ -15,6 +17,7 @@ import com.xuyihao.entity.LikeCrs;
  * @describe 打赏视频相关数据库操作封装类
  * @attention 打赏视频的数据库操作，只有添加信息入表，没有删除操作，因为打赏是不可以撤销的
  */
+@Component("LikeCrsDao")
 public class LikeCrsDaoImpl implements LikeCrsDao {
 	private DatabaseConnector conn = new DatabaseConnector();
 

@@ -9,11 +9,14 @@ import com.xuyihao.entity.Shops;
 
 import java.util.*;
 
+import org.springframework.stereotype.Component;
+
 /**
  * created by xuyihao on 2016/4/28
  * 
  * @attention 平台暂时不开放删除店铺功能
  */
+@Component("ShopsDao")
 public class ShopsDaoImpl implements ShopsDao {
 	private DatabaseConnector conn = new DatabaseConnector();
 

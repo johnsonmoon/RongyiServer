@@ -3,6 +3,8 @@ package com.xuyihao.filerelate.dao.impl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.stereotype.Component;
+
 import com.xuyihao.common.DatabaseConnector;
 import com.xuyihao.filerelate.dao.VedioPathDao;
 import com.xuyihao.filerelate.entity.VedioPath;
@@ -12,6 +14,7 @@ import com.xuyihao.filerelate.entity.VedioPath;
  * @author Xuyh at 2016年8月30日 上午11:18:44.
  *
  */
+@Component("VedioPathDao")
 public class VedioPathDaoImpl implements VedioPathDao {
 	private DatabaseConnector databaseConnector = new DatabaseConnector();
 

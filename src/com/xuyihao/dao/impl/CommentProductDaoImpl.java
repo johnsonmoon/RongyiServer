@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.xuyihao.common.DatabaseConnector;
 import com.xuyihao.dao.CommentProductDao;
 import com.xuyihao.entity.CommentProduct;
@@ -15,6 +17,7 @@ import com.xuyihao.entity.CommentProduct;
  * @description 评论产品的数据库操作工具类
  * @attention 产品评论后只能修改评论，不能删除，所以不添加删除方法
  */
+@Component("CommentProductDao")
 public class CommentProductDaoImpl implements CommentProductDao {
 	private DatabaseConnector conn = new DatabaseConnector();
 

@@ -8,9 +8,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 /**
  * Created by Xuyh at 16-8-13 上午11:20
  */
+@Component("FavouriteDao")
 public class FavouriteDaoImpl implements FavouriteDao {
 	private DatabaseConnector connDB = new DatabaseConnector();
 

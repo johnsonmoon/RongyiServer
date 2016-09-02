@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.xuyihao.common.DatabaseConnector;
 import com.xuyihao.dao.AddressDao;
 import com.xuyihao.entity.Address;
@@ -14,6 +16,7 @@ import com.xuyihao.entity.Address;
  * 
  * @description 收货地址的数据库操作工具类
  */
+@Component("AddressDao")
 public class AddressDaoImpl implements AddressDao {
 	private DatabaseConnector conn = new DatabaseConnector();
 

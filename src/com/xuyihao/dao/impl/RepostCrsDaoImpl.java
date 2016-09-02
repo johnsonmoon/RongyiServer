@@ -8,9 +8,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 /**
  * Created by Xuyh at 16-8-13 下午2:15
  */
+@Component("RepostCrsDao")
 public class RepostCrsDaoImpl implements RepostCrsDao {
 	private DatabaseConnector connDB = new DatabaseConnector();
 
