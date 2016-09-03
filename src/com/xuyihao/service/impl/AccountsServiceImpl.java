@@ -1,5 +1,7 @@
 package com.xuyihao.service.impl;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -528,5 +530,35 @@ public class AccountsServiceImpl implements AccountsService {
 			json.put("result", false);
 			return json.toString();
 		}
+	}
+
+	public String saveAccountHeadPhoto(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String saveAccountPhotos(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String changeAccountHeadPhoto(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String changeAccountPhotos(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getAccountHeadPhoto(String Acc_ID, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getAccountPhotos(String Acc_ID, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

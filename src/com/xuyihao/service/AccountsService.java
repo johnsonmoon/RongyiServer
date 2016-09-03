@@ -1,5 +1,7 @@
 package com.xuyihao.service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.xuyihao.entity.Accounts;
@@ -269,4 +271,57 @@ public interface AccountsService {
 	 * @return
 	 */
 	public String getCommentProductInformation(String commentId);
+	
+	//TODO ---------------------- 照片模块 ----------------------------------------------
+	
+	/**
+	 * 保存账号头像
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public String saveAccountHeadPhoto(HttpServletRequest request);
+	
+	/**
+	 * 保存账号照片集
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public String saveAccountPhotos(HttpServletRequest request);
+	
+	/**
+	 * 修改账号头像
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public String changeAccountHeadPhoto(HttpServletRequest request);
+	
+	/**
+	 * 修改账号图片集
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public String changeAccountPhotos(HttpServletRequest request);
+	
+	/**
+	 * 获取账户照片
+	 * 
+	 * @param Acc_ID
+	 * @param response
+	 * @return
+	 */
+	public String getAccountHeadPhoto(String Acc_ID, HttpServletResponse response);
+	
+	/**
+	 * 获取账户照片集
+	 * 
+	 * @param Acc_ID
+	 * @param response
+	 * @return
+	 */
+	public String getAccountPhotos(String Acc_ID, HttpServletResponse response);
 }

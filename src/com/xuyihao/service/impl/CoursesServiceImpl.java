@@ -1,5 +1,7 @@
 package com.xuyihao.service.impl;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -165,5 +167,35 @@ public class CoursesServiceImpl implements com.xuyihao.service.CoursesService {
 		// XXX 所有人可查看
 		LikeCrs likeCrs = this.likeCrsLogic.getLikeCrsInfo(likeId);
 		return likeCrs.toJSONString();
+	}
+
+	public String saveCoursesVedio(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String saveCoursesPhotos(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String changeCoursesPhotos(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getCoursesHeadPhoto(String Crs_ID, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getCoursesVedio(String Crs_ID, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getCoursesPhotos(String Crs_ID, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

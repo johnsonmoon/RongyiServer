@@ -247,7 +247,7 @@ create table AccountsPhotos
 _id bigint primary key AUTO_INCREMENT,
 Acc_ID varchar(20) not null,
 HeadPhoto_ID varchar(20) not null,
-Photo_ID_Combine varchar(400),
+Photo_ID_Combine varchar(2200),
 AccPhoto_addTime datetime
 )engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;
 
@@ -256,7 +256,7 @@ create table CoursesPhotos
 _id bigint primary key AUTO_INCREMENT,
 Crs_ID varchar(20) not null,
 HeadPhoto_ID varchar(20) not null,
-Photo_ID_Combine varchar(400),
+Photo_ID_Combine varchar(2200),
 CrsPhoto_addTime datetime
 )engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;
 
@@ -265,6 +265,6 @@ create table PostsPhotos
 _id bigint primary key AUTO_INCREMENT,
 Post_ID varchar(20) not null,
 HeadPhoto_ID varchar(20) not null,
-Photo_ID_Combine varchar(400),
+Photo_ID_Combine varchar(2200),
 PostPhoto_addTime datetime
 )engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;

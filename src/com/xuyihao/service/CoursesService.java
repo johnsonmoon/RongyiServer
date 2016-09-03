@@ -1,5 +1,7 @@
 package com.xuyihao.service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.xuyihao.entity.CommentCrs;
@@ -108,4 +110,57 @@ public interface CoursesService {
 	 * @return
 	 */
 	public String getLikeCourseInformation(String likeId);
+
+	//TODO ------------------------- 视频课程图片模块 -----------------
+	//TODO -------------------接口需要修改---------------
+	/**
+	 * 保存视频
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public String saveCoursesVedio(HttpServletRequest request);
+	
+	/**
+	 * 保存视频课程图片集
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public String saveCoursesPhotos(HttpServletRequest request);
+
+	/**
+	 * 修改视频课程图片集
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public String changeCoursesPhotos(HttpServletRequest request);
+
+	/**
+	 * 获取视频课程封面图片
+	 * 
+	 * @param Crs_ID
+	 * @param response
+	 * @return
+	 */
+	public String getCoursesHeadPhoto(String Crs_ID, HttpServletResponse response);
+
+	/**
+	 * 获取视频
+	 * 
+	 * @param Crs_ID
+	 * @param response
+	 * @return
+	 */
+	public String getCoursesVedio(String Crs_ID, HttpServletResponse response);
+	
+	/**
+	 * 获取视频课程图片集
+	 * 
+	 * @param Crs
+	 * @param response
+	 * @return
+	 */
+	public String getCoursesPhotos(String Crs_ID, HttpServletResponse response);
 }
