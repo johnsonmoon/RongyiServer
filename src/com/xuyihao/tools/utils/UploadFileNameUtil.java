@@ -1,4 +1,4 @@
-package com.xuyihao.tools;
+package com.xuyihao.tools.utils;
 
 /** 
  * @description 开源获取的工具类
@@ -9,8 +9,12 @@ package com.xuyihao.tools;
  */
 import javax.servlet.http.*;
 
-public class UploadUtil {
-	// 获取文件类型返回一个类似于".XXX"的字串
+public class UploadFileNameUtil {
+	/**
+	 * 获取文件类型返回一个类似于"xxx"的字串
+	 * @param p
+	 * @return
+	 */
 	public static String getFileType(Part p) {
 		String name = p.getHeader("content-disposition");
 		String fileNameTmp = name.substring(name.indexOf("filename=") + 10);
@@ -18,7 +22,11 @@ public class UploadUtil {
 		return type;
 	}
 
-	// 获取文件名返回一个类似于"XXX.XXX"的完整文件名，包括了后缀
+	/**
+	 * 获取文件名返回一个类似于"xxx.xxx"的完整文件名，包括了后缀
+	 * @param p
+	 * @return
+	 */
 	public static String getFileName(Part p) {
 		String name = p.getHeader("content-disposition");
 		String fileNameTmp = name.substring(name.indexOf("filename=") + 10);

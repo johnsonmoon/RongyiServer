@@ -53,7 +53,11 @@ public class CoursesServlet extends HttpServlet {
 		// 设置会话信息
 		this.session = request.getSession();
 		this.coursesService.setSessionInfo(session);
-		String action = request.getParameter("action").trim();
+		String action = request.getParameter("action");
+		if (action == null || action.equals("")) {
+			return;
+		}
+		action = action.trim();
 		switch (action) {
 		case "addCrs":
 			this.addCourse(request, response);

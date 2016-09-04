@@ -24,12 +24,15 @@ public class AccountsPhotosLogicImpl implements AccountsPhotosLogic {
 		AccountsPhotos accountsPhotos = new AccountsPhotos();
 		accountsPhotos.setAcc_ID(Acc_ID);
 		accountsPhotos.setHeadPhoto_ID(HeadPhoto_ID);
-		String photoIdCombine = "";
-		for (String id : photoIdList) {
-			photoIdCombine += (id + "&&");
+		if (photoIdList != null && photoIdList.size() > 0) {
+			String photoIdCombine = "";
+
+			for (String id : photoIdList) {
+				photoIdCombine += (id + "&&");
+			}
+			photoIdCombine = photoIdCombine.substring(0, photoIdCombine.length() - 2);
+			accountsPhotos.setPhoto_ID_Combine(photoIdCombine);
 		}
-		photoIdCombine = photoIdCombine.substring(0, photoIdCombine.length() - 2);
-		accountsPhotos.setPhoto_ID_Combine(photoIdCombine);
 		accountsPhotos.setAccPhoto_addTime(DateUtils.currentDateTime());
 		return this.accountsPhotosDao.saveAccountsPhotos(accountsPhotos);
 	}
@@ -46,7 +49,7 @@ public class AccountsPhotosLogicImpl implements AccountsPhotosLogic {
 		if (HeadPhoto_ID != null && !HeadPhoto_ID.equals("")) {
 			accountsPhotos.setHeadPhoto_ID(HeadPhoto_ID);
 		}
-		if (photoIdList.size() > 0) {
+		if (photoIdList != null && photoIdList.size() > 0) {
 			String photoIdCombine = "";
 			for (String id : photoIdList) {
 				photoIdCombine += (id + "&&");

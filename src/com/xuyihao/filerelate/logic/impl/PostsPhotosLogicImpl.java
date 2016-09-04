@@ -24,12 +24,14 @@ public class PostsPhotosLogicImpl implements PostsPhotosLogic {
 		PostsPhotos postsPhotos = new PostsPhotos();
 		postsPhotos.setPost_ID(Post_ID);
 		postsPhotos.setHeadPhoto_ID(HeadPhoto_ID);
-		String idCombine = "";
-		for (String id : postPhotosList) {
-			idCombine += (id + "&&");
+		if (postPhotosList != null && postPhotosList.size() > 0) {
+			String idCombine = "";
+			for (String id : postPhotosList) {
+				idCombine += (id + "&&");
+			}
+			idCombine = idCombine.substring(0, idCombine.length() - 2);
+			postsPhotos.setPhoto_ID_Combine(idCombine);
 		}
-		idCombine = idCombine.substring(0, idCombine.length() - 2);
-		postsPhotos.setPhoto_ID_Combine(idCombine);
 		postsPhotos.setPostPhoto_addTime(DateUtils.currentDateTime());
 		return this.postsPhotosDao.savePostsPhotos(postsPhotos);
 	}
@@ -46,7 +48,7 @@ public class PostsPhotosLogicImpl implements PostsPhotosLogic {
 		if (HeadPhoto_ID != null && !HeadPhoto_ID.equals("")) {
 			postsPhotos.setHeadPhoto_ID(HeadPhoto_ID);
 		}
-		if (postPhotosList.size() > 0) {
+		if (postPhotosList != null && postPhotosList.size() > 0) {
 			String idCombine = "";
 			for (String id : postPhotosList) {
 				idCombine += (id + "&&");

@@ -1,23 +1,41 @@
 package com.xuyihao.service.impl;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.xuyihao.common.AppPropertiesLoader;
 import com.xuyihao.entity.Accounts;
 import com.xuyihao.entity.Address;
 import com.xuyihao.entity.Cart;
 import com.xuyihao.entity.CommentProduct;
 import com.xuyihao.entity.Orders;
+import com.xuyihao.filerelate.entity.AccountsPhotos;
+import com.xuyihao.filerelate.logic.AccountsPhotosLogic;
+import com.xuyihao.filerelate.logic.PhotoPathLogic;
 import com.xuyihao.logic.AccountsLogic;
 import com.xuyihao.logic.AddressLogic;
 import com.xuyihao.logic.CartLogic;
 import com.xuyihao.logic.CommentProductLogic;
 import com.xuyihao.logic.OrdersLogic;
 import com.xuyihao.service.AccountsService;
+import com.xuyihao.tools.utils.DateUtils;
+import com.xuyihao.tools.utils.FileTypeUtils;
+import com.xuyihao.tools.utils.ThumbnailImageUtils;
+import com.xuyihao.tools.utils.UploadFileNameUtil;
 
 import net.sf.json.JSONObject;
 
@@ -25,8 +43,13 @@ import net.sf.json.JSONObject;
  * 
  * @Author Xuyh created at 2016年8月26日 下午1:18:39
  */
+@MultipartConfig
 @Component("AccountsService")
 public class AccountsServiceImpl implements AccountsService {
+	private String BASE_FILE_PATH = AppPropertiesLoader.getAppProperties().getProperty("BaseFilePath");
+	private String RELATIVE_PATH = File.separator + "photos" + File.separator + "accounts" + File.separator;
+	private String ABSOLUTE_PATH = BASE_FILE_PATH + RELATIVE_PATH;
+
 	@Autowired
 	private AccountsLogic accountsLogic;
 
@@ -41,6 +64,12 @@ public class AccountsServiceImpl implements AccountsService {
 
 	@Autowired
 	private OrdersLogic ordersLogic;
+
+	@Autowired
+	private AccountsPhotosLogic accountsPhotosLogic;
+
+	@Autowired
+	private PhotoPathLogic photoPathLogic;
 
 	/**
 	 * 用来保存会话信息
@@ -69,6 +98,14 @@ public class AccountsServiceImpl implements AccountsService {
 
 	public void setSessionInfo(HttpSession session) {
 		this.session = session;
+	}
+
+	public void setAccountsPhotosLogic(AccountsPhotosLogic accountsPhotosLogic) {
+		this.accountsPhotosLogic = accountsPhotosLogic;
+	}
+
+	public void setPhotoPathLogic(PhotoPathLogic photoPathLogic) {
+		this.photoPathLogic = photoPathLogic;
 	}
 
 	public String isAccountNameExists(String name) {
@@ -533,32 +570,324 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	public String saveAccountHeadPhoto(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		JSONObject json = new JSONObject();
+		String absolutePath = ABSOLUTE_PATH;
+		File dir = new File(absolutePath);
+		if (!dir.getParentFile().exists()) {
+			dir.getParentFile().mkdir();
+			if (!dir.exists()) {
+				dir.mkdir();
+			}
+		}
+		String requestAccId = this.session.getAttribute("Acc_ID").toString().trim();
+		if (request.getParameter("Acc_ID").equals(requestAccId)) {
+			try {
+				//检查数据库图片数据是否已经存在
+				boolean exists = false;
+				AccountsPhotos accountsPhoto = this.accountsPhotosLogic.getAccountsPhotosInfo(requestAccId);
+				if (accountsPhoto.get_id() != 0) {
+					exists = true;
+					this.photoPathLogic.deletePhotoPath(accountsPhoto.getHeadPhoto_ID());
+				}
+				Part part = request.getPart("file");
+				if (part == null) {
+					json.put("result", false);
+				} else {
+					String fileTypeName = "." + UploadFileNameUtil.getFileType(part);
+					String newFileName = "headPhoto" + requestAccId + DateUtils.currentDate() + fileTypeName;
+					String newFileThumbnailName = "headThumbnailPhoto" + requestAccId + DateUtils.currentDate() + fileTypeName;
+					//保存原始图片
+					part.write(absolutePath + newFileName);
+					//生成并保存缩略图
+					ThumbnailImageUtils.zoomImageScale(absolutePath + newFileName, absolutePath + newFileThumbnailName,
+							448);
+					//数据库保存图片数据
+					String photoId = this.photoPathLogic.savePhotoPath(newFileName, newFileThumbnailName);
+					boolean result;
+					if (!exists) {
+						result = this.accountsPhotosLogic.saveAccountsPhotos(requestAccId, photoId, null);
+					} else {
+						result = this.accountsPhotosLogic.changeAccountsPhotosInfo(requestAccId, photoId, null);
+					}
+					if (result) {
+						json.put("result", true);
+					} else {
+						json.put("result", false);
+					}
+				}
+			} catch (ServletException e1) {
+				e1.printStackTrace();
+				json.put("result", false);
+			} catch (IOException e) {
+				e.printStackTrace();
+				json.put("result", false);
+			}
+		} else {
+			json.put("result", false);
+		}
+		return json.toString();
 	}
 
 	public String saveAccountPhotos(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		JSONObject json = new JSONObject();
+		String absolutePath = ABSOLUTE_PATH;
+		File dir = new File(absolutePath);
+		if (!dir.getParentFile().exists()) {
+			dir.getParentFile().mkdir();
+			if (!dir.exists()) {
+				dir.mkdir();
+			}
+		}
+		String requestAccId = this.session.getAttribute("Acc_ID").toString().trim();
+		if (request.getParameter("Acc_ID").equals(requestAccId)) {
+			try {
+				//检查数据库图片数据是否已经存在
+				boolean exists = false;
+				AccountsPhotos accountsPhoto = this.accountsPhotosLogic.getAccountsPhotosInfo(requestAccId);
+				if (accountsPhoto.get_id() != 0) {
+					exists = true;
+					for (String id : this.accountsPhotosLogic.getAccountsOtherPhotos(requestAccId)) {
+						this.photoPathLogic.deletePhotoPath(id);
+					}
+				}
+				int counter = 0;
+				List<String> combine = new ArrayList<String>();
+				while (true) {
+					Part part = request.getPart("file" + counter);
+					counter++;
+					if (part == null) {
+						break;
+					} else {
+						String fileTypeName = "." + UploadFileNameUtil.getFileType(part);
+						String newFileName = "combinePhoto" + (counter - 1) + requestAccId + DateUtils.currentDate() + fileTypeName;
+						String newFileThumbnailName = "combineThumbnailPhoto" + (counter - 1) + requestAccId
+								+ DateUtils.currentDate()
+								+ fileTypeName;
+						//保存原始图片
+						part.write(absolutePath + newFileName);
+						//生成并保存缩略图
+						ThumbnailImageUtils.zoomImageScale(absolutePath + newFileName, absolutePath + newFileThumbnailName,
+								448);
+						//数据库保存图片数据
+						String photoId = this.photoPathLogic.savePhotoPath(newFileName, newFileThumbnailName);
+						combine.add(photoId);
+					}
+				}
+				boolean result;
+				if (!exists) {
+					result = this.accountsPhotosLogic.saveAccountsPhotos(requestAccId, null, combine);
+				} else {
+					result = this.accountsPhotosLogic.changeAccountsPhotosInfo(requestAccId, null, combine);
+				}
+				if (result) {
+					json.put("result", true);
+				} else {
+					json.put("result", false);
+				}
+			} catch (ServletException e1) {
+				e1.printStackTrace();
+				json.put("result", false);
+			} catch (IOException e) {
+				e.printStackTrace();
+				json.put("result", false);
+			}
+		} else {
+			json.put("result", false);
+		}
+		return json.toString();
 	}
 
 	public String changeAccountHeadPhoto(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		JSONObject json = new JSONObject();
+		String absolutePath = ABSOLUTE_PATH;
+		String requestAccId = this.session.getAttribute("Acc_ID").toString().trim();
+		if (request.getParameter("Acc_ID").equals(requestAccId)) {
+			try {
+				//检查数据库图片数据是否已经存在
+				AccountsPhotos accountsPhoto = this.accountsPhotosLogic.getAccountsPhotosInfo(requestAccId);
+				if (accountsPhoto.get_id() == 0) {
+					json.put("result", false);
+				} else {
+					Part part = request.getPart("file");
+					if (part == null) {
+						json.put("result", false);
+					} else {
+						String fileTypeName = "." + UploadFileNameUtil.getFileType(part);
+						String newFileName = "headPhoto" + requestAccId + DateUtils.currentDate() + fileTypeName;
+						String newFileThumbnailName = "headThumbnailPhoto" + requestAccId + DateUtils.currentDate() + fileTypeName;
+						//保存原始图片
+						part.write(absolutePath + newFileName);
+						//生成并保存缩略图
+						ThumbnailImageUtils.zoomImageScale(absolutePath + newFileName, absolutePath + newFileThumbnailName,
+								448);
+						//数据库保存图片数据
+						this.photoPathLogic.deletePhotoPath(accountsPhoto.getHeadPhoto_ID());
+						String photoId = this.photoPathLogic.savePhotoPath(newFileName, newFileThumbnailName);
+						boolean result = this.accountsPhotosLogic.changeAccountsPhotosInfo(requestAccId, photoId, null);
+						if (result) {
+							json.put("result", true);
+						} else {
+							json.put("result", false);
+						}
+					}
+				}
+			} catch (ServletException e1) {
+				e1.printStackTrace();
+				json.put("result", false);
+			} catch (IOException e) {
+				e.printStackTrace();
+				json.put("result", false);
+			}
+		} else {
+			json.put("result", false);
+		}
+		return json.toString();
 	}
 
 	public String changeAccountPhotos(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		JSONObject json = new JSONObject();
+		String absolutePath = ABSOLUTE_PATH;
+		String requestAccId = this.session.getAttribute("Acc_ID").toString().trim();
+		if (request.getParameter("Acc_ID").equals(requestAccId)) {
+			try {
+				//检查数据库图片数据是否已经存在
+				AccountsPhotos accountsPhoto = this.accountsPhotosLogic.getAccountsPhotosInfo(requestAccId);
+				if (accountsPhoto.get_id() == 0) {
+					json.put("result", false);
+				} else {
+					for (String id : this.accountsPhotosLogic.getAccountsOtherPhotos(requestAccId)) {
+						this.photoPathLogic.deletePhotoPath(id);
+					}
+					int counter = 0;
+					List<String> combine = new ArrayList<String>();
+					while (true) {
+						Part part = request.getPart("file" + counter);
+						counter++;
+						if (part == null) {
+							break;
+						} else {
+							String fileTypeName = "." + UploadFileNameUtil.getFileType(part);
+							String newFileName = "combinePhoto" + (counter - 1) + requestAccId + DateUtils.currentDate()
+									+ fileTypeName;
+							String newFileThumbnailName = "combineThumbnailPhoto" + (counter - 1) + requestAccId
+									+ DateUtils.currentDate()
+									+ fileTypeName;
+							//保存原始图片
+							part.write(absolutePath + newFileName);
+							//生成并保存缩略图
+							ThumbnailImageUtils.zoomImageScale(absolutePath + newFileName, absolutePath + newFileThumbnailName,
+									448);
+							//数据库保存图片数据
+							String photoId = this.photoPathLogic.savePhotoPath(newFileName, newFileThumbnailName);
+							combine.add(photoId);
+						}
+					}
+					boolean result;
+					result = this.accountsPhotosLogic.changeAccountsPhotosInfo(requestAccId, null, combine);
+					if (result) {
+						json.put("result", true);
+					} else {
+						json.put("result", false);
+					}
+				}
+			} catch (ServletException e1) {
+				e1.printStackTrace();
+				json.put("result", false);
+			} catch (IOException e) {
+				e.printStackTrace();
+				json.put("result", false);
+			}
+		} else {
+			json.put("result", false);
+		}
+		return json.toString();
 	}
 
-	public String getAccountHeadPhoto(String Acc_ID, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getAccountHeadPhotoId(String Acc_ID) {
+		JSONObject json = new JSONObject();
+		String Photo_ID = this.accountsPhotosLogic.getAccountsHeadPhoto(Acc_ID);
+		json.put("headPhotoId", Photo_ID);
+		return json.toString();
 	}
 
-	public String getAccountPhotos(String Acc_ID, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getAccountPhotosId(String Acc_ID) {
+		JSONObject json = new JSONObject();
+		List<String> Photo_IDList = this.accountsPhotosLogic.getAccountsOtherPhotos(Acc_ID);
+		json.put("combinePhotoId", Photo_IDList);
+		return json.toString();
+	}
+
+	public String getPhotoById(String Photo_ID, HttpServletResponse response) {
+		String pathName = this.photoPathLogic.getPhotoPathInfo(Photo_ID).getPhoto_pathName();
+		String realPath = ABSOLUTE_PATH + pathName;
+		String fileType = FileTypeUtils.getFileType(pathName).getValue();
+		File file = new File(realPath);
+		String name = file.getName();
+		//设置响应头
+		response.addHeader("Content-Disposition", "attachment; filename=\"" + name + "\"");
+		long fileLength = file.length();
+		response.addHeader("Content-Length", String.valueOf(fileLength));
+		response.setContentType(fileType);
+		response.setCharacterEncoding("UTF-8");
+		FileInputStream in = null;
+		OutputStream out = null;
+		try {
+			in = new FileInputStream(file);
+			out = response.getOutputStream();
+			int length = 0;
+			byte[] b = new byte[1024];
+			while ((length = in.read(b)) != -1) {
+				out.write(b, 0, length);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "Failed!";
+		} finally {
+			try {
+				in.close();
+				out.flush();
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return "Succeeded!";
+	}
+
+	public String getThumbnailPhotoById(String Photo_ID, HttpServletResponse response) {
+		String pathName = this.photoPathLogic.getPhotoPathInfo(Photo_ID).getThumbnail_pathName();
+		String realPath = ABSOLUTE_PATH + pathName;
+		String fileType = FileTypeUtils.getFileType(pathName).getValue();
+		File file = new File(realPath);
+		String name = file.getName();
+		//设置响应头
+		response.addHeader("Content-Disposition", "attachment; filename=\"" + name + "\"");
+		long fileLength = file.length();
+		response.addHeader("Content-Length", String.valueOf(fileLength));
+		response.setContentType(fileType);
+		response.setCharacterEncoding("UTF-8");
+		FileInputStream in = null;
+		OutputStream out = null;
+		try {
+			in = new FileInputStream(file);
+			out = response.getOutputStream();
+			int length = 0;
+			byte[] b = new byte[1024];
+			while ((length = in.read(b)) != -1) {
+				out.write(b, 0, length);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "Failed!";
+		} finally {
+			try {
+				in.close();
+				out.flush();
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return "Succeeded!";
 	}
 }

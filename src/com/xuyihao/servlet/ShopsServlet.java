@@ -53,7 +53,11 @@ public class ShopsServlet extends HttpServlet {
 		// 设置会话信息
 		this.session = request.getSession();
 		this.shopsService.setSessionInfo(session);
-		String action = request.getParameter("action").trim();
+		String action = request.getParameter("action");
+		if (action == null || action.equals("")) {
+			return;
+		}
+		action = action.trim();
 		switch (action) {
 		case "addShop":
 			this.addShop(request, response);

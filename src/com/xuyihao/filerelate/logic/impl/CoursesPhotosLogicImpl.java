@@ -24,12 +24,14 @@ public class CoursesPhotosLogicImpl implements CoursesPhotosLogic {
 		CoursesPhotos coursesPhotos = new CoursesPhotos();
 		coursesPhotos.setCrs_ID(Crs_ID);
 		coursesPhotos.setHeadPhoto_ID(HeadPhoto_ID);
-		String idCombine = "";
-		for (String id : CrsPhotoIdList) {
-			idCombine += (id + "&&");
+		if (CrsPhotoIdList != null && CrsPhotoIdList.size() > 0) {
+			String idCombine = "";
+			for (String id : CrsPhotoIdList) {
+				idCombine += (id + "&&");
+			}
+			idCombine = idCombine.substring(0, idCombine.length() - 2);
+			coursesPhotos.setPhoto_ID_Combine(idCombine);
 		}
-		idCombine = idCombine.substring(0, idCombine.length() - 2);
-		coursesPhotos.setPhoto_ID_Combine(idCombine);
 		coursesPhotos.setCrsPhoto_addTime(DateUtils.currentDateTime());
 		return this.coursesPhotosDao.saveCoursesPhotos(coursesPhotos);
 	}
@@ -46,7 +48,7 @@ public class CoursesPhotosLogicImpl implements CoursesPhotosLogic {
 		if (HeadPhoto_ID != null && !HeadPhoto_ID.equals("")) {
 			coursesPhotos.setHeadPhoto_ID(HeadPhoto_ID);
 		}
-		if (CrsPhotoIdList.size() > 0) {
+		if (CrsPhotoIdList != null && CrsPhotoIdList.size() > 0) {
 			String idCombine = "";
 			for (String id : CrsPhotoIdList) {
 				idCombine += (id + "&&");

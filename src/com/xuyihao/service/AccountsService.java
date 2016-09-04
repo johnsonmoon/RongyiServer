@@ -271,9 +271,9 @@ public interface AccountsService {
 	 * @return
 	 */
 	public String getCommentProductInformation(String commentId);
-	
+
 	//TODO ---------------------- 照片模块 ----------------------------------------------
-	
+
 	/**
 	 * 保存账号头像
 	 * 
@@ -282,7 +282,7 @@ public interface AccountsService {
 	 * @return
 	 */
 	public String saveAccountHeadPhoto(HttpServletRequest request);
-	
+
 	/**
 	 * 保存账号照片集
 	 * 
@@ -290,7 +290,7 @@ public interface AccountsService {
 	 * @return
 	 */
 	public String saveAccountPhotos(HttpServletRequest request);
-	
+
 	/**
 	 * 修改账号头像
 	 * 
@@ -298,7 +298,7 @@ public interface AccountsService {
 	 * @return
 	 */
 	public String changeAccountHeadPhoto(HttpServletRequest request);
-	
+
 	/**
 	 * 修改账号图片集
 	 * 
@@ -306,22 +306,38 @@ public interface AccountsService {
 	 * @return
 	 */
 	public String changeAccountPhotos(HttpServletRequest request);
-	
+
 	/**
-	 * 获取账户照片
+	 * 获取账户照片id
 	 * 
 	 * @param Acc_ID
 	 * @param response
 	 * @return
 	 */
-	public String getAccountHeadPhoto(String Acc_ID, HttpServletResponse response);
-	
+	public String getAccountHeadPhotoId(String Acc_ID);
+
 	/**
-	 * 获取账户照片集
+	 * 获取账户照片集id
 	 * 
 	 * @param Acc_ID
 	 * @param response
 	 * @return
 	 */
-	public String getAccountPhotos(String Acc_ID, HttpServletResponse response);
+	public String getAccountPhotosId(String Acc_ID);
+
+	/**
+	 * 获取图片
+	 * 
+	 * @param Photo_ID
+	 * @return
+	 */
+	public String getPhotoById(String Photo_ID, HttpServletResponse response);
+
+	/**
+	 * 获取缩略图
+	 * 
+	 * @param Photo_ID
+	 * @return
+	 */
+	public String getThumbnailPhotoById(String Photo_ID, HttpServletResponse response);
 }

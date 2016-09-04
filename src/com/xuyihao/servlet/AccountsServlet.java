@@ -58,7 +58,11 @@ public class AccountsServlet extends HttpServlet {
 		// 设置会话信息
 		this.session = request.getSession();
 		this.accountsService.setSessionInfo(session);
-		String action = request.getParameter("action").trim();
+		String action = request.getParameter("action");
+		if (action == null || action.equals("")) {
+			return;
+		}
+		action = action.trim();
 		switch (action) {
 		case "accountNameExists":
 			this.isAccountNameExists(request, response);
@@ -143,6 +147,30 @@ public class AccountsServlet extends HttpServlet {
 			break;
 		case "getCommProdInfo":
 			this.getCommentProductInformation(request, response);
+			break;
+		case "addHeadPhoto":
+			this.saveAccHeadPhoto(request, response);
+			break;
+		case "addPhotos":
+			this.saveAccPhotos(request, response);
+			break;
+		case "changeHeadPhoto":
+			this.changeAccHeadPhoto(request, response);
+			break;
+		case "changePhotos":
+			this.changeAccPhotos(request, response);
+			break;
+		case "getHeadPhotoId":
+			this.getAccHeadPhotoId(request, response);
+			break;
+		case "getPhotosId":
+			this.getAccPhotosId(request, response);
+			break;
+		case "getPhotoById":
+			this.getPhotoById(request, response);
+			break;
+		case "getThumbnailPhotoById":
+			this.getThumbnailPhotoById(request, response);
 			break;
 		}
 	}
@@ -509,5 +537,55 @@ public class AccountsServlet extends HttpServlet {
 		String commentId = request.getParameter("Comm_ID");
 		String message = this.accountsService.getCommentProductInformation(commentId);
 		response.getWriter().println(message);
+	}
+
+	public void saveAccHeadPhoto(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String message = this.accountsService.saveAccountHeadPhoto(request);
+		response.getWriter().println(message);
+	}
+
+	public void saveAccPhotos(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String message = this.accountsService.saveAccountPhotos(request);
+		response.getWriter().println(message);
+	}
+
+	public void changeAccHeadPhoto(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String message = this.accountsService.changeAccountHeadPhoto(request);
+		response.getWriter().println(message);
+	}
+
+	public void changeAccPhotos(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String message = this.accountsService.changeAccountPhotos(request);
+		response.getWriter().println(message);
+	}
+
+	public void getAccHeadPhotoId(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String Acc_ID = request.getParameter("Acc_ID");
+		String message = this.accountsService.getAccountHeadPhotoId(Acc_ID);
+		response.getWriter().println(message);
+	}
+
+	public void getAccPhotosId(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String Acc_ID = request.getParameter("Acc_ID");
+		String message = this.accountsService.getAccountPhotosId(Acc_ID);
+		response.getWriter().println(message);
+	}
+
+	public void getPhotoById(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String Photo_ID = request.getParameter("Photo_ID");
+		this.accountsService.getPhotoById(Photo_ID, response);
+	}
+
+	public void getThumbnailPhotoById(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String Photo_ID = request.getParameter("Photo_ID");
+		this.accountsService.getThumbnailPhotoById(Photo_ID, response);
 	}
 }
