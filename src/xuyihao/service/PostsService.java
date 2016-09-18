@@ -1,7 +1,5 @@
 package xuyihao.service;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import xuyihao.entity.CommentPost;
@@ -110,56 +108,4 @@ public interface PostsService {
 	 * @return
 	 */
 	public String getLikePostInformation(String likeId);
-
-	//TODO ------------------------
-
-	/**
-	 * 保存帖子封面图片
-	 * 
-	 * @param request
-	 * @return
-	 */
-	public String savePostsHeadPhoto(HttpServletRequest request);
-
-	/**
-	 * 保存帖子图片集
-	 * 
-	 * @param request
-	 * @return
-	 */
-	public String savePostsPhotos(HttpServletRequest request);
-
-	/**
-	 * 修改帖子封面图片
-	 * 
-	 * @param request
-	 * @return
-	 */
-	public String changePostsHeadPhoto(HttpServletRequest request);
-
-	/**
-	 * 修改帖子图片集
-	 * 
-	 * @param request
-	 * @return
-	 */
-	public String changePostsPhotos(HttpServletRequest request);
-
-	/**
-	 * 获取帖子封面图片
-	 * 
-	 * @param Post_ID
-	 * @param response
-	 * @return
-	 */
-	public String getPostsHeadPhoto(String Post_ID, HttpServletResponse response);
-
-	/**
-	 * 获取帖子图片集
-	 * 
-	 * @param Post_ID
-	 * @param response
-	 * @return
-	 */
-	public String getPostsPhotos(String Post_ID, HttpServletResponse response);
 }

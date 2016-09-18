@@ -1,7 +1,5 @@
 package xuyihao.service.impl;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -169,35 +167,5 @@ public class PostsServiceImpl implements xuyihao.service.PostsService {
 		// XXX 所有人可查看
 		LikePost likePost = this.likePostLogic.getLikePostInfo(likeId);
 		return likePost.toJSONString();
-	}
-
-	public String savePostsHeadPhoto(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String savePostsPhotos(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String changePostsHeadPhoto(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String changePostsPhotos(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String getPostsHeadPhoto(String Post_ID, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String getPostsPhotos(String Post_ID, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
