@@ -1,11 +1,16 @@
 package xuyihao.service.impl;
 
+import java.io.File;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import net.sf.json.JSONObject;
+import xuyihao.common.AppPropertiesLoader;
 import xuyihao.entity.CommentCrs;
 import xuyihao.entity.Courses;
 import xuyihao.entity.LikeCrs;
@@ -19,6 +24,10 @@ import xuyihao.logic.LikeCrsLogic;
  */
 @Component("CoursesService")
 public class CoursesServiceImpl implements xuyihao.service.CoursesService {
+	private String BASE_FILE_PATH = AppPropertiesLoader.getAppProperties().getProperty("BaseFilePath");
+	private String RELATIVE_PATH = File.separator + "vedios" + File.separator + "courses" + File.separator;
+	private String ABSOLUTE_PATH = BASE_FILE_PATH + RELATIVE_PATH;
+
 	@Autowired
 	private CoursesLogic coursesLogic;
 
@@ -164,5 +173,30 @@ public class CoursesServiceImpl implements xuyihao.service.CoursesService {
 		// XXX 所有人可查看
 		LikeCrs likeCrs = this.likeCrsLogic.getLikeCrsInfo(likeId);
 		return likeCrs.toJSONString();
+	}
+
+	public String saveCoursesVedio(HttpServletRequest request) {
+
+		return null;
+	}
+
+	public String changeCoursesVedio(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getCoursesVedioId(String Crs_ID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getThumbnailByVedioId(String Vedio_ID, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getVedioByVedioId(String Vedio_ID, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
