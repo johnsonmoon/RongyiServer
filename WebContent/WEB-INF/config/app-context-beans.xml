@@ -10,10 +10,10 @@
     	http://www.springframework.org/schema/task/spring-task-4.0.xsd">
 
 	<!-- base configurations -->
-	<context:component-scan base-package="com.xuyihao.filerelate.dao.impl"></context:component-scan>
-	<context:component-scan base-package="com.xuyihao.filerelate.logic.impl"></context:component-scan>
-	<context:component-scan base-package="com.xuyihao.dao.impl"></context:component-scan>
-	<context:component-scan base-package="com.xuyihao.service.impl"></context:component-scan>
-	<context:component-scan base-package="com.xuyihao.logic.impl"></context:component-scan>
+	<context:component-scan base-package="xuyihao.filerelate.dao.impl"></context:component-scan>
+	<context:component-scan base-package="xuyihao.filerelate.logic.impl"></context:component-scan>
+	<context:component-scan base-package="xuyihao.dao.impl"></context:component-scan>
+	<context:component-scan base-package="xuyihao.service.impl"></context:component-scan>
+	<context:component-scan base-package="xuyihao.logic.impl"></context:component-scan>
 	<context:annotation-config />
 </beans>

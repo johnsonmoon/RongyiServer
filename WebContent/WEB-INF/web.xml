@@ -16,7 +16,7 @@
 	<!-- Filters -->
 	<filter>
 		<filter-name>CharacterEncodingFilter</filter-name>
-		<filter-class>com.xuyihao.filter.CharacterEncodingFilter</filter-class>
+		<filter-class>xuyihao.filter.CharacterEncodingFilter</filter-class>
 		<init-param>
 			<param-name>encoding</param-name>
 			<param-value>UTF-8</param-value>
@@ -39,7 +39,7 @@
 		<description>Accounts</description>
 		<display-name>AccountsServlet</display-name>
 		<servlet-name>AccountsServlet</servlet-name>
-		<servlet-class>com.xuyihao.servlet.AccountsServlet</servlet-class>
+		<servlet-class>xuyihao.servlet.AccountsServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AccountsServlet</servlet-name>
@@ -50,7 +50,7 @@
 		<description>Courses</description>
 		<display-name>CoursesServlet</display-name>
 		<servlet-name>CoursesServlet</servlet-name>
-		<servlet-class>com.xuyihao.servlet.CoursesServlet</servlet-class>
+		<servlet-class>xuyihao.servlet.CoursesServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>CoursesServlet</servlet-name>
@@ -61,7 +61,7 @@
 		<description>Posts</description>
 		<display-name>PostsServlet</display-name>
 		<servlet-name>PostsServlet</servlet-name>
-		<servlet-class>com.xuyihao.servlet.PostsServlet</servlet-class>
+		<servlet-class>xuyihao.servlet.PostsServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>PostsServlet</servlet-name>
@@ -72,7 +72,7 @@
 		<description>Shops</description>
 		<display-name>ShopsServlet</display-name>
 		<servlet-name>ShopsServlet</servlet-name>
-		<servlet-class>com.xuyihao.servlet.ShopsServlet</servlet-class>
+		<servlet-class>xuyihao.servlet.ShopsServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ShopsServlet</servlet-name>
