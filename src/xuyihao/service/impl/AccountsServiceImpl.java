@@ -35,6 +35,7 @@ import xuyihao.logic.OrdersLogic;
 import xuyihao.service.AccountsService;
 import xuyihao.tools.utils.DateUtils;
 import xuyihao.tools.utils.FileTypeUtils;
+import xuyihao.tools.utils.FileUtils;
 import xuyihao.tools.utils.ThumbnailImageUtils;
 import xuyihao.tools.utils.UploadFileNameUtil;
 
@@ -596,7 +597,7 @@ public class AccountsServiceImpl implements AccountsService {
 					String newFileName = "headPhoto" + requestAccId + DateUtils.currentDate() + fileTypeName;
 					String newFileThumbnailName = "headThumbnailPhoto" + requestAccId + DateUtils.currentDate() + fileTypeName;
 					//保存原始图片
-					part.write(absolutePath + newFileName);
+					FileUtils.writePartToDisk(part, absolutePath + newFileName);
 					//生成并保存缩略图
 					ThumbnailImageUtils.zoomImageScale(absolutePath + newFileName, absolutePath + newFileThumbnailName,
 							448);
@@ -663,7 +664,7 @@ public class AccountsServiceImpl implements AccountsService {
 								+ DateUtils.currentDate()
 								+ fileTypeName;
 						//保存原始图片
-						part.write(absolutePath + newFileName);
+						FileUtils.writePartToDisk(part, absolutePath + newFileName);
 						//生成并保存缩略图
 						ThumbnailImageUtils.zoomImageScale(absolutePath + newFileName, absolutePath + newFileThumbnailName,
 								448);
@@ -715,7 +716,7 @@ public class AccountsServiceImpl implements AccountsService {
 						String newFileName = "headPhoto" + requestAccId + DateUtils.currentDate() + fileTypeName;
 						String newFileThumbnailName = "headThumbnailPhoto" + requestAccId + DateUtils.currentDate() + fileTypeName;
 						//保存原始图片
-						part.write(absolutePath + newFileName);
+						FileUtils.writePartToDisk(part, absolutePath + newFileName);
 						//生成并保存缩略图
 						ThumbnailImageUtils.zoomImageScale(absolutePath + newFileName, absolutePath + newFileThumbnailName,
 								448);
@@ -772,7 +773,7 @@ public class AccountsServiceImpl implements AccountsService {
 									+ DateUtils.currentDate()
 									+ fileTypeName;
 							//保存原始图片
-							part.write(absolutePath + newFileName);
+							FileUtils.writePartToDisk(part, absolutePath + newFileName);
 							//生成并保存缩略图
 							ThumbnailImageUtils.zoomImageScale(absolutePath + newFileName, absolutePath + newFileThumbnailName,
 									448);

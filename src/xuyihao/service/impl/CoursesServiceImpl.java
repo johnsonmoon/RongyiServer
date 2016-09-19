@@ -30,6 +30,7 @@ import xuyihao.logic.CoursesLogic;
 import xuyihao.logic.LikeCrsLogic;
 import xuyihao.tools.utils.DateUtils;
 import xuyihao.tools.utils.FileTypeUtils;
+import xuyihao.tools.utils.FileUtils;
 import xuyihao.tools.utils.UploadFileNameUtil;
 
 /**
@@ -108,7 +109,7 @@ public class CoursesServiceImpl implements xuyihao.service.CoursesService {
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		Courses queryCourse = this.coursesLogic.getCoursesInfo(courseId);
-		if (Acc_ID.equals(queryCourse.getAcc_ID())) {// 是本人的视频
+		if (Acc_ID.equals(queryCourse.getAcc_ID()) && Acc_ID.equals(queryCourse.getAuthor_ID())) {// 是本人的视频(发布人)
 			boolean flag = this.coursesLogic.deleteCourse(courseId);
 			boolean flag2 = this.deleteCoursesVedio(courseId);
 			if ((flag && flag2) == true) {
@@ -125,7 +126,7 @@ public class CoursesServiceImpl implements xuyihao.service.CoursesService {
 	public String changeCourseInformation(Courses course, HttpServletRequest request) {
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
-		if (Acc_ID.equals(course.getAcc_ID())) {
+		if (Acc_ID != null && !Acc_ID.equals("")) {
 			boolean flag = this.coursesLogic.changeCourseInfo(course);
 			String vedioId = this.changeCoursesVedio(course.getCrs_ID(), request);
 			String FirstPhoto_ID = this.getFirstPhotoIdByVedioId(vedioId);
@@ -318,6 +319,13 @@ public class CoursesServiceImpl implements xuyihao.service.CoursesService {
 			// 检查数据库视频数据是否已经存在
 			CoursesVedio coursesVedio = this.coursesVedioLogic.getCoursesVedioInfo(Crs_ID);
 			if (coursesVedio.get_id() != 0) {
+				//如果存在则删除原来的视频和图片
+				String VedioPath = this.vedioPathLogic.getVedioPathInfo(coursesVedio.getVedio_ID()).getVedio_pathName();
+				File file = new File(absolutePath + VedioPath);
+				if (file.exists()) {
+					file.delete();
+				}
+				//TODO 删除图片
 				this.coursesVedioLogic.deleteCoursesVedio(Crs_ID);
 			}
 			Part part = request.getPart("file");
@@ -329,7 +337,7 @@ public class CoursesServiceImpl implements xuyihao.service.CoursesService {
 				String firstPhotoName = "VedioFirstPhoto" + Crs_ID + DateUtils.currentDate() + ".jpg";// 视频首帧图
 				String firstPhotoThumbnailName = "VedioThumbnailPhoto" + Crs_ID + DateUtils.currentDate() + ".jpg";// 视频首帧缩略图
 				// TODO 保存视频,以及图片
-				part.write(absolutePath + vedioFileName);
+				FileUtils.writePartToDisk(part, absolutePath + vedioFileName);
 				// TODO 生成视频首帧的缩略图，需要设计实现
 				// ThumbnailImageUtils.zoomImageScale(photoAbsolutePath +
 				// firstPhotoName,
