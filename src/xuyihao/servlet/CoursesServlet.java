@@ -89,6 +89,24 @@ public class CoursesServlet extends HttpServlet {
 		case "getLikeCrsInfo":
 			this.getLikeCourseInformation(request, response);
 			break;
+		case "getCrsFileInfo":
+			this.getCourseFileInformation(request, response);
+			break;
+		case "getCrsVedioId":
+			this.getCourseVedioId(request, response);
+			break;
+		case "getCrsPhotoId":
+			this.getCoursePhotoId(request, response);
+			break;
+		case "getVedioById":
+			this.getCourseVedioById(request, response);
+			break;
+		case "getPhotoById":
+			this.getCoursePhotoById(request, response);
+			break;
+		case "getThumbnailPhotoById":
+			this.getCourseThumbnailPhotoById(request, response);
+			break;
 		}
 	}
 
@@ -102,7 +120,7 @@ public class CoursesServlet extends HttpServlet {
 		course.setCrs_name(request.getParameter("Crs_name"));
 		course.setAcc_ID(Acc_ID);
 		course.setAuthor_ID(Acc_ID);
-		String message = this.coursesService.addCourse(course);
+		String message = this.coursesService.addCourse(course, request);
 		response.getWriter().println(message);
 	}
 
@@ -127,8 +145,7 @@ public class CoursesServlet extends HttpServlet {
 		// XXX Crs_ID 必需量
 		course.setCrs_ID(request.getParameter("Crs_ID"));
 		course.setCrs_name(request.getParameter("Crs_name"));
-		// TODO 这里需要考虑视频是否要更换，如果更换，需要详细设计
-		String message = this.coursesService.changeCourseInformation(course);
+		String message = this.coursesService.changeCourseInformation(course, request);
 		response.getWriter().println(message);
 	}
 
@@ -211,5 +228,44 @@ public class CoursesServlet extends HttpServlet {
 		String likeId = request.getParameter("Like_ID");
 		String message = this.coursesService.getLikeCourseInformation(likeId);
 		response.getWriter().println(message);
+	}
+
+	public void getCourseFileInformation(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String Crs_ID = request.getParameter("Crs_ID");
+		String message = this.coursesService.getCoursesVedioAndPhotoIds(Crs_ID);
+		response.getWriter().println(message);
+	}
+
+	public void getCourseVedioId(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String Crs_ID = request.getParameter("Crs_ID");
+		String message = this.coursesService.getCoursesVedioId(Crs_ID);
+		response.getWriter().println(message);
+	}
+
+	public void getCoursePhotoId(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String Vedio_ID = request.getParameter("Vedio_ID");
+		String message = this.coursesService.getFirstPhotoIdByVedioId(Vedio_ID);
+		response.getWriter().println(message);
+	}
+
+	public void getCourseVedioById(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String vedioId = request.getParameter("Vedio_ID");
+		this.coursesService.getVedioByVedioId(vedioId, response);
+	}
+
+	public void getCoursePhotoById(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String Photo_ID = request.getParameter("Photo_ID");
+		this.coursesService.getPhotoByPhotoId(Photo_ID, response);
+	}
+
+	public void getCourseThumbnailPhotoById(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String Photo_ID = request.getParameter("Photo_ID");
+		this.coursesService.getThumbnailPhotoByPhotoId(Photo_ID, response);
 	}
 }

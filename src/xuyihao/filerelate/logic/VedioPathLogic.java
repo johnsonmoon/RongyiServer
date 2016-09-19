@@ -15,7 +15,7 @@ public interface VedioPathLogic {
 	 * @param Thumbnail_pathName
 	 * @return
 	 */
-	public String saveVedioPath(String Vedio_pathName, String Thumbnail_pathName);
+	public String saveVedioPath(String Vedio_pathName, String firstPhotoId);
 
 	/**
 	 * 删除视频路径
@@ -32,7 +32,7 @@ public interface VedioPathLogic {
 	 * @param Thumbnail_pathName
 	 * @return
 	 */
-	public boolean changeVedioPathInfo(String Vedio_ID, String Vedio_pathName, String Thumbnail_pathName);
+	public boolean changeVedioPathInfo(String Vedio_ID, String Vedio_pathName, String firstPhotoId);
 
 	/**
 	 * 获取视频路径信息

@@ -30,7 +30,7 @@ public interface CoursesService {
 	 * @param course
 	 * @return
 	 */
-	public String addCourse(Courses course);
+	public String addCourse(Courses course, HttpServletRequest request);
 
 	/**
 	 * 删除视频课程
@@ -46,7 +46,7 @@ public interface CoursesService {
 	 * @param course
 	 * @return
 	 */
-	public String changeCourseInformation(Courses course);
+	public String changeCourseInformation(Courses course,  HttpServletRequest request);
 
 	/**
 	 * 获取视频课程信息
@@ -112,20 +112,12 @@ public interface CoursesService {
 	public String getLikeCourseInformation(String likeId);
 
 	/**
-	 * 保存视频教程的视频（上传视频）
+	 * 获取教程相关的视频ID、文件ID
 	 * 
-	 * @param request
+	 * @param Crs_ID
 	 * @return
 	 */
-	public String saveCoursesVedio(HttpServletRequest request);
-
-	/**
-	 * 修改视频教程的视频（上传视频）
-	 * 
-	 * @param request
-	 * @return
-	 */
-	public String changeCoursesVedio(HttpServletRequest request);
+	public String getCoursesVedioAndPhotoIds(String Crs_ID);
 
 	/**
 	 * 获取视频课程的视频ID
@@ -136,13 +128,13 @@ public interface CoursesService {
 	public String getCoursesVedioId(String Crs_ID);
 
 	/**
-	 * 通过视频ID获取视频缩略图
+	 * 通过视频ID获取视频图片ID
 	 * 
 	 * @param Vedio_ID
 	 * @param response
 	 * @return
 	 */
-	public String getThumbnailByVedioId(String Vedio_ID, HttpServletResponse response);
+	public String getFirstPhotoIdByVedioId(String Vedio_ID);
 
 	/**
 	 * 通过视频ID获取视频文件
@@ -152,4 +144,21 @@ public interface CoursesService {
 	 * @return
 	 */
 	public String getVedioByVedioId(String Vedio_ID, HttpServletResponse response);
+
+	/**
+	 * 通过图片ID获取图片文件
+	 * 
+	 * @param Photo_ID
+	 * @param response
+	 * @return
+	 */
+	public String getPhotoByPhotoId(String Photo_ID, HttpServletResponse response);
+
+	/**
+	 * 通过图片ID获取图片缩略图文件
+	 * 
+	 * @param Photo_ID
+	 * @return
+	 */
+	public String getThumbnailPhotoByPhotoId(String Photo_ID, HttpServletResponse response);
 }

@@ -10,19 +10,19 @@ public class VedioPath {
 	public static final String BASE_VEDIOPATH_PHYSICAL_ID = "_id";
 	public static final String BASE_VEDIOPATH_ID = "Vedio_ID";
 	public static final String BASE_VEDIOPATH_PATHNAME = "Vedio_pathName";
-	public static final String BASE_VEDIOPATH_THUMBNAIL_PATHNAME = "Thumbnail_pathName";
+	public static final String BASE_VEDIOPATH_FIRSTPHOTO_ID = "FirstPhoto_ID";
 	public static final String BASE_VEDIOPATH_ADD_TIME = "Vedio_addTime";
 	private long _id;
 	private String Vedio_ID;
 	private String Vedio_pathName;
-	private String Thumbnail_pathName;
+	private String FirstPhoto_ID;
 	private String Vedio_addTime;
 
 	public VedioPath() {
 		this._id = 0l;
 		this.Vedio_ID = "";
 		this.Vedio_pathName = "";
-		this.Thumbnail_pathName = "";
+		this.FirstPhoto_ID = "";
 		this.Vedio_addTime = "";
 	}
 
@@ -30,7 +30,7 @@ public class VedioPath {
 		this._id = vedioPath.get_id();
 		this.Vedio_ID = vedioPath.getVedio_ID();
 		this.Vedio_pathName = vedioPath.getVedio_pathName();
-		this.Thumbnail_pathName = vedioPath.getThumbnail_pathName();
+		this.FirstPhoto_ID = vedioPath.getFirstPhoto_ID();
 		this.Vedio_addTime = vedioPath.getVedio_addTime();
 	}
 
@@ -42,8 +42,8 @@ public class VedioPath {
 	public String toJSONString() {
 		String value = "{\"" + BASE_VEDIOPATH_PHYSICAL_ID + "\":\"" + this._id + "\", \"" + BASE_VEDIOPATH_ID + "\":\""
 				+ this.Vedio_ID + "\", \"" + BASE_VEDIOPATH_PATHNAME + "\":\"" + this.Vedio_pathName + "\", \""
-				+ BASE_VEDIOPATH_THUMBNAIL_PATHNAME + "\":\"" + this.Thumbnail_pathName + "\", \"" + BASE_VEDIOPATH_ADD_TIME
-				+ "\":\"" + this.Vedio_addTime + "\"}";
+				+ BASE_VEDIOPATH_FIRSTPHOTO_ID + "\":\"" + this.FirstPhoto_ID + "\", \"" + BASE_VEDIOPATH_ADD_TIME + "\":\""
+				+ this.Vedio_addTime + "\"}";
 		return value;
 	}
 
@@ -71,12 +71,12 @@ public class VedioPath {
 		Vedio_pathName = vedio_pathName;
 	}
 
-	public String getThumbnail_pathName() {
-		return Thumbnail_pathName;
+	public String getFirstPhoto_ID() {
+		return FirstPhoto_ID;
 	}
 
-	public void setThumbnail_pathName(String thumbnail_pathName) {
-		Thumbnail_pathName = thumbnail_pathName;
+	public void setFirstPhoto_ID(String firstPhoto_ID) {
+		FirstPhoto_ID = firstPhoto_ID;
 	}
 
 	public String getVedio_addTime() {

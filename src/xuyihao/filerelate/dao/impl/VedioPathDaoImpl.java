@@ -20,8 +20,8 @@ public class VedioPathDaoImpl implements VedioPathDao {
 
 	public boolean saveVedioPath(VedioPath vedioPath) {
 		String sql = "insert into " + VedioPath.BASE_TABLE_NAME + " values(null, '" + vedioPath.getVedio_ID() + "', '"
-				+ vedioPath.getVedio_pathName() + "', '" + vedioPath.getThumbnail_pathName() + "', '"
-				+ vedioPath.getVedio_addTime() + "')";
+				+ vedioPath.getVedio_pathName() + "', '" + vedioPath.getFirstPhoto_ID() + "', '" + vedioPath.getVedio_addTime()
+				+ "')";
 		if (this.databaseConnector.executeUpdate(sql) != 0) {
 			return true;
 		} else {
@@ -41,9 +41,9 @@ public class VedioPathDaoImpl implements VedioPathDao {
 
 	public boolean updateVedioPath(VedioPath vedioPath) {
 		String sql = "update " + VedioPath.BASE_TABLE_NAME + " set " + VedioPath.BASE_VEDIOPATH_PATHNAME + " = '"
-				+ vedioPath.getVedio_pathName()
-				+ "', " + VedioPath.BASE_VEDIOPATH_THUMBNAIL_PATHNAME + " = '" + vedioPath.getThumbnail_pathName() + "' where "
-				+ VedioPath.BASE_VEDIOPATH_ID + " = '" + vedioPath.getVedio_ID() + "'";
+				+ vedioPath.getVedio_pathName() + "', " + VedioPath.BASE_VEDIOPATH_FIRSTPHOTO_ID + " = '"
+				+ vedioPath.getFirstPhoto_ID() + "' where " + VedioPath.BASE_VEDIOPATH_ID + " = '" + vedioPath.getVedio_ID()
+				+ "'";
 		if (this.databaseConnector.executeUpdate(sql) != 0) {
 			return true;
 		} else {
@@ -78,7 +78,7 @@ public class VedioPathDaoImpl implements VedioPathDao {
 				vedioPath.set_id(resultSet.getLong(VedioPath.BASE_VEDIOPATH_PHYSICAL_ID));
 				vedioPath.setVedio_ID(resultSet.getString(VedioPath.BASE_VEDIOPATH_ID));
 				vedioPath.setVedio_pathName(resultSet.getString(VedioPath.BASE_VEDIOPATH_PATHNAME));
-				vedioPath.setThumbnail_pathName(resultSet.getString(VedioPath.BASE_VEDIOPATH_THUMBNAIL_PATHNAME));
+				vedioPath.setFirstPhoto_ID(resultSet.getString(VedioPath.BASE_VEDIOPATH_FIRSTPHOTO_ID));
 				vedioPath.setVedio_addTime(resultSet.getString(VedioPath.BASE_VEDIOPATH_ADD_TIME));
 			}
 		} catch (SQLException e) {

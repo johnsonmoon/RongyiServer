@@ -229,7 +229,7 @@ create table VedioPath
 _id bigint primary key AUTO_INCREMENT,
 Vedio_ID varchar(20) not null,
 Vedio_pathName varchar(200) not null,
-Thumbnail_pathName varchar(200) not null,
+FirstPhoto_ID varchar(20) not null,
 Vedio_addTime datetime
 )engine=InnoDB AUTO_INCREMENT=1 CHARSET=UTF8;
 

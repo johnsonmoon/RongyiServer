@@ -18,13 +18,13 @@ public class VedioPathLogicImpl implements VedioPathLogic {
 		this.vedioPathDao = vedioPathDao;
 	}
 
-	public String saveVedioPath(String Vedio_pathName, String Thumbnail_pathName) {
+	public String saveVedioPath(String Vedio_pathName, String firstPhotoId) {
 		VedioPath vedioPath = new VedioPath();
 		String Vedio_ID = RandomUtils.getRandomString(15) + "Vedio";
 		vedioPath.setVedio_ID(Vedio_ID);
 		vedioPath.setVedio_addTime(DateUtils.currentDateTime());
 		vedioPath.setVedio_pathName(Vedio_pathName);
-		vedioPath.setThumbnail_pathName(Thumbnail_pathName);
+		vedioPath.setFirstPhoto_ID(firstPhotoId);
 		boolean flag = this.vedioPathDao.saveVedioPath(vedioPath);
 		if (flag) {
 			return Vedio_ID;
@@ -37,7 +37,7 @@ public class VedioPathLogicImpl implements VedioPathLogic {
 		return this.vedioPathDao.deleteVedioPath(Vedio_ID);
 	}
 
-	public boolean changeVedioPathInfo(String Vedio_ID, String Vedio_pathName, String Thumbnail_pathName) {
+	public boolean changeVedioPathInfo(String Vedio_ID, String Vedio_pathName, String firstPhotoId) {
 		VedioPath vedioPath = this.vedioPathDao.queryById(Vedio_ID);
 		if (vedioPath.get_id() == 0) {
 			return false;
@@ -45,8 +45,8 @@ public class VedioPathLogicImpl implements VedioPathLogic {
 		if (Vedio_pathName != null && !Vedio_pathName.equals("")) {
 			vedioPath.setVedio_pathName(Vedio_pathName);
 		}
-		if (Thumbnail_pathName != null && !Thumbnail_pathName.equals("")) {
-			vedioPath.setThumbnail_pathName(Thumbnail_pathName);
+		if (firstPhotoId != null && !firstPhotoId.equals("")) {
+			vedioPath.setFirstPhoto_ID(firstPhotoId);
 		}
 		return this.vedioPathDao.updateVedioPath(vedioPath);
 	}
