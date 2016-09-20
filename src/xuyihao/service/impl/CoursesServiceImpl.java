@@ -352,10 +352,21 @@ public class CoursesServiceImpl implements xuyihao.service.CoursesService {
 				// TODO 判断视频是否是mp4,flv等格式，如果不是则需要转换(视频工具还有一些问题，该功能暂时忽略)
 				FileUtils.writePartToDisk(part, absolutePath + vedioFileName);
 				// 生成视频首帧的图片以及缩略图
-				// XXX 这个方法开启进程调用但是不会阻塞,会影响之后的方法调用
-				// TODO 需要想办法使截取图片的时候阻塞线程
+				// XXX 这个方法开启进程调用但是不会阻塞,会影响之后的方法调用(缩略图生成方法找不到文件)
 				VedioUtils.cutoutVedio(FFMPEG_TOOL_NAME, absolutePath + vedioFileName, photoAbsolutePath + firstPhotoName,
 						3.3f);
+				// XXX 判断首帧图片是否生成,并等待两秒使图片完成生成
+				while (true) {
+					File photoRaw = new File(photoAbsolutePath + firstPhotoName);
+					if (photoRaw.exists()) {
+						try {
+							Thread.sleep(2000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						break;
+					}
+				}
 				ThumbnailImageUtils.zoomImageScale(photoAbsolutePath + firstPhotoName,
 						photoAbsolutePath + firstPhotoThumbnailName, 448);
 				// 数据库数据
@@ -457,7 +468,7 @@ public class CoursesServiceImpl implements xuyihao.service.CoursesService {
 			}
 		}
 		String pathName = this.photoPathLogic.getPhotoPathInfo(Photo_ID).getPhoto_pathName();
-		String realPath = ABSOLUTE_PATH + pathName;
+		String realPath = photoAbsolutePath + pathName;
 		String fileType = FileTypeUtils.getFileType(pathName).getValue();
 		File file = new File(realPath);
 		String name = file.getName();
@@ -502,7 +513,7 @@ public class CoursesServiceImpl implements xuyihao.service.CoursesService {
 			}
 		}
 		String pathName = this.photoPathLogic.getPhotoPathInfo(Photo_ID).getThumbnail_pathName();
-		String realPath = ABSOLUTE_PATH + pathName;
+		String realPath = photoAbsolutePath + pathName;
 		String fileType = FileTypeUtils.getFileType(pathName).getValue();
 		File file = new File(realPath);
 		String name = file.getName();
