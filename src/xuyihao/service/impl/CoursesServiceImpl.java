@@ -31,7 +31,9 @@ import xuyihao.logic.LikeCrsLogic;
 import xuyihao.tools.utils.DateUtils;
 import xuyihao.tools.utils.FileTypeUtils;
 import xuyihao.tools.utils.FileUtils;
+import xuyihao.tools.utils.ThumbnailImageUtils;
 import xuyihao.tools.utils.UploadFileNameUtil;
+import xuyihao.tools.utils.VedioUtils;
 
 /**
  * 
@@ -44,6 +46,8 @@ public class CoursesServiceImpl implements xuyihao.service.CoursesService {
 	private String ABSOLUTE_PATH = BASE_FILE_PATH + RELATIVE_PATH;
 	private String PHOTO_RELATIVE_PATH = File.separator + "photos" + File.separator + "courses" + File.separator;
 	private String PHOTO_ABSOLUTE_PATH = BASE_FILE_PATH + PHOTO_RELATIVE_PATH;
+	private String FFMPEG_TOOL_NAME = AppPropertiesLoader.getAppProperties()
+			.getProperty("ffmpeg_executable_file_pathName");
 
 	@Autowired
 	private CoursesLogic coursesLogic;
@@ -95,7 +99,6 @@ public class CoursesServiceImpl implements xuyihao.service.CoursesService {
 
 	public String addCourse(Courses course, HttpServletRequest request) {
 		String Crs_ID = this.coursesLogic.saveCourse(course);
-		this.saveCoursesVedio(Crs_ID, request);
 		String Vedio_ID = this.saveCoursesVedio(Crs_ID, request);
 		String FirstPhoto_ID = this.vedioPathLogic.getVedioPathInfo(Vedio_ID).getFirstPhoto_ID();
 		JSONObject json = new JSONObject();
@@ -129,7 +132,7 @@ public class CoursesServiceImpl implements xuyihao.service.CoursesService {
 		if (Acc_ID != null && !Acc_ID.equals("")) {
 			boolean flag = this.coursesLogic.changeCourseInfo(course);
 			String vedioId = this.changeCoursesVedio(course.getCrs_ID(), request);
-			String FirstPhoto_ID = this.getFirstPhotoIdByVedioId(vedioId);
+			String FirstPhoto_ID = this.vedioPathLogic.getVedioPathInfo(vedioId).getFirstPhoto_ID();
 			json.put("result", flag);
 			json.put("Vedio_ID", vedioId);
 			json.put("FirstPhoto_ID", FirstPhoto_ID);
@@ -319,13 +322,22 @@ public class CoursesServiceImpl implements xuyihao.service.CoursesService {
 			// 检查数据库视频数据是否已经存在
 			CoursesVedio coursesVedio = this.coursesVedioLogic.getCoursesVedioInfo(Crs_ID);
 			if (coursesVedio.get_id() != 0) {
-				//如果存在则删除原来的视频和图片
-				String VedioPath = this.vedioPathLogic.getVedioPathInfo(coursesVedio.getVedio_ID()).getVedio_pathName();
+				// 如果存在则删除原来的视频和图片
+				VedioPath vedio = this.vedioPathLogic.getVedioPathInfo(coursesVedio.getVedio_ID());
+				String VedioPath = vedio.getVedio_pathName();
 				File file = new File(absolutePath + VedioPath);
 				if (file.exists()) {
 					file.delete();
 				}
-				//TODO 删除图片
+				PhotoPath photo = this.photoPathLogic.getPhotoPathInfo(vedio.getFirstPhoto_ID());
+				File filePhoto = new File(photoAbsolutePath + photo.getPhoto_pathName());
+				if (filePhoto.exists()) {
+					filePhoto.delete();
+				}
+				File fileThumbnail = new File(photoAbsolutePath + photo.getThumbnail_pathName());
+				if (fileThumbnail.exists()) {
+					fileThumbnail.delete();
+				}
 				this.coursesVedioLogic.deleteCoursesVedio(Crs_ID);
 			}
 			Part part = request.getPart("file");
@@ -336,14 +348,19 @@ public class CoursesServiceImpl implements xuyihao.service.CoursesService {
 				String vedioFileName = "Vedio" + Crs_ID + DateUtils.currentDate() + fileTypeName;
 				String firstPhotoName = "VedioFirstPhoto" + Crs_ID + DateUtils.currentDate() + ".jpg";// 视频首帧图
 				String firstPhotoThumbnailName = "VedioThumbnailPhoto" + Crs_ID + DateUtils.currentDate() + ".jpg";// 视频首帧缩略图
-				// TODO 保存视频,以及图片
+				// 保存视频
+				// TODO 判断视频是否是mp4,flv等格式，如果不是则需要转换(视频工具还有一些问题，该功能暂时忽略)
 				FileUtils.writePartToDisk(part, absolutePath + vedioFileName);
-				// TODO 生成视频首帧的缩略图，需要设计实现
-				// ThumbnailImageUtils.zoomImageScale(photoAbsolutePath +
-				// firstPhotoName,
-				// photoAbsolutePath + firstPhotoThumbnailName, 448);
-				// 数据库保存图片数据
-				String firstPhotoId = this.photoPathLogic.savePhotoPath(firstPhotoName, firstPhotoThumbnailName);
+				// 生成视频首帧的图片以及缩略图
+				// XXX 这个方法开启进程调用但是不会阻塞,会影响之后的方法调用
+				// TODO 需要想办法使截取图片的时候阻塞线程
+				VedioUtils.cutoutVedio(FFMPEG_TOOL_NAME, absolutePath + vedioFileName, photoAbsolutePath + firstPhotoName,
+						3.3f);
+				ThumbnailImageUtils.zoomImageScale(photoAbsolutePath + firstPhotoName,
+						photoAbsolutePath + firstPhotoThumbnailName, 448);
+				// 数据库数据
+				String firstPhotoId = "";
+				firstPhotoId = this.photoPathLogic.savePhotoPath(firstPhotoName, firstPhotoThumbnailName);
 				String Vedio_ID = this.vedioPathLogic.saveVedioPath(vedioFileName, firstPhotoId);
 				boolean result = this.coursesVedioLogic.saveCoursesVedio(Crs_ID, Vedio_ID);
 				if (result) {
