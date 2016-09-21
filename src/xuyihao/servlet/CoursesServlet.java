@@ -18,6 +18,7 @@ import xuyihao.entity.CommentCrs;
 import xuyihao.entity.Courses;
 import xuyihao.entity.LikeCrs;
 import xuyihao.service.CoursesService;
+import xuyihao.tools.utils.RespondUtils;
 
 /**
  * 
@@ -121,7 +122,7 @@ public class CoursesServlet extends HttpServlet {
 		course.setAcc_ID(Acc_ID);
 		course.setAuthor_ID(Acc_ID);
 		String message = this.coursesService.addCourse(course, request);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void deleteCourse(HttpServletRequest request, HttpServletResponse response)
@@ -132,7 +133,7 @@ public class CoursesServlet extends HttpServlet {
 		}
 		String courseId = request.getParameter("Crs_ID");
 		String message = this.coursesService.deleteCourse(courseId);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void changeCourseInformation(HttpServletRequest request, HttpServletResponse response)
@@ -146,14 +147,14 @@ public class CoursesServlet extends HttpServlet {
 		course.setCrs_ID(request.getParameter("Crs_ID"));
 		course.setCrs_name(request.getParameter("Crs_name"));
 		String message = this.coursesService.changeCourseInformation(course, request);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void getCourseInformation(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String courseId = request.getParameter("Crs_ID");
 		String message = this.coursesService.getCourseInformation(courseId);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void shareCourse(HttpServletRequest request, HttpServletResponse response)
@@ -165,7 +166,7 @@ public class CoursesServlet extends HttpServlet {
 		String accountId = Acc_ID;
 		String courseId = request.getParameter("Crs_ID");
 		String message = this.coursesService.shareCourse(accountId, courseId);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void addCommentCourse(HttpServletRequest request, HttpServletResponse response)
@@ -180,7 +181,7 @@ public class CoursesServlet extends HttpServlet {
 		commentCrs.setRep_ID(request.getParameter("Rep_ID"));
 		commentCrs.setCrs_ID(request.getParameter("Crs_ID"));
 		String message = this.coursesService.addCommentCourse(commentCrs);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void deleteCommentCourse(HttpServletRequest request, HttpServletResponse response)
@@ -191,14 +192,14 @@ public class CoursesServlet extends HttpServlet {
 		}
 		String commentId = request.getParameter("Comm_ID");
 		String message = this.coursesService.deleteCommentCourse(commentId);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void getCommentCourseInformation(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String commentId = request.getParameter("Comm_ID");
 		String message = this.coursesService.getCommentCourseInformation(commentId);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void addLikeCourse(HttpServletRequest request, HttpServletResponse response)
@@ -220,52 +221,55 @@ public class CoursesServlet extends HttpServlet {
 		}
 		likeCrs.setLike_ryb(ryb);
 		String message = this.coursesService.addLikeCourse(likeCrs);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void getLikeCourseInformation(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String likeId = request.getParameter("Like_ID");
 		String message = this.coursesService.getLikeCourseInformation(likeId);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void getCourseFileInformation(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String Crs_ID = request.getParameter("Crs_ID");
 		String message = this.coursesService.getCoursesVedioAndPhotoIds(Crs_ID);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void getCourseVedioId(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String Crs_ID = request.getParameter("Crs_ID");
 		String message = this.coursesService.getCoursesVedioId(Crs_ID);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void getCoursePhotoId(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String Vedio_ID = request.getParameter("Vedio_ID");
 		String message = this.coursesService.getFirstPhotoIdByVedioId(Vedio_ID);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void getCourseVedioById(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String vedioId = request.getParameter("Vedio_ID");
-		this.coursesService.getVedioByVedioId(vedioId, response);
+		String filePathName = this.coursesService.getVedioByVedioId(vedioId);
+		RespondUtils.printFile(response, filePathName);
 	}
 
 	public void getCoursePhotoById(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String Photo_ID = request.getParameter("Photo_ID");
-		this.coursesService.getPhotoByPhotoId(Photo_ID, response);
+		String filePathName = this.coursesService.getPhotoByPhotoId(Photo_ID);
+		RespondUtils.printFile(response, filePathName);
 	}
 
 	public void getCourseThumbnailPhotoById(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String Photo_ID = request.getParameter("Photo_ID");
-		this.coursesService.getThumbnailPhotoByPhotoId(Photo_ID, response);
+		String filePathName = this.coursesService.getThumbnailPhotoByPhotoId(Photo_ID);
+		RespondUtils.printFile(response, filePathName);
 	}
 }

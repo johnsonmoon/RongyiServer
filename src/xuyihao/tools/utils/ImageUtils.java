@@ -7,13 +7,13 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * 生成缩略图工具
+ * 图片工具
  *
  * Created by Xuyh at 2016/9/4 13:30.
  */
-public class ThumbnailImageUtils {
+public class ImageUtils {
 	/**
-	 * 按指定高度 等比例缩放图片
+	 * 按指定高度 等比例缩放图片(生成缩略图)
 	 *
 	 * @param imageFile
 	 * @param newPath
@@ -39,7 +39,7 @@ public class ThumbnailImageUtils {
 	}
 
 	/**
-	 * 按尺寸缩放图片
+	 * 按尺寸缩放图片(生成缩略图)
 	 *
 	 * @param imageFile
 	 * @param newPath

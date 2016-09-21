@@ -21,6 +21,7 @@ import xuyihao.entity.Cart;
 import xuyihao.entity.CommentProduct;
 import xuyihao.entity.Orders;
 import xuyihao.service.AccountsService;
+import xuyihao.tools.utils.RespondUtils;
 
 /**
  * 
@@ -178,7 +179,7 @@ public class AccountsServlet extends HttpServlet {
 	public void isAccountNameExists(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String message = this.accountsService.isAccountNameExists(request.getParameter("Acc_name"));
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -191,7 +192,7 @@ public class AccountsServlet extends HttpServlet {
 		account.setAcc_name2(request.getParameter("Acc_name2"));
 		account.setAcc_tel(request.getParameter("Acc_tel"));
 		String message = this.accountsService.register(account);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -200,14 +201,14 @@ public class AccountsServlet extends HttpServlet {
 			return;
 		}
 		String message = this.accountsService.logout(Acc_ID);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String Acc_name = request.getParameter("Acc_name");
 		String Acc_pwd = request.getParameter("Acc_pwd");
 		String message = this.accountsService.login(Acc_name, Acc_pwd);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void changeAccountInformation(HttpServletRequest request, HttpServletResponse response)
@@ -234,21 +235,21 @@ public class AccountsServlet extends HttpServlet {
 		account.setAcc_name2(request.getParameter("Acc_name2"));
 		account.setAcc_tel(request.getParameter("Acc_tel"));
 		String message = this.accountsService.changeAccountInformation(account);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void getAccountInformationByName(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String Acc_name = request.getParameter("Acc_name");
 		String message = this.accountsService.getAccountInformationByName(Acc_name);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void getAccountInformationById(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String Acc_ID = request.getParameter("Acc_ID");
 		String message = this.accountsService.getAccountInformationById(Acc_ID);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void attention(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -259,7 +260,7 @@ public class AccountsServlet extends HttpServlet {
 		String atnId = Acc_ID;
 		String atndId = request.getParameter("atndId");
 		String message = this.accountsService.attention(atnId, atndId);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void cancelAttention(HttpServletRequest request, HttpServletResponse response)
@@ -271,7 +272,7 @@ public class AccountsServlet extends HttpServlet {
 		String atnId = Acc_ID;
 		String atndId = request.getParameter("atndId");
 		String message = this.accountsService.cancelAttention(atnId, atndId);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void favourite(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -282,7 +283,7 @@ public class AccountsServlet extends HttpServlet {
 		String accountId = Acc_ID;
 		String shopId = request.getParameter("Shop_ID");
 		String message = this.accountsService.favourite(accountId, shopId);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void cancelFavourite(HttpServletRequest request, HttpServletResponse response)
@@ -294,7 +295,7 @@ public class AccountsServlet extends HttpServlet {
 		String accountId = Acc_ID;
 		String shopId = request.getParameter("Shop_ID");
 		String message = this.accountsService.cancelFavourite(accountId, shopId);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void want(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -305,7 +306,7 @@ public class AccountsServlet extends HttpServlet {
 		String accountId = Acc_ID;
 		String productId = request.getParameter("Prod_ID");
 		String message = this.accountsService.want(accountId, productId);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void cancelWant(HttpServletRequest request, HttpServletResponse response)
@@ -317,7 +318,7 @@ public class AccountsServlet extends HttpServlet {
 		String accountId = Acc_ID;
 		String productId = request.getParameter("Prod_ID");
 		String message = this.accountsService.cancelWant(accountId, productId);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void addAddress(HttpServletRequest request, HttpServletResponse response)
@@ -333,7 +334,7 @@ public class AccountsServlet extends HttpServlet {
 		address.setConsign(request.getParameter("Consign"));
 		address.setCon_tel(request.getParameter("Con_tel"));
 		String message = this.accountsService.addAddress(address);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void deleteAddress(HttpServletRequest request, HttpServletResponse response)
@@ -344,7 +345,7 @@ public class AccountsServlet extends HttpServlet {
 		}
 		String addressId = request.getParameter("Add_ID");
 		String message = this.accountsService.deleteAddress(addressId);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void changeAddressInformation(HttpServletRequest request, HttpServletResponse response)
@@ -360,7 +361,7 @@ public class AccountsServlet extends HttpServlet {
 		address.setCon_tel(request.getParameter("Con_tel"));
 		address.setAdd_info(request.getParameter("Add_info"));
 		String message = this.accountsService.changeAddressInformation(address);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void getAddressInformation(HttpServletRequest request, HttpServletResponse response)
@@ -371,7 +372,7 @@ public class AccountsServlet extends HttpServlet {
 		}
 		String addressId = request.getParameter("Add_ID");
 		String message = this.accountsService.getAddressInformation(addressId);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void addCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -393,7 +394,7 @@ public class AccountsServlet extends HttpServlet {
 		cart.setPro_num(num);
 		cart.setProd_price(price);
 		String message = this.accountsService.addCart(cart);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void getCartInformation(HttpServletRequest request, HttpServletResponse response)
@@ -404,7 +405,7 @@ public class AccountsServlet extends HttpServlet {
 		}
 		String cartId = request.getParameter("Cart_ID");
 		String message = this.accountsService.getCartInformation(cartId);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void changeProductCount(HttpServletRequest request, HttpServletResponse response)
@@ -421,7 +422,7 @@ public class AccountsServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		String message = this.accountsService.changeProductCount(cartId, num);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void deleteCart(HttpServletRequest request, HttpServletResponse response)
@@ -432,7 +433,7 @@ public class AccountsServlet extends HttpServlet {
 		}
 		String cartId = request.getParameter("Cart_ID");
 		String message = this.accountsService.deleteCart(cartId);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void addOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -455,7 +456,7 @@ public class AccountsServlet extends HttpServlet {
 		order.setPro_num(num);
 		order.setAdd_ID(request.getParameter("Add_ID"));
 		String message = this.accountsService.addOrder(order);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void getOrderInformation(HttpServletRequest request, HttpServletResponse response)
@@ -466,7 +467,7 @@ public class AccountsServlet extends HttpServlet {
 		}
 		String orderId = request.getParameter("Ord_ID");
 		String message = this.accountsService.getOrderInformation(orderId);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void deleteOrder(HttpServletRequest request, HttpServletResponse response)
@@ -477,7 +478,7 @@ public class AccountsServlet extends HttpServlet {
 		}
 		String orderId = request.getParameter("Ord_ID");
 		String message = this.accountsService.deleteOrder(orderId);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void changeOrderInformation(HttpServletRequest request, HttpServletResponse response)
@@ -502,7 +503,7 @@ public class AccountsServlet extends HttpServlet {
 		order.setPro_num(num);
 		order.setAdd_ID(request.getParameter("Add_ID"));
 		String message = this.accountsService.changeOrderInformation(order);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void addCommentProduct(HttpServletRequest request, HttpServletResponse response)
@@ -517,7 +518,7 @@ public class AccountsServlet extends HttpServlet {
 		commentProduct.setOrd_ID(request.getParameter("Ord_ID"));
 		commentProduct.setComm_desc(request.getParameter("Comm_desc"));
 		String message = this.accountsService.addCommentProduct(commentProduct);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void changeCommentProduct(HttpServletRequest request, HttpServletResponse response)
@@ -529,63 +530,65 @@ public class AccountsServlet extends HttpServlet {
 		String commentId = request.getParameter("Comm_ID");
 		String commentDescription = request.getParameter("Comm_desc");
 		String message = this.accountsService.changeCommentProduct(commentId, commentDescription);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void getCommentProductInformation(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String commentId = request.getParameter("Comm_ID");
 		String message = this.accountsService.getCommentProductInformation(commentId);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void saveAccHeadPhoto(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String message = this.accountsService.saveAccountHeadPhoto(request);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void saveAccPhotos(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String message = this.accountsService.saveAccountPhotos(request);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void changeAccHeadPhoto(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String message = this.accountsService.changeAccountHeadPhoto(request);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void changeAccPhotos(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String message = this.accountsService.changeAccountPhotos(request);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void getAccHeadPhotoId(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String Acc_ID = request.getParameter("Acc_ID");
 		String message = this.accountsService.getAccountHeadPhotoId(Acc_ID);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void getAccPhotosId(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String Acc_ID = request.getParameter("Acc_ID");
 		String message = this.accountsService.getAccountPhotosId(Acc_ID);
-		response.getWriter().println(message);
+		RespondUtils.PrintString(response, message);
 	}
 
 	public void getPhotoById(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String Photo_ID = request.getParameter("Photo_ID");
-		this.accountsService.getPhotoById(Photo_ID, response);
+		String filePathName = this.accountsService.getPhotoById(Photo_ID);
+		RespondUtils.printFile(response, filePathName);
 	}
 
 	public void getThumbnailPhotoById(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String Photo_ID = request.getParameter("Photo_ID");
-		this.accountsService.getThumbnailPhotoById(Photo_ID, response);
+		String filePathName = this.accountsService.getThumbnailPhotoById(Photo_ID);
+		RespondUtils.printFile(response, filePathName);
 	}
 }

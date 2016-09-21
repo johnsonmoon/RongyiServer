@@ -1,16 +1,13 @@
 package xuyihao.service.impl;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
@@ -34,10 +31,8 @@ import xuyihao.logic.CommentProductLogic;
 import xuyihao.logic.OrdersLogic;
 import xuyihao.service.AccountsService;
 import xuyihao.tools.utils.DateUtils;
-import xuyihao.tools.utils.FileTypeUtils;
 import xuyihao.tools.utils.FileUtils;
-import xuyihao.tools.utils.ThumbnailImageUtils;
-import xuyihao.tools.utils.UploadFileNameUtil;
+import xuyihao.tools.utils.ImageUtils;
 
 /**
  * 
@@ -582,7 +577,7 @@ public class AccountsServiceImpl implements AccountsService {
 		String requestAccId = this.session.getAttribute("Acc_ID").toString().trim();
 		if (request.getParameter("Acc_ID").equals(requestAccId)) {
 			try {
-				//检查数据库图片数据是否已经存在
+				// 检查数据库图片数据是否已经存在
 				boolean exists = false;
 				AccountsPhotos accountsPhoto = this.accountsPhotosLogic.getAccountsPhotosInfo(requestAccId);
 				if (accountsPhoto.get_id() != 0) {
@@ -593,15 +588,14 @@ public class AccountsServiceImpl implements AccountsService {
 				if (part == null) {
 					json.put("result", false);
 				} else {
-					String fileTypeName = "." + UploadFileNameUtil.getFileType(part);
+					String fileTypeName = "." + FileUtils.getFileType(part);
 					String newFileName = "headPhoto" + requestAccId + DateUtils.currentDate() + fileTypeName;
 					String newFileThumbnailName = "headThumbnailPhoto" + requestAccId + DateUtils.currentDate() + fileTypeName;
-					//保存原始图片
+					// 保存原始图片
 					FileUtils.writePartToDisk(part, absolutePath + newFileName);
-					//生成并保存缩略图
-					ThumbnailImageUtils.zoomImageScale(absolutePath + newFileName, absolutePath + newFileThumbnailName,
-							448);
-					//数据库保存图片数据
+					// 生成并保存缩略图
+					ImageUtils.zoomImageScale(absolutePath + newFileName, absolutePath + newFileThumbnailName, 448);
+					// 数据库保存图片数据
 					String photoId = this.photoPathLogic.savePhotoPath(newFileName, newFileThumbnailName);
 					boolean result;
 					if (!exists) {
@@ -641,7 +635,7 @@ public class AccountsServiceImpl implements AccountsService {
 		String requestAccId = this.session.getAttribute("Acc_ID").toString().trim();
 		if (request.getParameter("Acc_ID").equals(requestAccId)) {
 			try {
-				//检查数据库图片数据是否已经存在
+				// 检查数据库图片数据是否已经存在
 				boolean exists = false;
 				AccountsPhotos accountsPhoto = this.accountsPhotosLogic.getAccountsPhotosInfo(requestAccId);
 				if (accountsPhoto.get_id() != 0) {
@@ -658,17 +652,15 @@ public class AccountsServiceImpl implements AccountsService {
 					if (part == null) {
 						break;
 					} else {
-						String fileTypeName = "." + UploadFileNameUtil.getFileType(part);
+						String fileTypeName = "." + FileUtils.getFileType(part);
 						String newFileName = "combinePhoto" + (counter - 1) + requestAccId + DateUtils.currentDate() + fileTypeName;
 						String newFileThumbnailName = "combineThumbnailPhoto" + (counter - 1) + requestAccId
-								+ DateUtils.currentDate()
-								+ fileTypeName;
-						//保存原始图片
+								+ DateUtils.currentDate() + fileTypeName;
+						// 保存原始图片
 						FileUtils.writePartToDisk(part, absolutePath + newFileName);
-						//生成并保存缩略图
-						ThumbnailImageUtils.zoomImageScale(absolutePath + newFileName, absolutePath + newFileThumbnailName,
-								448);
-						//数据库保存图片数据
+						// 生成并保存缩略图
+						ImageUtils.zoomImageScale(absolutePath + newFileName, absolutePath + newFileThumbnailName, 448);
+						// 数据库保存图片数据
 						String photoId = this.photoPathLogic.savePhotoPath(newFileName, newFileThumbnailName);
 						combine.add(photoId);
 					}
@@ -703,7 +695,7 @@ public class AccountsServiceImpl implements AccountsService {
 		String requestAccId = this.session.getAttribute("Acc_ID").toString().trim();
 		if (request.getParameter("Acc_ID").equals(requestAccId)) {
 			try {
-				//检查数据库图片数据是否已经存在
+				// 检查数据库图片数据是否已经存在
 				AccountsPhotos accountsPhoto = this.accountsPhotosLogic.getAccountsPhotosInfo(requestAccId);
 				if (accountsPhoto.get_id() == 0) {
 					json.put("result", false);
@@ -712,15 +704,14 @@ public class AccountsServiceImpl implements AccountsService {
 					if (part == null) {
 						json.put("result", false);
 					} else {
-						String fileTypeName = "." + UploadFileNameUtil.getFileType(part);
+						String fileTypeName = "." + FileUtils.getFileType(part);
 						String newFileName = "headPhoto" + requestAccId + DateUtils.currentDate() + fileTypeName;
 						String newFileThumbnailName = "headThumbnailPhoto" + requestAccId + DateUtils.currentDate() + fileTypeName;
-						//保存原始图片
+						// 保存原始图片
 						FileUtils.writePartToDisk(part, absolutePath + newFileName);
-						//生成并保存缩略图
-						ThumbnailImageUtils.zoomImageScale(absolutePath + newFileName, absolutePath + newFileThumbnailName,
-								448);
-						//数据库保存图片数据
+						// 生成并保存缩略图
+						ImageUtils.zoomImageScale(absolutePath + newFileName, absolutePath + newFileThumbnailName, 448);
+						// 数据库保存图片数据
 						this.photoPathLogic.deletePhotoPath(accountsPhoto.getHeadPhoto_ID());
 						String photoId = this.photoPathLogic.savePhotoPath(newFileName, newFileThumbnailName);
 						boolean result = this.accountsPhotosLogic.changeAccountsPhotosInfo(requestAccId, photoId, null);
@@ -750,7 +741,7 @@ public class AccountsServiceImpl implements AccountsService {
 		String requestAccId = this.session.getAttribute("Acc_ID").toString().trim();
 		if (request.getParameter("Acc_ID").equals(requestAccId)) {
 			try {
-				//检查数据库图片数据是否已经存在
+				// 检查数据库图片数据是否已经存在
 				AccountsPhotos accountsPhoto = this.accountsPhotosLogic.getAccountsPhotosInfo(requestAccId);
 				if (accountsPhoto.get_id() == 0) {
 					json.put("result", false);
@@ -766,18 +757,16 @@ public class AccountsServiceImpl implements AccountsService {
 						if (part == null) {
 							break;
 						} else {
-							String fileTypeName = "." + UploadFileNameUtil.getFileType(part);
+							String fileTypeName = "." + FileUtils.getFileType(part);
 							String newFileName = "combinePhoto" + (counter - 1) + requestAccId + DateUtils.currentDate()
 									+ fileTypeName;
 							String newFileThumbnailName = "combineThumbnailPhoto" + (counter - 1) + requestAccId
-									+ DateUtils.currentDate()
-									+ fileTypeName;
-							//保存原始图片
+									+ DateUtils.currentDate() + fileTypeName;
+							// 保存原始图片
 							FileUtils.writePartToDisk(part, absolutePath + newFileName);
-							//生成并保存缩略图
-							ThumbnailImageUtils.zoomImageScale(absolutePath + newFileName, absolutePath + newFileThumbnailName,
-									448);
-							//数据库保存图片数据
+							// 生成并保存缩略图
+							ImageUtils.zoomImageScale(absolutePath + newFileName, absolutePath + newFileThumbnailName, 448);
+							// 数据库保存图片数据
 							String photoId = this.photoPathLogic.savePhotoPath(newFileName, newFileThumbnailName);
 							combine.add(photoId);
 						}
@@ -817,77 +806,15 @@ public class AccountsServiceImpl implements AccountsService {
 		return json.toString();
 	}
 
-	public String getPhotoById(String Photo_ID, HttpServletResponse response) {
+	public String getPhotoById(String Photo_ID) {
 		String pathName = this.photoPathLogic.getPhotoPathInfo(Photo_ID).getPhoto_pathName();
 		String realPath = ABSOLUTE_PATH + pathName;
-		String fileType = FileTypeUtils.getFileType(pathName).getValue();
-		File file = new File(realPath);
-		String name = file.getName();
-		//设置响应头
-		response.addHeader("Content-Disposition", "attachment; filename=\"" + name + "\"");
-		long fileLength = file.length();
-		response.addHeader("Content-Length", String.valueOf(fileLength));
-		response.setContentType(fileType);
-		response.setCharacterEncoding("UTF-8");
-		FileInputStream in = null;
-		OutputStream out = null;
-		try {
-			in = new FileInputStream(file);
-			out = response.getOutputStream();
-			int length = 0;
-			byte[] b = new byte[1024];
-			while ((length = in.read(b)) != -1) {
-				out.write(b, 0, length);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-			return "Failed!";
-		} finally {
-			try {
-				in.close();
-				out.flush();
-				out.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return "Succeeded!";
+		return realPath;
 	}
 
-	public String getThumbnailPhotoById(String Photo_ID, HttpServletResponse response) {
+	public String getThumbnailPhotoById(String Photo_ID) {
 		String pathName = this.photoPathLogic.getPhotoPathInfo(Photo_ID).getThumbnail_pathName();
 		String realPath = ABSOLUTE_PATH + pathName;
-		String fileType = FileTypeUtils.getFileType(pathName).getValue();
-		File file = new File(realPath);
-		String name = file.getName();
-		//设置响应头
-		response.addHeader("Content-Disposition", "attachment; filename=\"" + name + "\"");
-		long fileLength = file.length();
-		response.addHeader("Content-Length", String.valueOf(fileLength));
-		response.setContentType(fileType);
-		response.setCharacterEncoding("UTF-8");
-		FileInputStream in = null;
-		OutputStream out = null;
-		try {
-			in = new FileInputStream(file);
-			out = response.getOutputStream();
-			int length = 0;
-			byte[] b = new byte[1024];
-			while ((length = in.read(b)) != -1) {
-				out.write(b, 0, length);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-			return "Failed!";
-		} finally {
-			try {
-				in.close();
-				out.flush();
-				out.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return "Succeeded!";
+		return realPath;
 	}
 }

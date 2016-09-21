@@ -1,7 +1,6 @@
 package xuyihao.service;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import xuyihao.entity.CommentCrs;
@@ -137,28 +136,28 @@ public interface CoursesService {
 	public String getFirstPhotoIdByVedioId(String Vedio_ID);
 
 	/**
-	 * 通过视频ID获取视频文件
+	 * 通过视频ID获取视频文件, 返回完整路径名
 	 * 
 	 * @param Vedio_ID
 	 * @param response
 	 * @return
 	 */
-	public String getVedioByVedioId(String Vedio_ID, HttpServletResponse response);
+	public String getVedioByVedioId(String Vedio_ID);
 
 	/**
-	 * 通过图片ID获取图片文件
+	 * 通过图片ID获取图片文件, 返回完整路径名
 	 * 
 	 * @param Photo_ID
 	 * @param response
 	 * @return
 	 */
-	public String getPhotoByPhotoId(String Photo_ID, HttpServletResponse response);
+	public String getPhotoByPhotoId(String Photo_ID);
 
 	/**
-	 * 通过图片ID获取图片缩略图文件
+	 * 通过图片ID获取图片缩略图文件, 返回完整路径名
 	 * 
 	 * @param Photo_ID
 	 * @return
 	 */
-	public String getThumbnailPhotoByPhotoId(String Photo_ID, HttpServletResponse response);
+	public String getThumbnailPhotoByPhotoId(String Photo_ID);
 }

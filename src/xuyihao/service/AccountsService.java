@@ -1,7 +1,6 @@
 package xuyihao.service;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import xuyihao.entity.Accounts;
@@ -272,7 +271,8 @@ public interface AccountsService {
 	 */
 	public String getCommentProductInformation(String commentId);
 
-	//TODO ---------------------- 照片模块 ----------------------------------------------
+	// TODO ---------------------- 照片模块
+	// ----------------------------------------------
 
 	/**
 	 * 保存账号头像
@@ -326,18 +326,18 @@ public interface AccountsService {
 	public String getAccountPhotosId(String Acc_ID);
 
 	/**
-	 * 获取图片
+	 * 获取图片,返回完整路径名
 	 * 
 	 * @param Photo_ID
 	 * @return
 	 */
-	public String getPhotoById(String Photo_ID, HttpServletResponse response);
+	public String getPhotoById(String Photo_ID);
 
 	/**
-	 * 获取缩略图
+	 * 获取缩略图,返回完整路径名
 	 * 
 	 * @param Photo_ID
 	 * @return
 	 */
-	public String getThumbnailPhotoById(String Photo_ID, HttpServletResponse response);
+	public String getThumbnailPhotoById(String Photo_ID);
 }

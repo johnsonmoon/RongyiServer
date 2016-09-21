@@ -1,13 +1,10 @@
 package xuyihao.service.impl;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
@@ -29,10 +26,8 @@ import xuyihao.logic.CommentCrsLogic;
 import xuyihao.logic.CoursesLogic;
 import xuyihao.logic.LikeCrsLogic;
 import xuyihao.tools.utils.DateUtils;
-import xuyihao.tools.utils.FileTypeUtils;
 import xuyihao.tools.utils.FileUtils;
-import xuyihao.tools.utils.ThumbnailImageUtils;
-import xuyihao.tools.utils.UploadFileNameUtil;
+import xuyihao.tools.utils.ImageUtils;
 import xuyihao.tools.utils.VedioUtils;
 
 /**
@@ -112,9 +107,12 @@ public class CoursesServiceImpl implements xuyihao.service.CoursesService {
 		JSONObject json = new JSONObject();
 		String Acc_ID = this.session.getAttribute("Acc_ID").toString();
 		Courses queryCourse = this.coursesLogic.getCoursesInfo(courseId);
-		if (Acc_ID.equals(queryCourse.getAcc_ID()) && Acc_ID.equals(queryCourse.getAuthor_ID())) {// 是本人的视频(发布人)
+		if (Acc_ID.equals(queryCourse.getAcc_ID())) {// 是本人的视频教程
 			boolean flag = this.coursesLogic.deleteCourse(courseId);
-			boolean flag2 = this.deleteCoursesVedio(courseId);
+			boolean flag2 = true;
+			if (Acc_ID.equals(queryCourse.getAuthor_ID())) {// 是发布人，即视频源发布人,则连同视频文件一起删除
+				flag2 = this.deleteCoursesVedio(courseId);
+			}
 			if ((flag && flag2) == true) {
 				json.put("result", true);
 			} else {
@@ -344,7 +342,7 @@ public class CoursesServiceImpl implements xuyihao.service.CoursesService {
 			if (part == null) {
 				return "";
 			} else {
-				String fileTypeName = "." + UploadFileNameUtil.getFileType(part);
+				String fileTypeName = "." + FileUtils.getFileType(part);
 				String vedioFileName = "Vedio" + Crs_ID + DateUtils.currentDate() + fileTypeName;
 				String firstPhotoName = "VedioFirstPhoto" + Crs_ID + DateUtils.currentDate() + ".jpg";// 视频首帧图
 				String firstPhotoThumbnailName = "VedioThumbnailPhoto" + Crs_ID + DateUtils.currentDate() + ".jpg";// 视频首帧缩略图
@@ -367,8 +365,7 @@ public class CoursesServiceImpl implements xuyihao.service.CoursesService {
 						break;
 					}
 				}
-				ThumbnailImageUtils.zoomImageScale(photoAbsolutePath + firstPhotoName,
-						photoAbsolutePath + firstPhotoThumbnailName, 448);
+				ImageUtils.zoomImageScale(photoAbsolutePath + firstPhotoName, photoAbsolutePath + firstPhotoThumbnailName, 448);
 				// 数据库数据
 				String firstPhotoId = "";
 				firstPhotoId = this.photoPathLogic.savePhotoPath(firstPhotoName, firstPhotoThumbnailName);
@@ -412,7 +409,7 @@ public class CoursesServiceImpl implements xuyihao.service.CoursesService {
 		return json.toString();
 	}
 
-	public String getVedioByVedioId(String Vedio_ID, HttpServletResponse response) {
+	public String getVedioByVedioId(String Vedio_ID) {
 		String absolutePath = ABSOLUTE_PATH;
 		File dir = new File(absolutePath);
 		if (!dir.getParentFile().exists()) {
@@ -424,41 +421,10 @@ public class CoursesServiceImpl implements xuyihao.service.CoursesService {
 		VedioPath vedio = this.vedioPathLogic.getVedioPathInfo(Vedio_ID);
 		String vedioName = vedio.getVedio_pathName();
 		String vedioFilePathName = absolutePath + vedioName;
-		String fileType = FileTypeUtils.getFileType(vedioName).getValue();
-		File file = new File(vedioFilePathName);
-		String name = file.getName();
-		// 设置响应头
-		response.addHeader("Content-Disposition", "attachment; filename=\"" + name + "\"");
-		long fileLength = file.length();
-		response.addHeader("Content-Length", String.valueOf(fileLength));
-		response.setContentType(fileType);
-		response.setCharacterEncoding("UTF-8");
-		FileInputStream in = null;
-		OutputStream out = null;
-		try {
-			in = new FileInputStream(file);
-			out = response.getOutputStream();
-			int length = 0;
-			byte[] b = new byte[1024];
-			while ((length = in.read(b)) != -1) {
-				out.write(b, 0, length);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-			return "Failed!";
-		} finally {
-			try {
-				in.close();
-				out.flush();
-				out.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return "Succeeded!";
+		return vedioFilePathName;
 	}
 
-	public String getPhotoByPhotoId(String Photo_ID, HttpServletResponse response) {
+	public String getPhotoByPhotoId(String Photo_ID) {
 		String photoAbsolutePath = PHOTO_ABSOLUTE_PATH;
 		File dirPhoto = new File(photoAbsolutePath);
 		if (!dirPhoto.getParentFile().exists()) {
@@ -469,41 +435,10 @@ public class CoursesServiceImpl implements xuyihao.service.CoursesService {
 		}
 		String pathName = this.photoPathLogic.getPhotoPathInfo(Photo_ID).getPhoto_pathName();
 		String realPath = photoAbsolutePath + pathName;
-		String fileType = FileTypeUtils.getFileType(pathName).getValue();
-		File file = new File(realPath);
-		String name = file.getName();
-		// 设置响应头
-		response.addHeader("Content-Disposition", "attachment; filename=\"" + name + "\"");
-		long fileLength = file.length();
-		response.addHeader("Content-Length", String.valueOf(fileLength));
-		response.setContentType(fileType);
-		response.setCharacterEncoding("UTF-8");
-		FileInputStream in = null;
-		OutputStream out = null;
-		try {
-			in = new FileInputStream(file);
-			out = response.getOutputStream();
-			int length = 0;
-			byte[] b = new byte[1024];
-			while ((length = in.read(b)) != -1) {
-				out.write(b, 0, length);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-			return "Failed!";
-		} finally {
-			try {
-				in.close();
-				out.flush();
-				out.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return "Succeeded!";
+		return realPath;
 	}
 
-	public String getThumbnailPhotoByPhotoId(String Photo_ID, HttpServletResponse response) {
+	public String getThumbnailPhotoByPhotoId(String Photo_ID) {
 		String photoAbsolutePath = PHOTO_ABSOLUTE_PATH;
 		File dirPhoto = new File(photoAbsolutePath);
 		if (!dirPhoto.getParentFile().exists()) {
@@ -514,37 +449,6 @@ public class CoursesServiceImpl implements xuyihao.service.CoursesService {
 		}
 		String pathName = this.photoPathLogic.getPhotoPathInfo(Photo_ID).getThumbnail_pathName();
 		String realPath = photoAbsolutePath + pathName;
-		String fileType = FileTypeUtils.getFileType(pathName).getValue();
-		File file = new File(realPath);
-		String name = file.getName();
-		// 设置响应头
-		response.addHeader("Content-Disposition", "attachment; filename=\"" + name + "\"");
-		long fileLength = file.length();
-		response.addHeader("Content-Length", String.valueOf(fileLength));
-		response.setContentType(fileType);
-		response.setCharacterEncoding("UTF-8");
-		FileInputStream in = null;
-		OutputStream out = null;
-		try {
-			in = new FileInputStream(file);
-			out = response.getOutputStream();
-			int length = 0;
-			byte[] b = new byte[1024];
-			while ((length = in.read(b)) != -1) {
-				out.write(b, 0, length);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-			return "Failed!";
-		} finally {
-			try {
-				in.close();
-				out.flush();
-				out.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return "Succeeded!";
+		return realPath;
 	}
 }
