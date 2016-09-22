@@ -32,8 +32,8 @@ public class ProductsDaoImpl implements ProductsDao {
 		String sql = "insert into " + Products.BASE_TABLE_NAME + " values(null, '" + product.getProd_ID() + "', '"
 				+ product.getCat_ID() + "', '" + product.getShop_ID() + "', '" + product.getProd_name() + "', '"
 				+ product.getProd_desc() + "', '" + product.getProd_info() + "', " + product.getProd_price() + ", "
-				+ product.getProd_num() + ", " + product.getProd_sold() + ", DATE_FORMAT('" + product.getProd_addTime()
-				+ "', '%Y-%m-%d %H:%i:%s'))";
+				+ product.getProd_num() + ", " + product.getProd_sold() + ", '" + product.getProd_addTime()
+				+ "')";
 		boolean flag = false;
 		if (this.conn.executeUpdate(sql) != 0) {
 			flag = true;

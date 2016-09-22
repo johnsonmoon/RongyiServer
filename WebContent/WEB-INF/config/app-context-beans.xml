@@ -15,5 +15,9 @@
 	<context:component-scan base-package="xuyihao.dao.impl"></context:component-scan>
 	<context:component-scan base-package="xuyihao.service.impl"></context:component-scan>
 	<context:component-scan base-package="xuyihao.logic.impl"></context:component-scan>
+	<context:component-scan base-package="xuyihao.schedual"></context:component-scan>
 	<context:annotation-config />
+
+	<bean id="SchedualedPublishCachePool" class="xuyihao.schedual.SchedualedPublishCachePool"
+		init-method="init" />
 </beans>

@@ -35,7 +35,7 @@ public class VedioPathDaoTest extends CommonTest {
 			VedioPath vedioPath = new VedioPath();
 			vedioPath.setVedio_ID(RandomUtils.getRandomString(15) + "Vedio");
 			vedioPath.setVedio_pathName(RandomUtils.getRandomString(20));
-			vedioPath.setFirstPhoto_ID(RandomUtils.getRandomString(40));
+			vedioPath.setFirstPhoto_ID(RandomUtils.getRandomString(15) + "Photo");
 			vedioPath.setVedio_addTime(DateUtils.currentDateTime());
 			this.vedioPathList.add(vedioPath);
 			this.vedioPathDao.saveVedioPath(vedioPath);
@@ -48,7 +48,7 @@ public class VedioPathDaoTest extends CommonTest {
 			VedioPath vedioPath = new VedioPath();
 			vedioPath.setVedio_ID(RandomUtils.getRandomString(15) + "Vedio");
 			vedioPath.setVedio_pathName(RandomUtils.getRandomString(20));
-			vedioPath.setFirstPhoto_ID(RandomUtils.getRandomString(40));
+			vedioPath.setFirstPhoto_ID(RandomUtils.getRandomString(15) + "Photo");
 			vedioPath.setVedio_addTime(DateUtils.currentDateTime());
 			this.vedioPathList.add(vedioPath);
 			boolean flag = this.vedioPathDao.saveVedioPath(vedioPath);
