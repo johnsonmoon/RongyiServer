@@ -113,6 +113,22 @@ public class CoursesDaoImpl implements CoursesDao {
 		return coursesList;
 	}
 
+	public List<Courses> queryByLimitOrdered(String OrderedBy, int ascOrDesc, int page, int size) {
+		String sql = "select * from " + Courses.BASE_TABLE_NAME + " order by " + OrderedBy;
+		if (ascOrDesc == 1) {
+			sql += " asc ";
+		} else if (ascOrDesc == -1) {
+			sql += " desc ";
+		} else {
+			sql += " asc ";
+		}
+		sql += "limit " + page + ", " + size + "";
+		ResultSet resultSet = this.conn.executeQuery(sql);
+		List<Courses> coursesList = getCoursesListFromResultSet(resultSet);
+		this.conn.close();
+		return coursesList;
+	}
+
 	public ResultSet queryBySql(String query) {
 		ResultSet resultSet = this.conn.executeQuery(query);
 		return resultSet;

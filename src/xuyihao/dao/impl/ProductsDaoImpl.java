@@ -117,6 +117,22 @@ public class ProductsDaoImpl implements ProductsDao {
 		return productsList;
 	}
 
+	public List<Products> queryByLimitOrdered(String OrderedBy, int ascOrDesc, int page, int size) {
+		String sql = "select * from " + Products.BASE_TABLE_NAME + " order by " + OrderedBy;
+		if (ascOrDesc == 1) {
+			sql += " asc ";
+		} else if (ascOrDesc == -1) {
+			sql += " desc ";
+		} else {
+			sql += " asc ";
+		}
+		sql += "limit " + page + ", " + size + "";
+		ResultSet resultSet = this.conn.executeQuery(sql);
+		List<Products> resultList = getProductsListFromResultSet(resultSet);
+		this.conn.close();
+		return resultList;
+	}
+
 	public ResultSet queryBySql(String sql) {
 		ResultSet resultSet = this.conn.executeQuery(sql);
 		return resultSet;

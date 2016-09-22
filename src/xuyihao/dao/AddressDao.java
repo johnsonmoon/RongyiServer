@@ -45,7 +45,7 @@ public interface AddressDao {
 	 * 查询
 	 *
 	 * @param Acc_ID 账号ID(查询账号的收货地址集)
-	 * @return 
+	 * @return
 	 */
 	public List<Address> queryByAccountId(String Acc_ID);
 
@@ -53,7 +53,7 @@ public interface AddressDao {
 	 * 查询
 	 *
 	 * @param Add_ID 地址ID
-	 * @return 
+	 * @return
 	 */
 	public Address queryById(String Add_ID);
 
@@ -61,10 +61,10 @@ public interface AddressDao {
 	 * 查询
 	 *
 	 * @param query 查询sql语句
-	 * @return 
+	 * @return
 	 */
 	public ResultSet queryBySql(String query);
-	
+
 	/**
 	 * 关闭数据库连接(对于返回ResultSet的查询，其余的不用)
 	 * 

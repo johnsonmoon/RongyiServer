@@ -72,13 +72,24 @@ public interface CoursesDao {
 	public List<Courses> queryByAuthorId(String Author_ID);
 
 	/**
+	 * 排序分页查询
+	 * 
+	 * @param OrderedBy 按照哪一个属性排序
+	 * @param ascOrDesc 顺序还是倒序(1顺序, -1倒序)
+	 * @param page 页号
+	 * @param size 页大小
+	 * @return
+	 */
+	public List<Courses> queryByLimitOrdered(String OrderedBy, int ascOrDesc, int page, int size);
+
+	/**
 	 * 查询
 	 *
 	 * @param query 查询sql语句
 	 * @return Resultset 查询结果游标
 	 */
 	public ResultSet queryBySql(String query);
-	
+
 	/**
 	 * 关闭数据库连接(对于返回ResultSet的查询，其余的不用)
 	 * 

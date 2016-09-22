@@ -112,6 +112,22 @@ public class PostsDaoImpl implements PostsDao {
 		return postsList;
 	}
 
+	public List<Posts> queryByLimitOrdered(String OrderedBy, int ascOrDesc, int page, int size) {
+		String sql = "select * from " + Posts.BASE_TABLE_NAME + " order by " + OrderedBy;
+		if (ascOrDesc == 1) {
+			sql += " asc ";
+		} else if (ascOrDesc == -1) {
+			sql += " desc ";
+		} else {
+			sql += " asc ";
+		}
+		sql += "limit " + page + ", " + size + "";
+		ResultSet resultSet = this.conn.executeQuery(sql);
+		List<Posts> resultList = getPostsListFromResultSet(resultSet);
+		this.conn.close();
+		return resultList;
+	}
+
 	public ResultSet queryBySql(String sql) {
 		ResultSet resultSet = this.conn.executeQuery(sql);
 		return resultSet;
