@@ -1,10 +1,13 @@
 package xuyihao.service.impl;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import xuyihao.entity.CommentPost;
 import xuyihao.entity.LikePost;
@@ -12,6 +15,7 @@ import xuyihao.entity.Posts;
 import xuyihao.logic.CommentPostLogic;
 import xuyihao.logic.LikePostLogic;
 import xuyihao.logic.PostsLogic;
+import xuyihao.schedual.SchedualedPublishCachePool;
 
 /**
  * 
@@ -167,5 +171,49 @@ public class PostsServiceImpl implements xuyihao.service.PostsService {
 		// XXX 所有人可查看
 		LikePost likePost = this.likePostLogic.getLikePostInfo(likeId);
 		return likePost.toJSONString();
+	}
+
+	public String getCachedPublishingPosts() {
+		List<Posts> postsList = SchedualedPublishCachePool.getLatestPostsPool();
+		JSONArray array = this.convertPostsList(postsList);
+		JSONObject json = new JSONObject();
+		json.put("postsList", array);
+		return json.toString();
+	}
+
+	public String getLatestPosts(int page, int size) {
+		JSONArray array = this.convertPostsList(this.postsLogic.getLatestPosts(page, size));
+		JSONObject json = new JSONObject();
+		json.put("postsList", array);
+		return json.toString();
+	}
+
+	/**
+	 * <pre>
+	 * 转换响应数据
+	 * TODO 完善响应数据
+	 * </pre>
+	 * 
+	 * @return
+	 */
+	private JSONArray convertPostsList(List<Posts> postsList) {
+		JSONArray array = new JSONArray();
+		// TODO 完善响应消息，待帖子模块进一步开发之后
+		for (Posts post : postsList) {
+			JSONObject json = new JSONObject();
+			json.put(Posts.BASE_POSTS_PHYSICAL_ID, post.get_id());
+			json.put(Posts.BASE_POSTS_ID, post.getPost_ID());
+			json.put(Posts.BASE_POSTS_NAME, post.getPost_name());
+			json.put(Posts.BASE_POSTS_ROUTE, post.getPost_route());
+			json.put(Posts.BASE_POSTS_ACCOUNT_ID, post.getAcc_ID());
+			json.put(Posts.BASE_POSTS_AUTHOR_ACCOUNT_ID, post.getAuthor_ID());
+			json.put(Posts.BASE_POSTS_REPOST_COUNT, post.getPost_rep());
+			json.put(Posts.BASE_POSTS_COMMON_COUNT, post.getPost_comm());
+			json.put(Posts.BASE_POSTS_LIKE_COUNT, post.getPost_like());
+			json.put(Posts.BASE_POSTS_ADD_TIME, post.getPost_addTime());
+			// TODO 添加未来增加的属性
+			array.add(json);
+		}
+		return array;
 	}
 }

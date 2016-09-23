@@ -108,4 +108,20 @@ public interface PostsService {
 	 * @return
 	 */
 	public String getLikePostInformation(String likeId);
+
+	/**
+	 * 获取定时更新的*条帖子信息缓存
+	 * 
+	 * @return
+	 */
+	public String getCachedPublishingPosts();
+
+	/**
+	 * 获取由时间排序的帖子列表
+	 * 
+	 * @param page 页号
+	 * @param size 页大小
+	 * @return
+	 */
+	public String getLatestPosts(int page, int size);
 }

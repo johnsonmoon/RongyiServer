@@ -18,6 +18,7 @@ import xuyihao.entity.CommentPost;
 import xuyihao.entity.LikePost;
 import xuyihao.entity.Posts;
 import xuyihao.service.PostsService;
+import xuyihao.tools.utils.RespondUtils;
 
 /**
  * 
@@ -88,6 +89,12 @@ public class PostsServlet extends HttpServlet {
 			break;
 		case "getLikePostInfo":
 			this.getLikePostInformation(request, response);
+			break;
+		case "getCachedPostsList":
+			this.getCachedPostsList(request, response);
+			break;
+		case "getLatestPostsList":
+			this.getLatestPostsList(request, response);
 			break;
 		}
 	}
@@ -210,5 +217,19 @@ public class PostsServlet extends HttpServlet {
 		String likeId = request.getParameter("Like_ID");
 		String message = this.postsService.getLikePostInformation(likeId);
 		response.getWriter().println(message);
+	}
+
+	public void getCachedPostsList(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String message = this.postsService.getCachedPublishingPosts();
+		RespondUtils.PrintString(response, message);
+	}
+
+	public void getLatestPostsList(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		int page = Integer.valueOf(request.getParameter("page"));
+		int size = Integer.valueOf(request.getParameter("size"));
+		String message = this.postsService.getLatestPosts(page, size);
+		RespondUtils.PrintString(response, message);
 	}
 }

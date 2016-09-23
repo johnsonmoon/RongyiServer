@@ -45,7 +45,7 @@ public interface CoursesService {
 	 * @param course
 	 * @return
 	 */
-	public String changeCourseInformation(Courses course,  HttpServletRequest request);
+	public String changeCourseInformation(Courses course, HttpServletRequest request);
 
 	/**
 	 * 获取视频课程信息
@@ -160,4 +160,20 @@ public interface CoursesService {
 	 * @return
 	 */
 	public String getThumbnailPhotoByPhotoId(String Photo_ID);
+
+	/**
+	 * 获取定时更新的*条视频信息缓存
+	 * 
+	 * @return
+	 */
+	public String getCachedPublishingCourses();
+
+	/**
+	 * 获取由时间排序的视频列表
+	 * 
+	 * @param page 页号
+	 * @param size 页大小
+	 * @return
+	 */
+	public String getLatestCourses(int page, int size);
 }

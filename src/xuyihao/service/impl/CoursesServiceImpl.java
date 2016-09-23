@@ -2,6 +2,7 @@ package xuyihao.service.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import javax.servlet.http.Part;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import xuyihao.common.AppPropertiesLoader;
 import xuyihao.entity.CommentCrs;
@@ -25,6 +27,7 @@ import xuyihao.filerelate.logic.VedioPathLogic;
 import xuyihao.logic.CommentCrsLogic;
 import xuyihao.logic.CoursesLogic;
 import xuyihao.logic.LikeCrsLogic;
+import xuyihao.schedual.SchedualedPublishCachePool;
 import xuyihao.tools.utils.DateUtils;
 import xuyihao.tools.utils.FileUtils;
 import xuyihao.tools.utils.ImageUtils;
@@ -450,5 +453,52 @@ public class CoursesServiceImpl implements xuyihao.service.CoursesService {
 		String pathName = this.photoPathLogic.getPhotoPathInfo(Photo_ID).getThumbnail_pathName();
 		String realPath = photoAbsolutePath + pathName;
 		return realPath;
+	}
+
+	public String getCachedPublishingCourses() {
+		List<Courses> coursesList = SchedualedPublishCachePool.getLatestCoursesPool();
+		JSONArray array = this.copyCoursesList(coursesList);
+		JSONObject json = new JSONObject();
+		json.put("coursesList", array);
+		return json.toString();
+	}
+
+	public String getLatestCourses(int page, int size) {
+		JSONArray array = this.copyCoursesList(this.coursesLogic.getLatestCourses(page, size));
+		JSONObject json = new JSONObject();
+		json.put("coursesList", array);
+		return json.toString();
+	}
+
+	/**
+	 * <pre>
+	 * 转换响应数据
+	 * 添加Vedio_ID, FirstPhoto_ID,完善响应数据
+	 * </pre>
+	 * 
+	 * @return
+	 */
+	private JSONArray copyCoursesList(List<Courses> coursesList) {
+		// XXX 形成响应消息
+		JSONArray array = new JSONArray();
+		for (Courses course : coursesList) {
+			JSONObject json = new JSONObject();
+			json.put(Courses.BASE_COURSES_PHYSICAL_ID, course.get_id());
+			json.put(Courses.BASE_COURSES_ID, course.getCrs_ID());
+			json.put(Courses.BASE_COURSES_NAME, course.getCrs_name());
+			json.put(Courses.BASE_COURSES_ROUTE, course.getCrs_route());
+			json.put(Courses.BASE_COURSES_ACCOUNT_ID, course.getAcc_ID());
+			json.put(Courses.BASE_COURSES_AUTHOR_ACCOUNT_ID, course.getAuthor_ID());
+			json.put(Courses.BASE_COURSES_REPOST_COUNT, course.getCrs_rep());
+			json.put(Courses.BASE_COURSES_COMMON_COUNT, course.getCrs_comm());
+			json.put(Courses.BASE_COURSES_LIKE_COUNT, course.getCrs_like());
+			json.put(Courses.BASE_COURSES_ADD_TIME, course.getCrs_addTime());
+			String vedioId = this.coursesVedioLogic.getCoursesVedioInfo(course.getCrs_ID()).getVedio_ID();
+			String firstPhotoId = this.vedioPathLogic.getVedioPathInfo(vedioId).getFirstPhoto_ID();
+			json.put("Vedio_ID", vedioId);
+			json.put("FirstPhoto_ID", firstPhotoId);
+			array.add(json);
+		}
+		return array;
 	}
 }

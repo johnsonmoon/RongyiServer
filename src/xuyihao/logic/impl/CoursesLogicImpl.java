@@ -1,5 +1,7 @@
 package xuyihao.logic.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -107,5 +109,10 @@ public class CoursesLogicImpl implements CoursesLogic {
 		} else {
 			return "";
 		}
+	}
+
+	public List<Courses> getLatestCourses(int page, int size) {
+		List<Courses> coursesList = this.coursesDao.queryByLimitOrdered(Courses.BASE_COURSES_PHYSICAL_ID, -1, page, size);
+		return coursesList;
 	}
 }

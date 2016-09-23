@@ -1,5 +1,7 @@
 package xuyihao.logic;
 
+import java.util.List;
+
 import xuyihao.entity.Courses;
 
 /**
@@ -48,4 +50,13 @@ public interface CoursesLogic {
 	 * @return newCrsID
 	 */
 	public String shareCourse(String Acc_ID, String Crs_ID);
+
+	/**
+	 * 获取最近视频列表
+	 * 
+	 * @param page
+	 * @param size
+	 * @return
+	 */
+	public List<Courses> getLatestCourses(int page, int size);
 }

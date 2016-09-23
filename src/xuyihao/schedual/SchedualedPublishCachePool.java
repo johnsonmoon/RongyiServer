@@ -25,11 +25,11 @@ public class SchedualedPublishCachePool {
 	/**
 	 * 最近的视频教程缓存池
 	 */
-	private static List<Courses> latestCoursesPool;
+	private static List<Courses> latestCoursesPool = null;
 	/**
 	 * 最近的帖子缓存池
 	 */
-	private static List<Posts> latestPostsPool;
+	private static List<Posts> latestPostsPool = null;
 
 	/**
 	 * 缓存池大小
@@ -53,18 +53,43 @@ public class SchedualedPublishCachePool {
 	 */
 	@Scheduled(cron = "0/30 * * * * *")
 	public void updateCachePool() {
+		updateLatestCoursesPool(
+				this.coursesDao.queryByLimitOrdered(Courses.BASE_COURSES_PHYSICAL_ID, -1, 0, cachePoolSize));
+		updateLatestPostsPool(this.postsDao.queryByLimitOrdered(Posts.BASE_POSTS_PHYSICAL_ID, -1, 0, cachePoolSize));
+	}
+
+	private static void updateLatestCoursesPool(List<Courses> queryCoursesList) {
 		latestCoursesPool.clear();
+		for (Courses course : queryCoursesList) {
+			latestCoursesPool.add(course);
+		}
+	}
+
+	private static void updateLatestPostsPool(List<Posts> queryPostsList) {
 		latestPostsPool.clear();
-		latestCoursesPool = this.coursesDao.queryByLimitOrdered(Courses.BASE_COURSES_PHYSICAL_ID, -1, 0, cachePoolSize);
-		latestPostsPool = this.postsDao.queryByLimitOrdered(Posts.BASE_POSTS_PHYSICAL_ID, -1, 0, cachePoolSize);
+		for (Posts post : queryPostsList) {
+			latestPostsPool.add(post);
+		}
 	}
 
+	/**
+	 * 获取最近的视频教程缓存
+	 * 
+	 * @return
+	 */
 	public static List<Courses> getLatestCoursesPool() {
-		return latestCoursesPool;
+		List<Courses> coursesList = new ArrayList<>(latestCoursesPool);
+		return coursesList;
 	}
 
+	/**
+	 * 获取帖子缓存池
+	 * 
+	 * @return
+	 */
 	public static List<Posts> getLatestPostsPool() {
-		return latestPostsPool;
+		List<Posts> postsList = new ArrayList<>(latestPostsPool);
+		return postsList;
 	}
 
 	public void setCoursesDao(CoursesDao coursesDao) {

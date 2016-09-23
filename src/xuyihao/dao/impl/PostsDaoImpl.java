@@ -113,6 +113,7 @@ public class PostsDaoImpl implements PostsDao {
 	}
 
 	public List<Posts> queryByLimitOrdered(String OrderedBy, int ascOrDesc, int page, int size) {
+		int offset = page * size;
 		String sql = "select * from " + Posts.BASE_TABLE_NAME + " order by " + OrderedBy;
 		if (ascOrDesc == 1) {
 			sql += " asc ";
@@ -121,7 +122,7 @@ public class PostsDaoImpl implements PostsDao {
 		} else {
 			sql += " asc ";
 		}
-		sql += "limit " + page + ", " + size + "";
+		sql += "limit " + offset + ", " + size + "";
 		ResultSet resultSet = this.conn.executeQuery(sql);
 		List<Posts> resultList = getPostsListFromResultSet(resultSet);
 		this.conn.close();

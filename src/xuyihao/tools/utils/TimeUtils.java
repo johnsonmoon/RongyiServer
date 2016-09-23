@@ -21,7 +21,7 @@ public class TimeUtils {
 	public static long HALF_DAY_TIME_MILLISECONDS = 12 * 60 * 60 * 1000;
 
 	/**
-	 * 获取指定时间的毫秒数
+	 * 获取本日指定时间的毫秒数
 	 *
 	 * @param time 格式"HH:MM:SS"
 	 * @return
@@ -31,6 +31,23 @@ public class TimeUtils {
 			DateFormat dateFormat = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
 			DateFormat dayFormat = new SimpleDateFormat("yy-MM-dd");
 			Date curDate = dateFormat.parse(dayFormat.format(new Date()) + " " + time);
+			return curDate.getTime();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	/**
+	 * 获取指定日期时间的毫秒数
+	 * 
+	 * @param dateTime 格式"yy-MM-dd HH:mm:ss"
+	 * @return
+	 */
+	public static long getTimeMillisDateTime(String dateTime) {
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+			Date curDate = dateFormat.parse(dateTime);
 			return curDate.getTime();
 		} catch (ParseException e) {
 			e.printStackTrace();

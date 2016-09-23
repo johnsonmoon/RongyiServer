@@ -1,5 +1,7 @@
 package xuyihao.logic;
 
+import java.util.List;
+
 import xuyihao.entity.Posts;
 
 /**
@@ -45,4 +47,13 @@ public interface PostsLogic {
 	 * @return
 	 */
 	public String sharePost(String Acc_ID, String Post_ID);
+
+	/**
+	 * 获取最新的帖子列表
+	 * 
+	 * @param page
+	 * @param size
+	 * @return
+	 */
+	public List<Posts> getLatestPosts(int page, int size);
 }

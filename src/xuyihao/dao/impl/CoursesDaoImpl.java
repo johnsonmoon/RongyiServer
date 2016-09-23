@@ -114,6 +114,7 @@ public class CoursesDaoImpl implements CoursesDao {
 	}
 
 	public List<Courses> queryByLimitOrdered(String OrderedBy, int ascOrDesc, int page, int size) {
+		int offset = page * size;
 		String sql = "select * from " + Courses.BASE_TABLE_NAME + " order by " + OrderedBy;
 		if (ascOrDesc == 1) {
 			sql += " asc ";
@@ -122,7 +123,7 @@ public class CoursesDaoImpl implements CoursesDao {
 		} else {
 			sql += " asc ";
 		}
-		sql += "limit " + page + ", " + size + "";
+		sql += "limit " + offset + ", " + size + "";
 		ResultSet resultSet = this.conn.executeQuery(sql);
 		List<Courses> coursesList = getCoursesListFromResultSet(resultSet);
 		this.conn.close();

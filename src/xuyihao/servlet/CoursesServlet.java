@@ -108,6 +108,12 @@ public class CoursesServlet extends HttpServlet {
 		case "getThumbnailPhotoById":
 			this.getCourseThumbnailPhotoById(request, response);
 			break;
+		case "getCachedCoursesList":
+			this.getCachedCoursesList(request, response);
+			break;
+		case "getLatestCoursesList":
+			this.getLatestCoursesList(request, response);
+			break;
 		}
 	}
 
@@ -271,5 +277,19 @@ public class CoursesServlet extends HttpServlet {
 		String Photo_ID = request.getParameter("Photo_ID");
 		String filePathName = this.coursesService.getThumbnailPhotoByPhotoId(Photo_ID);
 		RespondUtils.printFile(response, filePathName);
+	}
+
+	public void getCachedCoursesList(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String message = this.coursesService.getCachedPublishingCourses();
+		RespondUtils.PrintString(response, message);
+	}
+
+	public void getLatestCoursesList(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		int page = Integer.valueOf(request.getParameter("page"));
+		int size = Integer.valueOf(request.getParameter("size"));
+		String message = this.coursesService.getLatestCourses(page, size);
+		RespondUtils.PrintString(response, message);
 	}
 }
