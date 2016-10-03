@@ -22,6 +22,18 @@ import xuyihao.tools.MIME_FileType;
  */
 public class FileUtils {
 	/**
+	 * 检查文件路径是否存在，若不存在创建之(包括所有父路径)
+	 * 
+	 * @param path
+	 */
+	public static void checkAndCreateFilePath(String path) {
+		File file = new File(path);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+	}
+
+	/**
 	 * 把javax.servlet.http.Part存储的文件写入磁盘
 	 * 
 	 * @param part

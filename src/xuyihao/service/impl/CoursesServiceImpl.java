@@ -258,20 +258,8 @@ public class CoursesServiceImpl implements xuyihao.service.CoursesService {
 	private boolean deleteCoursesVedio(String Crs_ID) {
 		String absolutePath = ABSOLUTE_PATH;
 		String photoAbsolutePath = PHOTO_ABSOLUTE_PATH;
-		File dir = new File(absolutePath);
-		if (!dir.getParentFile().exists()) {
-			dir.getParentFile().mkdir();
-			if (!dir.exists()) {
-				dir.mkdir();
-			}
-		}
-		File dirPhoto = new File(photoAbsolutePath);
-		if (!dirPhoto.getParentFile().exists()) {
-			dirPhoto.getParentFile().mkdir();
-			if (!dirPhoto.exists()) {
-				dirPhoto.mkdir();
-			}
-		}
+		FileUtils.checkAndCreateFilePath(absolutePath);
+		FileUtils.checkAndCreateFilePath(photoAbsolutePath);
 		// 查找并删除相关文件
 		String Vedio_ID = this.coursesVedioLogic.getCoursesVedioInfo(Crs_ID).getVedio_ID();
 		VedioPath vedio = this.vedioPathLogic.getVedioPathInfo(Vedio_ID);
@@ -305,20 +293,8 @@ public class CoursesServiceImpl implements xuyihao.service.CoursesService {
 		}
 		String absolutePath = ABSOLUTE_PATH;
 		String photoAbsolutePath = PHOTO_ABSOLUTE_PATH;
-		File dir = new File(absolutePath);
-		if (!dir.getParentFile().exists()) {
-			dir.getParentFile().mkdir();
-			if (!dir.exists()) {
-				dir.mkdir();
-			}
-		}
-		File dirPhoto = new File(photoAbsolutePath);
-		if (!dirPhoto.getParentFile().exists()) {
-			dirPhoto.getParentFile().mkdir();
-			if (!dirPhoto.exists()) {
-				dirPhoto.mkdir();
-			}
-		}
+		FileUtils.checkAndCreateFilePath(absolutePath);
+		FileUtils.checkAndCreateFilePath(photoAbsolutePath);
 		try {
 			// 检查数据库视频数据是否已经存在
 			CoursesVedio coursesVedio = this.coursesVedioLogic.getCoursesVedioInfo(Crs_ID);
@@ -414,13 +390,7 @@ public class CoursesServiceImpl implements xuyihao.service.CoursesService {
 
 	public String getVedioByVedioId(String Vedio_ID) {
 		String absolutePath = ABSOLUTE_PATH;
-		File dir = new File(absolutePath);
-		if (!dir.getParentFile().exists()) {
-			dir.getParentFile().mkdir();
-			if (!dir.exists()) {
-				dir.mkdir();
-			}
-		}
+		FileUtils.checkAndCreateFilePath(absolutePath);
 		VedioPath vedio = this.vedioPathLogic.getVedioPathInfo(Vedio_ID);
 		String vedioName = vedio.getVedio_pathName();
 		String vedioFilePathName = absolutePath + vedioName;
@@ -429,13 +399,7 @@ public class CoursesServiceImpl implements xuyihao.service.CoursesService {
 
 	public String getPhotoByPhotoId(String Photo_ID) {
 		String photoAbsolutePath = PHOTO_ABSOLUTE_PATH;
-		File dirPhoto = new File(photoAbsolutePath);
-		if (!dirPhoto.getParentFile().exists()) {
-			dirPhoto.getParentFile().mkdir();
-			if (!dirPhoto.exists()) {
-				dirPhoto.mkdir();
-			}
-		}
+		FileUtils.checkAndCreateFilePath(photoAbsolutePath);
 		String pathName = this.photoPathLogic.getPhotoPathInfo(Photo_ID).getPhoto_pathName();
 		String realPath = photoAbsolutePath + pathName;
 		return realPath;
@@ -443,13 +407,7 @@ public class CoursesServiceImpl implements xuyihao.service.CoursesService {
 
 	public String getThumbnailPhotoByPhotoId(String Photo_ID) {
 		String photoAbsolutePath = PHOTO_ABSOLUTE_PATH;
-		File dirPhoto = new File(photoAbsolutePath);
-		if (!dirPhoto.getParentFile().exists()) {
-			dirPhoto.getParentFile().mkdir();
-			if (!dirPhoto.exists()) {
-				dirPhoto.mkdir();
-			}
-		}
+		FileUtils.checkAndCreateFilePath(photoAbsolutePath);
 		String pathName = this.photoPathLogic.getPhotoPathInfo(Photo_ID).getThumbnail_pathName();
 		String realPath = photoAbsolutePath + pathName;
 		return realPath;

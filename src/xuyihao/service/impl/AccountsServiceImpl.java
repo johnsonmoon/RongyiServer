@@ -567,13 +567,7 @@ public class AccountsServiceImpl implements AccountsService {
 	public String saveAccountHeadPhoto(HttpServletRequest request) {
 		JSONObject json = new JSONObject();
 		String absolutePath = ABSOLUTE_PATH;
-		File dir = new File(absolutePath);
-		if (!dir.getParentFile().exists()) {
-			dir.getParentFile().mkdir();
-			if (!dir.exists()) {
-				dir.mkdir();
-			}
-		}
+		FileUtils.checkAndCreateFilePath(absolutePath);
 		String requestAccId = this.session.getAttribute("Acc_ID").toString().trim();
 		if (request.getParameter("Acc_ID").equals(requestAccId)) {
 			try {
@@ -625,13 +619,7 @@ public class AccountsServiceImpl implements AccountsService {
 	public String saveAccountPhotos(HttpServletRequest request) {
 		JSONObject json = new JSONObject();
 		String absolutePath = ABSOLUTE_PATH;
-		File dir = new File(absolutePath);
-		if (!dir.getParentFile().exists()) {
-			dir.getParentFile().mkdir();
-			if (!dir.exists()) {
-				dir.mkdir();
-			}
-		}
+		FileUtils.checkAndCreateFilePath(absolutePath);
 		String requestAccId = this.session.getAttribute("Acc_ID").toString().trim();
 		if (request.getParameter("Acc_ID").equals(requestAccId)) {
 			try {
@@ -692,6 +680,7 @@ public class AccountsServiceImpl implements AccountsService {
 	public String changeAccountHeadPhoto(HttpServletRequest request) {
 		JSONObject json = new JSONObject();
 		String absolutePath = ABSOLUTE_PATH;
+		FileUtils.checkAndCreateFilePath(absolutePath);
 		String requestAccId = this.session.getAttribute("Acc_ID").toString().trim();
 		if (request.getParameter("Acc_ID").equals(requestAccId)) {
 			try {
@@ -738,6 +727,7 @@ public class AccountsServiceImpl implements AccountsService {
 	public String changeAccountPhotos(HttpServletRequest request) {
 		JSONObject json = new JSONObject();
 		String absolutePath = ABSOLUTE_PATH;
+		FileUtils.checkAndCreateFilePath(absolutePath);
 		String requestAccId = this.session.getAttribute("Acc_ID").toString().trim();
 		if (request.getParameter("Acc_ID").equals(requestAccId)) {
 			try {
