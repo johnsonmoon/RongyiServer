@@ -26,11 +26,13 @@ public class FileUtils {
 	 * 
 	 * @param path
 	 */
-	public static void checkAndCreateFilePath(String path) {
+	public static boolean checkAndCreateFilePath(String path) {
+		boolean flag = false;
 		File file = new File(path);
 		if (!file.exists()) {
-			file.mkdirs();
+			flag = file.mkdirs();
 		}
+		return flag;
 	}
 
 	/**
