@@ -8,14 +8,12 @@ import xuyihao.common.AppPropertiesLoader;
 import java.util.Properties;
 
 /**
- * create by xuyihao on 2016/4/3
+ * 重写HttpServletRequest的部分方法实现post，get请求中文乱码问题
  * 
- * @description: 重写HttpServletRequest的部分方法实现post，get请求中文乱码问题
+ * @Author Xuyh created on 2016/4/3
+ *
  */
 public class MyCharacterEncodingRequest extends HttpServletRequestWrapper {
-	/*
-	 * fields
-	 */
 	private HttpServletRequest request;
 	private static boolean changeOrNot = false;
 
@@ -24,16 +22,13 @@ public class MyCharacterEncodingRequest extends HttpServletRequestWrapper {
 		changeOrNot = Boolean.parseBoolean(properties.getProperty("ChangeOrNot"));
 	}
 
-	/*
-	 * constructor
-	 */
 	public MyCharacterEncodingRequest(HttpServletRequest req) {
 		super(req);
 		this.request = req;
 	}
 
-	/*
-	 * 覆盖需要增强的getParameter方法
+	/**
+	 * 重写需要增强的getParameter方法
 	 */
 	@Override
 	public String getParameter(String name) {
